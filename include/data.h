@@ -32,18 +32,18 @@ struct MonCoords
 #define GET_MON_COORDS_WIDTH(size) ((size >> 4) * 8)
 #define GET_MON_COORDS_HEIGHT(size) ((size & 0xF) * 8)
 
-// Valori per il campo abilityNum dei Pokémon degli allenatori
-#define TRAINER_MON_ABILITY_DEFAULT 0 // comportamento vanilla (decisa dalla personality)
-#define TRAINER_MON_ABILITY_1       1 // prima abilità della specie
-#define TRAINER_MON_ABILITY_2       2 // seconda abilità (se la specie non ce l'ha, resta la prima)
+// Values for the abilityNum field of trainer party mons
+#define TRAINER_MON_ABILITY_DEFAULT 0 // vanilla behavior (decided by personality)
+#define TRAINER_MON_ABILITY_1       1 // species' first ability
+#define TRAINER_MON_ABILITY_2       2 // species' second ability (falls back to the first if the species has only one)
 
 struct TrainerMonNoItemDefaultMoves
 {
     u16 iv;
     u8 lvl;
     u16 species;
-    u8 nature;      // NATURE_*; NATURE_HARDY (0, default) = natura vanilla
-    u8 abilityNum;  // TRAINER_MON_ABILITY_*; 0 (default) = abilità vanilla
+    u8 nature;      // NATURE_*; NATURE_HARDY (0, default) = vanilla nature
+    u8 abilityNum;  // TRAINER_MON_ABILITY_*; 0 (default) = vanilla ability
 };
 
 struct TrainerMonItemDefaultMoves
@@ -51,8 +51,8 @@ struct TrainerMonItemDefaultMoves
     u16 iv;
     u8 lvl;
     u16 species;
-    u8 nature;      // NATURE_*; NATURE_HARDY (0, default) = natura vanilla
-    u8 abilityNum;  // TRAINER_MON_ABILITY_*; 0 (default) = abilità vanilla
+    u8 nature;      // NATURE_*; NATURE_HARDY (0, default) = vanilla nature
+    u8 abilityNum;  // TRAINER_MON_ABILITY_*; 0 (default) = vanilla ability
     u16 heldItem;
 };
 
@@ -61,8 +61,8 @@ struct TrainerMonNoItemCustomMoves
     u16 iv;
     u8 lvl;
     u16 species;
-    u8 nature;      // NATURE_*; NATURE_HARDY (0, default) = natura vanilla
-    u8 abilityNum;  // TRAINER_MON_ABILITY_*; 0 (default) = abilità vanilla
+    u8 nature;      // NATURE_*; NATURE_HARDY (0, default) = vanilla nature
+    u8 abilityNum;  // TRAINER_MON_ABILITY_*; 0 (default) = vanilla ability
     u16 moves[MAX_MON_MOVES];
 };
 
@@ -71,8 +71,8 @@ struct TrainerMonItemCustomMoves
     u16 iv;
     u8 lvl;
     u16 species;
-    u8 nature;      // NATURE_*; NATURE_HARDY (0, default) = natura vanilla
-    u8 abilityNum;  // TRAINER_MON_ABILITY_*; 0 (default) = abilità vanilla
+    u8 nature;      // NATURE_*; NATURE_HARDY (0, default) = vanilla nature
+    u8 abilityNum;  // TRAINER_MON_ABILITY_*; 0 (default) = vanilla ability
     u16 heldItem;
     u16 moves[MAX_MON_MOVES];
 };

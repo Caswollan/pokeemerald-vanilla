@@ -1957,9 +1957,9 @@ static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite)
     }
 }
 
-// Forza la natura modificando la personality PRIMA di CreateMon.
-// Aggiunge solo multipli di 256, così il byte basso (che decide il genere) non cambia.
-// 256 % 25 = 6 e 6 * 21 % 25 = 1, quindi servono ((diff * 21) % 25) passi da 256.
+// Forces the nature by adjusting the personality BEFORE CreateMon.
+// Only multiples of 256 are added, so the low byte (which decides gender) is unchanged.
+// 256 % 25 = 6 and 6 * 21 % 25 = 1, so ((diff * 21) % 25) steps of 256 are needed.
 static u32 ApplyTrainerMonNature(u32 personality, u8 nature)
 {
     u32 diff;
@@ -1971,8 +1971,8 @@ static u32 ApplyTrainerMonNature(u32 personality, u8 nature)
     return personality + ((diff * 21) % NUM_NATURES) * 256;
 }
 
-// Forza l'abilità DOPO CreateMon. Lo slot 2 si applica solo se la specie ne ha davvero due,
-// altrimenti il Pokémon finirebbe con ABILITY_NONE.
+// Forces the ability AFTER CreateMon. Slot 2 is only applied if the species actually has
+// a second ability, otherwise the mon would end up with ABILITY_NONE.
 static void ApplyTrainerMonAbility(struct Pokemon *mon, u16 species, u8 abilityNum)
 {
     u8 value;
