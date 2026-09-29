@@ -141,6 +141,7 @@ extern const u8 BattleScript_RainDishActivates[];
 extern const u8 BattleScript_SandstreamActivates[];
 extern const u8 BattleScript_SnowWarningActivates[];
 extern const u8 BattleScript_LightningRodBoost[];
+extern const u8 BattleScript_FrostbiteTurnDmg[];
 extern const u8 BattleScript_LightningRodBoost_PPLoss[];
 extern const u8 BattleScript_ShedSkinActivates[];
 extern const u8 BattleScript_WeatherFormChanges[];

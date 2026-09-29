@@ -8765,7 +8765,7 @@ static void Cmd_jumpifnopursuitswitchdmg(void)
 
     if (gChosenActionByBattler[gBattlerTarget] == B_ACTION_USE_MOVE
         && gBattlerAttacker == *(gBattleStruct->moveTarget + gBattlerTarget)
-        && !(gBattleMons[gBattlerTarget].status1 & (STATUS1_SLEEP | STATUS1_FREEZE))
+        && !(gBattleMons[gBattlerTarget].status1 & STATUS1_SLEEP)
         && gBattleMons[gBattlerAttacker].hp
         && !gDisableStructs[gBattlerTarget].truantCounter
         && gChosenMoveByBattler[gBattlerTarget] == MOVE_PURSUIT)
@@ -10014,9 +10014,9 @@ static void Cmd_handleballthrow(void)
             * (gBattleMons[gBattlerTarget].maxHP * 3 - gBattleMons[gBattlerTarget].hp * 2)
             / (3 * gBattleMons[gBattlerTarget].maxHP);
 
-        if (gBattleMons[gBattlerTarget].status1 & (STATUS1_SLEEP | STATUS1_FREEZE))
+        if (gBattleMons[gBattlerTarget].status1 & STATUS1_SLEEP)
             odds *= 2;
-        if (gBattleMons[gBattlerTarget].status1 & (STATUS1_POISON | STATUS1_BURN | STATUS1_PARALYSIS | STATUS1_TOXIC_POISON))
+        if (gBattleMons[gBattlerTarget].status1 & (STATUS1_POISON | STATUS1_BURN | STATUS1_FREEZE | STATUS1_PARALYSIS | STATUS1_TOXIC_POISON))
             odds = (odds * 15) / 10;
 
         if (gLastUsedItem != ITEM_SAFARI_BALL)

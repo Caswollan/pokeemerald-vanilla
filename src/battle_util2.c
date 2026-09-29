@@ -179,7 +179,7 @@ u32 BattlePalace_TryEscapeStatus(u8 battler)
             gBattleCommunication[MULTIUSE_STATE]++;
             break;
         case 1:
-            if (gBattleMons[battler].status1 & STATUS1_FREEZE)
+            if (FALSE) // Frostbite (STATUS1_FREEZE) no longer prevents moving
             {
                 if (Random() % 5 != 0)
                 {

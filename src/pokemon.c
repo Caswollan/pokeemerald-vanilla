@@ -3325,6 +3325,10 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
         damage = (damage / damageHelper);
         damage /= 50;
 
+        // Frostbite cuts special damage in half (STATUS1_FREEZE is now Frostbite)
+        if (attacker->status1 & STATUS1_FREEZE)
+            damage /= 2;
+
         // Apply Lightscreen
         if ((sideStatus & SIDE_STATUS_LIGHTSCREEN) && gCritMultiplier == 1)
         {

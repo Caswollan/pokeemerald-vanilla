@@ -1442,6 +1442,7 @@ enum
     ENDTURN_POISON,
     ENDTURN_BAD_POISON,
     ENDTURN_BURN,
+    ENDTURN_FROSTBITE,
     ENDTURN_NIGHTMARES,
     ENDTURN_CURSE,
     ENDTURN_WRAP,
@@ -1546,10 +1547,22 @@ u8 DoBattlerEndTurnEffects(void)
             case ENDTURN_BURN:  // burn
                 if ((gBattleMons[gActiveBattler].status1 & STATUS1_BURN) && gBattleMons[gActiveBattler].hp != 0)
                 {
-                    gBattleMoveDamage = gBattleMons[gActiveBattler].maxHP / 8;
+                    gBattleMoveDamage = gBattleMons[gActiveBattler].maxHP / 16;
                     if (gBattleMoveDamage == 0)
                         gBattleMoveDamage = 1;
                     BattleScriptExecute(BattleScript_BurnTurnDmg);
+                    effect++;
+                }
+                gBattleStruct->turnEffectsTracker++;
+                break;
+                 break;
+            case ENDTURN_FROSTBITE:  // frostbite
+                if ((gBattleMons[gActiveBattler].status1 & STATUS1_FREEZE) && gBattleMons[gActiveBattler].hp != 0)
+                {
+                    gBattleMoveDamage = gBattleMons[gActiveBattler].maxHP / 16;
+                    if (gBattleMoveDamage == 0)
+                        gBattleMoveDamage = 1;
+                    BattleScriptExecute(BattleScript_FrostbiteTurnDmg);
                     effect++;
                 }
                 gBattleStruct->turnEffectsTracker++;
@@ -2043,30 +2056,8 @@ u8 AtkCanceler_UnableToUseMove(void)
             gBattleStruct->atkCancelerTracker++;
             break;
         case CANCELER_FROZEN: // check being frozen
-            if (gBattleMons[gBattlerAttacker].status1 & STATUS1_FREEZE)
-            {
-                if (Random() % 5)
-                {
-                    if (gBattleMoves[gCurrentMove].effect != EFFECT_THAW_HIT) // unfreezing via a move effect happens in case 13
-                    {
-                        gBattlescriptCurrInstr = BattleScript_MoveUsedIsFrozen;
-                        gHitMarker |= HITMARKER_NO_ATTACKSTRING;
-                    }
-                    else
-                    {
-                        gBattleStruct->atkCancelerTracker++;
-                        break;
-                    }
-                }
-                else // unfreeze
-                {
-                    gBattleMons[gBattlerAttacker].status1 &= ~STATUS1_FREEZE;
-                    BattleScriptPushCursor();
-                    gBattlescriptCurrInstr = BattleScript_MoveUsedUnfroze;
-                    gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_DEFROSTED;
-                }
-                effect = 2;
-            }
+            // STATUS1_FREEZE is now Frostbite: the Pokemon can act normally and never thaws randomly.
+            // It is cured by thawing moves (CANCELER_THAW), Fire moves (MOVEEND_DEFROST), items or switching abilities.
             gBattleStruct->atkCancelerTracker++;
             break;
         case CANCELER_TRUANT: // truant
@@ -2720,7 +2711,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                     }
                     break;
                 case ABILITY_FLASH_FIRE:
-                    if (moveType == TYPE_FIRE && !(gBattleMons[battler].status1 & STATUS1_FREEZE))
+                    if (moveType == TYPE_FIRE)
                     {
                         if (!(gBattleResources->flags->flags[battler] & RESOURCE_FLAG_FLASH_FIRE))
                         {
