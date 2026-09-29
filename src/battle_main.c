@@ -1957,6 +1957,36 @@ static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite)
     }
 }
 
+// Forza la natura modificando la personality PRIMA di CreateMon.
+// Aggiunge solo multipli di 256, così il byte basso (che decide il genere) non cambia.
+// 256 % 25 = 6 e 6 * 21 % 25 = 1, quindi servono ((diff * 21) % 25) passi da 256.
+static u32 ApplyTrainerMonNature(u32 personality, u8 nature)
+{
+    u32 diff;
+
+    if (nature == NATURE_HARDY || nature >= NUM_NATURES)
+        return personality;
+
+    diff = (nature + NUM_NATURES - (personality % NUM_NATURES)) % NUM_NATURES;
+    return personality + ((diff * 21) % NUM_NATURES) * 256;
+}
+
+// Forza l'abilità DOPO CreateMon. Lo slot 2 si applica solo se la specie ne ha davvero due,
+// altrimenti il Pokémon finirebbe con ABILITY_NONE.
+static void ApplyTrainerMonAbility(struct Pokemon *mon, u16 species, u8 abilityNum)
+{
+    u8 value;
+
+    if (abilityNum == TRAINER_MON_ABILITY_1)
+        value = 0;
+    else if (abilityNum == TRAINER_MON_ABILITY_2 && gSpeciesInfo[species].abilities[1] != ABILITY_NONE)
+        value = 1;
+    else
+        return;
+
+    SetMonData(mon, MON_DATA_ABILITY_NUM, &value);
+}
+
 static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 firstTrainer)
 {
     u32 nameHash = 0;
@@ -2010,8 +2040,10 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
                     nameHash += gSpeciesNames[partyData[i].species][j];
 
                 personalityValue += nameHash << 8;
+                personalityValue = ApplyTrainerMonNature(personalityValue, partyData[i].nature);
                 fixedIV = partyData[i].iv * MAX_PER_STAT_IVS / 255;
                 CreateMon(&party[i], partyData[i].species, partyData[i].lvl, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
+                ApplyTrainerMonAbility(&party[i], partyData[i].species, partyData[i].abilityNum);
                 break;
             }
             case F_TRAINER_PARTY_CUSTOM_MOVESET:
@@ -2022,8 +2054,10 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
                     nameHash += gSpeciesNames[partyData[i].species][j];
 
                 personalityValue += nameHash << 8;
+                personalityValue = ApplyTrainerMonNature(personalityValue, partyData[i].nature);
                 fixedIV = partyData[i].iv * MAX_PER_STAT_IVS / 255;
                 CreateMon(&party[i], partyData[i].species, partyData[i].lvl, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
+                ApplyTrainerMonAbility(&party[i], partyData[i].species, partyData[i].abilityNum);
 
                 for (j = 0; j < MAX_MON_MOVES; j++)
                 {
@@ -2040,8 +2074,10 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
                     nameHash += gSpeciesNames[partyData[i].species][j];
 
                 personalityValue += nameHash << 8;
+                personalityValue = ApplyTrainerMonNature(personalityValue, partyData[i].nature);
                 fixedIV = partyData[i].iv * MAX_PER_STAT_IVS / 255;
                 CreateMon(&party[i], partyData[i].species, partyData[i].lvl, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
+                ApplyTrainerMonAbility(&party[i], partyData[i].species, partyData[i].abilityNum);
 
                 SetMonData(&party[i], MON_DATA_HELD_ITEM, &partyData[i].heldItem);
                 break;
@@ -2054,8 +2090,10 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
                     nameHash += gSpeciesNames[partyData[i].species][j];
 
                 personalityValue += nameHash << 8;
+                personalityValue = ApplyTrainerMonNature(personalityValue, partyData[i].nature);
                 fixedIV = partyData[i].iv * MAX_PER_STAT_IVS / 255;
                 CreateMon(&party[i], partyData[i].species, partyData[i].lvl, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
+                ApplyTrainerMonAbility(&party[i], partyData[i].species, partyData[i].abilityNum);
 
                 SetMonData(&party[i], MON_DATA_HELD_ITEM, &partyData[i].heldItem);
 

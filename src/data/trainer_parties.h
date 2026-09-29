@@ -3383,6 +3383,8 @@ static const struct TrainerMonItemCustomMoves sParty_Roxanne1[] = {
     .iv = 200,
     .lvl = 15,
     .species = SPECIES_NOSEPASS,
+    .nature = NATURE_ADAMANT,
+    .abilityNum = TRAINER_MON_ABILITY_1,
     .heldItem = ITEM_ORAN_BERRY,
     .moves = {MOVE_BLOCK, MOVE_HARDEN, MOVE_TACKLE, MOVE_ROCK_TOMB}
     }
