@@ -3202,6 +3202,14 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     if (attackerHoldEffect == HOLD_EFFECT_THICK_CLUB && (attacker->species == SPECIES_CUBONE || attacker->species == SPECIES_MAROWAK))
         attack *= 2;
 
+    if (WEATHER_HAS_EFFECT2)
+    {
+        if ((gBattleWeather & B_WEATHER_SANDSTORM) && (defender->types[0] == TYPE_ROCK || defender->types[1] == TYPE_ROCK))
+            spDefense = (150 * spDefense) / 100;
+        if ((gBattleWeather & B_WEATHER_HAIL) && (defender->types[0] == TYPE_ICE || defender->types[1] == TYPE_ICE))
+            defense = (150 * defense) / 100;
+    }
+
     // Apply abilities / field sports
     if (defender->ability == ABILITY_THICK_FAT && (type == TYPE_FIRE || type == TYPE_ICE))
         spAttack /= 2;
