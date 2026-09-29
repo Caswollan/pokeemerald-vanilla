@@ -4391,6 +4391,7 @@ BattleScript_FocusBandActivates::
 	playanimation BS_TARGET, B_ANIM_FOCUS_BAND
 	printstring STRINGID_PKMNHUNGONWITHX
 	waitmessage B_WAIT_TIME_LONG
+	removeitem BS_TARGET
 	return
 
 BattleScript_BerryConfuseHealEnd2::

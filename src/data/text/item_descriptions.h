@@ -544,8 +544,8 @@ static const u8 sLumBerryDesc[] = _(
 
 static const u8 sSitrusBerryDesc[] = _(
     "A hold item that\n"
-    "restores 30 HP in\n"
-    "battle.");
+    "restores 25% HP\n"
+    "in battle.");
 
 static const u8 sFigyBerryDesc[] = _(
     "A hold item that\n"
@@ -799,9 +799,9 @@ static const u8 sEverstoneDesc[] = _(
     "evolution.");
 
 static const u8 sFocusBandDesc[] = _(
-    "A hold item that\n"
-    "occasionally\n"
-    "prevents fainting.");
+    "If at full HP, the\n"
+    "holder survives one\n"
+    "KO hit. Single use.");
 
 static const u8 sLuckyEggDesc[] = _(
     "A hold item that\n"
@@ -830,8 +830,8 @@ static const u8 sDragonScaleDesc[] = _(
 
 static const u8 sLightBallDesc[] = _(
     "A hold item that\n"
-    "raises the SP. ATK\n"
-    "of PIKACHU.");
+    "raises PIKACHU's\n"
+    "ATK and SP. ATK.");
 
 static const u8 sSoftSandDesc[] = _(
     "A hold item that\n"
