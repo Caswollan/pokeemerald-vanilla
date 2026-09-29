@@ -58,6 +58,7 @@ AI_CBM_CheckIfNegatesType:
 	if_type_effectiveness AI_EFFECTIVENESS_x0, Score_Minus10
 	get_ability AI_TARGET
 	if_equal ABILITY_VOLT_ABSORB, CheckIfVoltAbsorbCancelsElectric
+	if_equal ABILITY_LIGHTNING_ROD, CheckIfVoltAbsorbCancelsElectric
 	if_equal ABILITY_WATER_ABSORB, CheckIfWaterAbsorbCancelsWater
 	if_equal ABILITY_FLASH_FIRE, CheckIfFlashFireCancelsFire
 	if_equal ABILITY_WONDER_GUARD, CheckIfWonderGuardCancelsMove
@@ -398,9 +399,17 @@ AI_CBM_Paralyze:
 	if_type_effectiveness AI_EFFECTIVENESS_x0, Score_Minus10
 	get_ability AI_TARGET
 	if_equal ABILITY_LIMBER, Score_Minus10
+	if_equal ABILITY_VOLT_ABSORB, AI_CBM_Paralyze_CheckElectric
+	if_equal ABILITY_LIGHTNING_ROD, AI_CBM_Paralyze_CheckElectric
+AI_CBM_Paralyze_CheckStatus:
 	if_status AI_TARGET, STATUS1_ANY, Score_Minus10
 	if_side_affecting AI_TARGET, SIDE_STATUS_SAFEGUARD, Score_Minus10
 	end
+
+AI_CBM_Paralyze_CheckElectric:
+	get_curr_move_type
+	if_equal_ TYPE_ELECTRIC, Score_Minus10
+	goto AI_CBM_Paralyze_CheckStatus
 
 AI_CBM_Substitute:
 	if_status2 AI_USER, STATUS2_SUBSTITUTE, Score_Minus8
@@ -2845,7 +2854,7 @@ AI_DoubleBattleSkillSwap:
 
 AI_DoubleBattleElectricMove:
 	if_no_ability AI_TARGET_PARTNER, ABILITY_LIGHTNING_ROD, AI_DoubleBattleElectricMoveEnd
-	score -2
+	score -10
 	if_no_type AI_TARGET_PARTNER, TYPE_GROUND, AI_DoubleBattleElectricMoveEnd
 	score -8
 AI_DoubleBattleElectricMoveEnd:

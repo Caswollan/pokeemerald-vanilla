@@ -1656,6 +1656,8 @@ static void UNUSED Unused_ApplyRandomDmgMultiplier(void)
     ApplyRandomDmgMultiplier();
 }
 
+#define STURDY_PREVENTS_KO(battler) (gBattleMons[battler].ability == ABILITY_STURDY && gBattleMons[battler].hp == gBattleMons[battler].maxHP)
+
 static void Cmd_adjustnormaldamage(void)
 {
     u8 holdEffect, param;
@@ -1683,13 +1685,18 @@ static void Cmd_adjustnormaldamage(void)
         gSpecialStatuses[gBattlerTarget].focusBanded = 1;
     }
     if (!(gBattleMons[gBattlerTarget].status2 & STATUS2_SUBSTITUTE)
-     && (gBattleMoves[gCurrentMove].effect == EFFECT_FALSE_SWIPE || gProtectStructs[gBattlerTarget].endured || gSpecialStatuses[gBattlerTarget].focusBanded)
+     && (gBattleMoves[gCurrentMove].effect == EFFECT_FALSE_SWIPE || gProtectStructs[gBattlerTarget].endured || STURDY_PREVENTS_KO(gBattlerTarget) || gSpecialStatuses[gBattlerTarget].focusBanded)
      && gBattleMons[gBattlerTarget].hp <= gBattleMoveDamage)
     {
         gBattleMoveDamage = gBattleMons[gBattlerTarget].hp - 1;
         if (gProtectStructs[gBattlerTarget].endured)
         {
             gMoveResultFlags |= MOVE_RESULT_FOE_ENDURED;
+        }
+        else if (STURDY_PREVENTS_KO(gBattlerTarget))
+        {
+            gMoveResultFlags |= MOVE_RESULT_FOE_ENDURED;
+            RecordAbilityBattle(gBattlerTarget, ABILITY_STURDY);
         }
         else if (gSpecialStatuses[gBattlerTarget].focusBanded)
         {
@@ -1728,13 +1735,18 @@ static void Cmd_adjustnormaldamage2(void)
         gSpecialStatuses[gBattlerTarget].focusBanded = 1;
     }
     if (!(gBattleMons[gBattlerTarget].status2 & STATUS2_SUBSTITUTE)
-     && (gProtectStructs[gBattlerTarget].endured || gSpecialStatuses[gBattlerTarget].focusBanded)
+     && (gProtectStructs[gBattlerTarget].endured || STURDY_PREVENTS_KO(gBattlerTarget) || gSpecialStatuses[gBattlerTarget].focusBanded)
      && gBattleMons[gBattlerTarget].hp <= gBattleMoveDamage)
     {
         gBattleMoveDamage = gBattleMons[gBattlerTarget].hp - 1;
         if (gProtectStructs[gBattlerTarget].endured)
         {
             gMoveResultFlags |= MOVE_RESULT_FOE_ENDURED;
+        }
+        else if (STURDY_PREVENTS_KO(gBattlerTarget))
+        {
+            gMoveResultFlags |= MOVE_RESULT_FOE_ENDURED;
+            RecordAbilityBattle(gBattlerTarget, ABILITY_STURDY);
         }
         else if (gSpecialStatuses[gBattlerTarget].focusBanded)
         {
@@ -5888,13 +5900,18 @@ static void Cmd_adjustsetdamage(void)
         gSpecialStatuses[gBattlerTarget].focusBanded = 1;
     }
     if (!(gBattleMons[gBattlerTarget].status2 & STATUS2_SUBSTITUTE)
-     && (gBattleMoves[gCurrentMove].effect == EFFECT_FALSE_SWIPE || gProtectStructs[gBattlerTarget].endured || gSpecialStatuses[gBattlerTarget].focusBanded)
+     && (gBattleMoves[gCurrentMove].effect == EFFECT_FALSE_SWIPE || gProtectStructs[gBattlerTarget].endured || STURDY_PREVENTS_KO(gBattlerTarget) || gSpecialStatuses[gBattlerTarget].focusBanded)
      && gBattleMons[gBattlerTarget].hp <= gBattleMoveDamage)
     {
         gBattleMoveDamage = gBattleMons[gBattlerTarget].hp - 1;
         if (gProtectStructs[gBattlerTarget].endured)
         {
             gMoveResultFlags |= MOVE_RESULT_FOE_ENDURED;
+        }
+        else if (STURDY_PREVENTS_KO(gBattlerTarget))
+        {
+            gMoveResultFlags |= MOVE_RESULT_FOE_ENDURED;
+            RecordAbilityBattle(gBattlerTarget, ABILITY_STURDY);
         }
         else if (gSpecialStatuses[gBattlerTarget].focusBanded)
         {

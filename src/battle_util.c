@@ -2678,7 +2678,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                 switch (gLastUsedAbility)
                 {
                 case ABILITY_VOLT_ABSORB:
-                    if (moveType == TYPE_ELECTRIC && gBattleMoves[move].power != 0)
+                    if (moveType == TYPE_ELECTRIC)
                     {
                         if (gProtectStructs[gBattlerAttacker].notFirstStrike)
                             gBattlescriptCurrInstr = BattleScript_MoveHPDrain;
@@ -2697,6 +2697,26 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                             gBattlescriptCurrInstr = BattleScript_MoveHPDrain_PPLoss;
 
                         effect = 1;
+                    }
+                    break;
+                case ABILITY_LIGHTNING_ROD:
+                    if (moveType == TYPE_ELECTRIC)
+                    {
+                        if (gBattleMons[battler].statStages[STAT_SPATK] < MAX_STAT_STAGE)
+                        {
+                            if (gProtectStructs[gBattlerAttacker].notFirstStrike)
+                                gBattlescriptCurrInstr = BattleScript_LightningRodBoost;
+                            else
+                                gBattlescriptCurrInstr = BattleScript_LightningRodBoost_PPLoss;
+                        }
+                        else
+                        {
+                            if (gProtectStructs[gBattlerAttacker].notFirstStrike)
+                                gBattlescriptCurrInstr = BattleScript_MonMadeMoveUseless;
+                            else
+                                gBattlescriptCurrInstr = BattleScript_MonMadeMoveUseless_PPLoss;
+                        }
+                        effect = 2;
                     }
                     break;
                 case ABILITY_FLASH_FIRE:
@@ -2770,7 +2790,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
                  && TARGET_TURN_DAMAGED
                  && (gBattleMoves[move].flags & FLAG_MAKES_CONTACT))
                 {
-                    gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 16;
+                    gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 8;
                     if (gBattleMoveDamage == 0)
                         gBattleMoveDamage = 1;
                     BattleScriptPushCursor();

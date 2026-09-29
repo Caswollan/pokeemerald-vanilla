@@ -4106,6 +4106,21 @@ BattleScript_MonMadeMoveUseless::
 	orbyte gMoveResultFlags, MOVE_RESULT_DOESNT_AFFECT_FOE
 	goto BattleScript_MoveEnd
 
+BattleScript_LightningRodBoost_PPLoss::
+	ppreduce
+BattleScript_LightningRodBoost::
+	attackstring
+	pause B_WAIT_TIME_SHORT
+	setstatchanger STAT_SPATK, 1, FALSE
+	statbuffchange STAT_CHANGE_NOT_PROTECT_AFFECTED | STAT_CHANGE_ALLOW_PTR, BattleScript_LightningRodBoostEnd
+	setgraphicalstatchangevalues
+	playanimation BS_TARGET, B_ANIM_STATS_CHANGE, sB_ANIM_ARG1
+	printstring STRINGID_PKMNSXRAISEDSPATK
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_LightningRodBoostEnd:
+	orbyte gMoveResultFlags, MOVE_RESULT_DOESNT_AFFECT_FOE
+	goto BattleScript_MoveEnd
+
 BattleScript_FlashFireBoost_PPLoss::
 	ppreduce
 BattleScript_FlashFireBoost::
