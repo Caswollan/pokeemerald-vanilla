@@ -2302,6 +2302,17 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     GiveBoxMonInitialMoveset(boxMon);
 }
 
+// Sets all 6 IVs to 31 and recalculates the stats (used for caught wild Pokemon and the starter)
+void SetMonMaxIVs(struct Pokemon *mon)
+{
+    u8 iv = MAX_PER_STAT_IVS;
+    u32 i;
+
+    for (i = 0; i < NUM_STATS; i++)
+        SetMonData(mon, MON_DATA_HP_IV + i, &iv);
+    CalculateMonStats(mon);
+}
+
 void CreateMonWithNature(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 nature)
 {
     u32 personality;
