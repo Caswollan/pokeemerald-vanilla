@@ -506,8 +506,8 @@ static const u8 sFireBlastDescription[] = _(
     "strikes. May cause a burn.");
 
 static const u8 sWaterfallDescription[] = _(
-    "Charges the foe with speed\n"
-    "to climb waterfalls.");
+    "Charges the foe with speed.\n"
+    "May cause flinching.");
 
 static const u8 sClampDescription[] = _(
     "Traps and squeezes the\n"
@@ -967,7 +967,7 @@ static const u8 sSunnyDayDescription[] = _(
 
 static const u8 sCrunchDescription[] = _(
     "Crunches with sharp fangs.\n"
-    "May lower SP. DEF.");
+    "May lower DEFENSE.");
 
 static const u8 sMirrorCoatDescription[] = _(
     "Counters the foe's special\n"
@@ -995,7 +995,7 @@ static const u8 sFutureSightDescription[] = _(
 
 static const u8 sRockSmashDescription[] = _(
     "A rock-crushing attack\n"
-    "that may lower DEFENSE.");
+    "that lowers DEFENSE.");
 
 static const u8 sWhirlpoolDescription[] = _(
     "Traps and hurts the foe in\n"
