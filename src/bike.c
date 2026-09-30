@@ -1055,7 +1055,9 @@ void Bike_HandleBumpySlopeJump(void)
 
 bool32 IsRunningDisallowed(u8 metatile)
 {
-    if (!gMapHeader.allowRunning || IsRunningDisallowedByMetatile(metatile) == TRUE)
+    // Running is allowed everywhere, including indoors: the map's allowRunning flag is ignored.
+    // Only specific tiles (MB_NO_RUNNING, long grass, hot springs, Pacifidlog logs) still block it.
+    if (IsRunningDisallowedByMetatile(metatile) == TRUE)
         return TRUE;
     else
         return FALSE;
