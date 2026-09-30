@@ -324,8 +324,9 @@ static void CreateHatchedMon(struct Pokemon *egg, struct Pokemon *temp)
 
     personality = GetMonData(egg, MON_DATA_PERSONALITY);
 
+    // Every hatched Pokemon gets 31 IVs in all stats (instead of the IVs stored in the Egg)
     for (i = 0; i < NUM_STATS; i++)
-        ivs[i] = GetMonData(egg, MON_DATA_HP_IV + i);
+        ivs[i] = MAX_PER_STAT_IVS;
 
     // The language is initially read from the Egg but is later overwritten below
     language = GetMonData(egg, MON_DATA_LANGUAGE);
