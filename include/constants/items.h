@@ -364,6 +364,26 @@ enum {
     ITEM_TM48,
     ITEM_TM49,
     ITEM_TM50,
+    ITEM_TM51,
+    ITEM_TM52,
+    ITEM_TM53,
+    ITEM_TM54,
+    ITEM_TM55,
+    ITEM_TM56,
+    ITEM_TM57,
+    ITEM_TM58,
+    ITEM_TM59,
+    ITEM_TM60,
+    ITEM_TM61,
+    ITEM_TM62,
+    ITEM_TM63,
+    ITEM_TM64,
+    ITEM_TM65,
+    ITEM_TM66,
+    ITEM_TM67,
+    ITEM_TM68,
+    ITEM_TM69,
+    ITEM_TM70,
     ITEM_HM01,
     ITEM_HM02,
     ITEM_HM03,
@@ -447,7 +467,7 @@ enum {
 #define ITEM_TO_MAIL(itemId) ((itemId) - FIRST_MAIL_INDEX)
 #define MAIL_NONE 0xFF
 
-#define NUM_TECHNICAL_MACHINES 50
+#define NUM_TECHNICAL_MACHINES 70
 #define NUM_HIDDEN_MACHINES     8
 
 #define MAX_BAG_ITEM_CAPACITY  99

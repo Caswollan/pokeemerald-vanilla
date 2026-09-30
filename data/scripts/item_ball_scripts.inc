@@ -107,7 +107,7 @@ Route115_EventScript_ItemSuperPotion::
 	end
 
 Route115_EventScript_ItemTMFocusPunch::
-	finditem ITEM_TM_FOCUS_PUNCH
+	finditem ITEM_TM_SUPERPOWER
 	end
 
 Route115_EventScript_ItemIron::
@@ -507,7 +507,7 @@ MtPyre_Exterior_EventScript_ItemMaxPotion::
 	end
 
 MtPyre_Exterior_EventScript_ItemTMSkillSwap::
-	finditem ITEM_TM_SKILL_SWAP
+	finditem ITEM_TM_SHADOW_PUNCH
 	end
 
 AquaHideout_B1F_EventScript_ItemMasterBall::

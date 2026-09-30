@@ -53,7 +53,7 @@ PacifidlogTown_House2_EventScript_PutInEffort::
 
 PacifidlogTown_House2_EventScript_GiveFrustration::
 	msgbox PacifidlogTown_House2_Text_ViciousPokemonTakeThis, MSGBOX_DEFAULT
-	giveitem ITEM_TM_FRUSTRATION
+	giveitem ITEM_TM_CRUNCH
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setflag FLAG_RECEIVED_FANCLUB_TM_THIS_WEEK
 	special SetPacifidlogTMReceivedDay
@@ -121,8 +121,8 @@ PacifidlogTown_House2_Text_ViciousPokemonTakeThis:
 PacifidlogTown_House2_Text_ExplainReturnFrustration:
 	.string "If a POKéMON likes you a lot, RETURN's\n"
 	.string "power is enhanced.\p"
-	.string "If it doesn't like you, FRUSTRATION's\n"
-	.string "power goes up.$"
+	.string "If it doesn't like you, CRUNCH is\n"
+	.string "for biting back at the foe!$"
 
 PacifidlogTown_House2_Text_GetGoodTMInXDays:
 	.string "Oh, yes. In about {STR_VAR_1} or so days,\n"
