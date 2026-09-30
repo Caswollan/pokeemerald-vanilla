@@ -156,6 +156,15 @@ static void Task_HandleShopMenuSell(u8 taskId);
 static void BuyMenuPrintItemDescriptionAndShowItemIcon(s32 item, bool8 onInit, struct ListMenu *list);
 static void BuyMenuPrintPriceInList(u8 windowId, u32 itemId, u8 y);
 
+// TMs are reusable, so the player only ever needs one copy of each
+static const u8 sText_TMOwned[] = _("OWNED");
+static const u8 sText_AlreadyHaveTM[] = _("You already have {STR_VAR_1}.\nTMs can be used again and again!");
+
+static bool8 IsOwnedTM(u16 itemId)
+{
+    return GetItemPocket(itemId) == POCKET_TM_HM && CheckBagHasItem(itemId, 1);
+}
+
 static const struct YesNoFuncTable sShopPurchaseYesNoFuncs =
 {
     BuyMenuTryMakePurchase,
@@ -623,6 +632,14 @@ static void BuyMenuPrintPriceInList(u8 windowId, u32 itemId, u8 y)
 
     if (itemId != LIST_CANCEL)
     {
+        if (sMartInfo.martType == MART_TYPE_NORMAL && IsOwnedTM(itemId))
+        {
+            // Already owned TM: show OWNED instead of the price
+            x = GetStringRightAlignXOffset(FONT_NARROW, sText_TMOwned, 120);
+            AddTextPrinterParameterized4(windowId, FONT_NARROW, x, y, 0, 0, sShopBuyMenuTextColors[COLORID_ITEM_LIST], TEXT_SKIP_DRAW, sText_TMOwned);
+            return;
+        }
+
         if (sMartInfo.martType == MART_TYPE_NORMAL)
         {
             ConvertIntToDecimalStringN(
@@ -990,7 +1007,13 @@ static void Task_BuyMenu(u8 taskId)
             else
                 sShopData->totalCost = gDecorations[itemId].price;
 
-            if (!IsEnoughMoney(&gSaveBlock1Ptr->money, sShopData->totalCost))
+            if (sMartInfo.martType == MART_TYPE_NORMAL && IsOwnedTM(itemId))
+            {
+                CopyItemName(itemId, gStringVar1);
+                StringExpandPlaceholders(gStringVar4, sText_AlreadyHaveTM);
+                BuyMenuDisplayMessage(taskId, gStringVar4, BuyMenuReturnToItemList);
+            }
+            else if (!IsEnoughMoney(&gSaveBlock1Ptr->money, sShopData->totalCost))
             {
                 BuyMenuDisplayMessage(taskId, gText_YouDontHaveMoney, BuyMenuReturnToItemList);
             }
@@ -1001,8 +1024,11 @@ static void Task_BuyMenu(u8 taskId)
                     CopyItemName(itemId, gStringVar1);
                     if (GetItemPocket(itemId) == POCKET_TM_HM)
                     {
-                        StringCopy(gStringVar2, gMoveNames[ItemIdToBattleMoveId(itemId)]);
-                        BuyMenuDisplayMessage(taskId, gText_Var1CertainlyHowMany2, Task_BuyHowManyDialogueInit);
+                        // TMs are bought one at a time: skip the "How many?" dialogue
+                        tItemCount = 1;
+                        ConvertIntToDecimalStringN(gStringVar2, sShopData->totalCost, STR_CONV_MODE_LEFT_ALIGN, 6);
+                        StringExpandPlaceholders(gStringVar4, gText_YouWantedVar1ThatllBeVar2);
+                        BuyMenuDisplayMessage(taskId, gStringVar4, BuyMenuConfirmPurchase);
                     }
                     else
                     {
@@ -1171,6 +1197,7 @@ static void BuyMenuReturnToItemList(u8 taskId)
     s16 *data = gTasks[taskId].data;
 
     ClearDialogWindowAndFrameToTransparent(WIN_MESSAGE, FALSE);
+    RedrawListMenu(tListTaskId); // refresh prices, e.g. a TM that was just bought now shows OWNED
     BuyMenuPrintCursor(tListTaskId, COLORID_ITEM_LIST);
     PutWindowTilemap(WIN_ITEM_LIST);
     PutWindowTilemap(WIN_ITEM_DESCRIPTION);

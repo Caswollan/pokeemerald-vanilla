@@ -276,6 +276,9 @@ MauvilleCity_GameCorner_EventScript_TMIceBeam::
 	goto MauvilleCity_GameCorner_EventScript_ConfirmTMPrize
 
 MauvilleCity_GameCorner_EventScript_ConfirmTMPrize::
+	@ TMs are reusable: a TM the player already owns can't be exchanged again
+	checkitem VAR_0x8004
+	goto_if_eq VAR_RESULT, TRUE, MauvilleCity_GameCorner_EventScript_AlreadyHaveTM
 	special BufferTMHMMoveName
 	msgbox MauvilleCity_GameCorner_Text_SoYourChoiceIsTheTMX, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, MauvilleCity_GameCorner_EventScript_CancelTMSelect
@@ -285,6 +288,11 @@ MauvilleCity_GameCorner_EventScript_ConfirmTMPrize::
 	case 3, MauvilleCity_GameCorner_EventScript_BuyTMFlamethrower
 	case 4, MauvilleCity_GameCorner_EventScript_BuyTMThunderbolt
 	case 5, MauvilleCity_GameCorner_EventScript_BuyTMIceBeam
+	end
+
+MauvilleCity_GameCorner_EventScript_AlreadyHaveTM::
+	msgbox MauvilleCity_GameCorner_Text_AlreadyHaveTM, MSGBOX_DEFAULT
+	goto MauvilleCity_GameCorner_EventScript_ReturnToChooseTMPrize
 	end
 
 MauvilleCity_GameCorner_EventScript_BuyTMDoubleTeam::
@@ -689,6 +697,10 @@ MauvilleCity_GameCorner_Text_SoYourChoiceIsX:
 
 MauvilleCity_GameCorner_Text_HereYouGo:
 	.string "Here you go!$"
+
+MauvilleCity_GameCorner_Text_AlreadyHaveTM:
+	.string "You already have {STR_VAR_1}.\n"
+	.string "TMs can be used again and again!$"
 
 @ Unused
 MauvilleCity_GameCorner_Text_CantCarryAnyMore:
