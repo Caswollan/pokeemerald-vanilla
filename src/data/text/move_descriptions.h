@@ -50,8 +50,8 @@ static const u8 sGuillotineDescription[] = _(
     "that may cause fainting.");
 
 static const u8 sRazorWindDescription[] = _(
-    "A 2-turn move that strikes\n"
-    "the foe on the 2nd turn.");
+    "Attacks with a blade of air.\n"
+    "May cause flinching.");
 
 static const u8 sSwordsDanceDescription[] = _(
     "A fighting dance that\n"
@@ -570,8 +570,8 @@ static const u8 sLovelyKissDescription[] = _(
     "face that induces sleep.");
 
 static const u8 sSkyAttackDescription[] = _(
-    "Searches out weak spots,\n"
-    "then strikes the next turn.");
+    "A reckless dive attack that\n"
+    "also hurts the user.");
 
 static const u8 sTransformDescription[] = _(
     "Alters the user's cells to\n"

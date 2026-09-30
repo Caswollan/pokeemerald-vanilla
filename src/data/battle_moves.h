@@ -171,15 +171,15 @@ const struct BattleMove gBattleMoves[MOVES_COUNT] =
 
     [MOVE_RAZOR_WIND] =
     {
-        .effect = EFFECT_RAZOR_WIND,
+        .effect = EFFECT_FLINCH_HIT,
         .power = 80,
-        .type = TYPE_NORMAL,
+        .type = TYPE_FLYING,
         .accuracy = 100,
-        .pp = 10,
-        .secondaryEffectChance = 0,
-        .target = MOVE_TARGET_BOTH,
+        .pp = 15,
+        .secondaryEffectChance = 20,
+        .target = MOVE_TARGET_SELECTED,
         .priority = 0,
-        .flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGS_ROCK_AFFECTED,
+        .flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED,
     },
 
     [MOVE_SWORDS_DANCE] =
@@ -1861,15 +1861,15 @@ const struct BattleMove gBattleMoves[MOVES_COUNT] =
 
     [MOVE_SKY_ATTACK] =
     {
-        .effect = EFFECT_SKY_ATTACK,
-        .power = 140,
+        .effect = EFFECT_DOUBLE_EDGE,
+        .power = 120,
         .type = TYPE_FLYING,
-        .accuracy = 90,
-        .pp = 5,
-        .secondaryEffectChance = 30,
+        .accuracy = 100,
+        .pp = 15,
+        .secondaryEffectChance = 0,
         .target = MOVE_TARGET_SELECTED,
         .priority = 0,
-        .flags = FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGS_ROCK_AFFECTED,
+        .flags = FLAG_MAKES_CONTACT | FLAG_PROTECT_AFFECTED | FLAG_MIRROR_MOVE_AFFECTED | FLAG_KINGS_ROCK_AFFECTED,
     },
 
     [MOVE_TRANSFORM] =

@@ -2916,7 +2916,7 @@ Move_BARRAGE:
 	end
 
 Move_SKY_ATTACK:
-	choosetwoturnanim SkyAttackSetUp, SkyAttackUnleash
+	goto SkyAttackUnleash
 SkyAttackEnd:
 	end
 SkyAttackSetUp:
@@ -7513,7 +7513,7 @@ SpiderWebThread:
 	return
 
 Move_RAZOR_WIND:
-	choosetwoturnanim RazorWindSetUp, RazorWindUnleash
+	goto RazorWindSetUp
 RazorWindEnd:
 	waitforvisualfinish
 	end
@@ -7526,7 +7526,7 @@ RazorWindSetUp:
 	createsprite gRazorWindTornadoSpriteTemplate, ANIM_ATTACKER, 2, 32, 0, 16, 16, 170, 7, 40
 	waitforvisualfinish
 	playsewithpan SE_M_GUST2, SOUND_PAN_ATTACKER
-	goto RazorWindEnd
+	goto RazorWindUnleash
 
 RazorWindUnleash:
 	loadspritegfx ANIM_TAG_AIR_WAVE_2
@@ -7544,7 +7544,6 @@ RazorWindUnleash:
 	delay 17
 	playsewithpan SE_M_RAZOR_WIND, SOUND_PAN_TARGET
 	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 10, 1
-	createvisualtask AnimTask_ShakeMon2, 2, ANIM_DEF_PARTNER, 2, 0, 10, 1
 	waitforvisualfinish
 	clearmonbg ANIM_TARGET
 	blendoff
