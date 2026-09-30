@@ -653,7 +653,7 @@ static const struct WindowTemplate sPageSkillsTemplate[] =
         .tilemapTop = 7,
         .width = 6,
         .height = 6,
-        .paletteNum = 6,
+        .paletteNum = 7, // palette 7 holds the nature colors (see sStatNatureColors)
         .baseBlock = 489,
     },
     [PSS_DATA_WINDOW_SKILLS_STATS_RIGHT] = {
@@ -662,7 +662,7 @@ static const struct WindowTemplate sPageSkillsTemplate[] =
         .tilemapTop = 7,
         .width = 3,
         .height = 6,
-        .paletteNum = 6,
+        .paletteNum = 7, // palette 7 holds the nature colors (see sStatNatureColors)
         .baseBlock = 525,
     },
     [PSS_DATA_WINDOW_EXP] = {
@@ -705,6 +705,22 @@ static const struct WindowTemplate sPageMovesTemplate[] = // This is used for bo
         .baseBlock = 599,
     },
 };
+// Palette indexes used to color stat values by nature. The stat value windows use text palette 7,
+// whose slots 1-8 match palette 6 and whose slots 9-12 are unused.
+#define STAT_COLOR_NORMAL        1   // black, same as the other values
+#define STAT_SHADOW_NORMAL       2   // light gray, same as the other values
+#define STAT_COLOR_RAISED        9   // soft red, from sStatNatureColors
+#define STAT_SHADOW_RAISED       2
+#define STAT_COLOR_LOWERED       10  // soft blue, from sStatNatureColors
+#define STAT_SHADOW_LOWERED      2
+
+// Softer red/blue for stat values affected by the nature, loaded into the unused slots 9-10 of text palette 7.
+// (Palette 6 has no free slots: 5-6 are also used by the colored words in the trainer memo.)
+static const u16 sStatNatureColors[] = {
+    RGB(30, 10, 6),  // raised
+    RGB(7, 19, 31),  // lowered
+};
+
 static const u8 sTextColors[][3] =
 {
     {0, 1, 2},
@@ -1353,6 +1369,7 @@ static bool8 DecompressGraphics(void)
     case 6:
         LoadCompressedPalette(gSummaryScreen_Pal, BG_PLTT_ID(0), 8 * PLTT_SIZE_4BPP);
         LoadPalette(&gPPTextPalette, BG_PLTT_ID(8) + 1, PLTT_SIZEOF(16 - 1));
+        LoadPalette(sStatNatureColors, BG_PLTT_ID(7) + STAT_COLOR_RAISED, PLTT_SIZEOF(ARRAY_COUNT(sStatNatureColors)));
         sMonSummaryScreen->switchCounter++;
         break;
     case 7:
@@ -3389,17 +3406,48 @@ static void PrintRibbonCount(void)
     PrintTextOnWindow(AddWindowFromTemplateList(sPageSkillsTemplate, PSS_DATA_WINDOW_SKILLS_RIBBON_COUNT), text, x, 1, 0, 0);
 }
 
+// Writes a stat value preceded by text color codes: red if the nature raises the stat, blue if it lowers it.
+// Every value gets a color code, because the color would otherwise carry over to the next line.
+static void BufferStatValueWithNatureColor(u8 *dest, u16 value, u8 stat, u8 numDigits)
+{
+    s8 modifier = 0;
+    u8 color = STAT_COLOR_NORMAL;
+    u8 shadow = STAT_SHADOW_NORMAL;
+
+    if (stat != STAT_HP) // gNatureStatTable has no HP column: its columns start at STAT_ATK
+        modifier = gNatureStatTable[sMonSummaryScreen->summary.nature][stat - 1];
+
+    if (modifier > 0)
+    {
+        color = STAT_COLOR_RAISED;
+        shadow = STAT_SHADOW_RAISED;
+    }
+    else if (modifier < 0)
+    {
+        color = STAT_COLOR_LOWERED;
+        shadow = STAT_SHADOW_LOWERED;
+    }
+
+    *(dest++) = EXT_CTRL_CODE_BEGIN;
+    *(dest++) = EXT_CTRL_CODE_COLOR;
+    *(dest++) = color;
+    *(dest++) = EXT_CTRL_CODE_BEGIN;
+    *(dest++) = EXT_CTRL_CODE_SHADOW;
+    *(dest++) = shadow;
+    ConvertIntToDecimalStringN(dest, value, STR_CONV_MODE_RIGHT_ALIGN, numDigits);
+}
+
 static void BufferLeftColumnStats(void)
 {
     u8 *currentHPString = Alloc(8);
     u8 *maxHPString = Alloc(8);
-    u8 *attackString = Alloc(8);
-    u8 *defenseString = Alloc(8);
+    u8 *attackString = Alloc(16); // room for the color codes
+    u8 *defenseString = Alloc(16);
 
     ConvertIntToDecimalStringN(currentHPString, sMonSummaryScreen->summary.currentHP, STR_CONV_MODE_RIGHT_ALIGN, 3);
     ConvertIntToDecimalStringN(maxHPString, sMonSummaryScreen->summary.maxHP, STR_CONV_MODE_RIGHT_ALIGN, 3);
-    ConvertIntToDecimalStringN(attackString, sMonSummaryScreen->summary.atk, STR_CONV_MODE_RIGHT_ALIGN, 7);
-    ConvertIntToDecimalStringN(defenseString, sMonSummaryScreen->summary.def, STR_CONV_MODE_RIGHT_ALIGN, 7);
+    BufferStatValueWithNatureColor(attackString, sMonSummaryScreen->summary.atk, STAT_ATK, 7);
+    BufferStatValueWithNatureColor(defenseString, sMonSummaryScreen->summary.def, STAT_DEF, 7);
 
     DynamicPlaceholderTextUtil_Reset();
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, currentHPString);
@@ -3421,9 +3469,9 @@ static void PrintLeftColumnStats(void)
 
 static void BufferRightColumnStats(void)
 {
-    ConvertIntToDecimalStringN(gStringVar1, sMonSummaryScreen->summary.spatk, STR_CONV_MODE_RIGHT_ALIGN, 3);
-    ConvertIntToDecimalStringN(gStringVar2, sMonSummaryScreen->summary.spdef, STR_CONV_MODE_RIGHT_ALIGN, 3);
-    ConvertIntToDecimalStringN(gStringVar3, sMonSummaryScreen->summary.speed, STR_CONV_MODE_RIGHT_ALIGN, 3);
+    BufferStatValueWithNatureColor(gStringVar1, sMonSummaryScreen->summary.spatk, STAT_SPATK, 3);
+    BufferStatValueWithNatureColor(gStringVar2, sMonSummaryScreen->summary.spdef, STAT_SPDEF, 3);
+    BufferStatValueWithNatureColor(gStringVar3, sMonSummaryScreen->summary.speed, STAT_SPEED, 3);
 
     DynamicPlaceholderTextUtil_Reset();
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gStringVar1);
