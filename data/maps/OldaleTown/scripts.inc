@@ -33,6 +33,16 @@ OldaleTown_EventScript_Girl::
 	msgbox OldaleTown_Text_SavingMyProgress, MSGBOX_NPC
 	end
 
+@ Gives 99 Rare Candies and 99 Pomeg Berries every time the player talks to him
+OldaleTown_EventScript_CandyGiver::
+	lock
+	faceplayer
+	msgbox OldaleTown_Text_CandyGiverGift, MSGBOX_DEFAULT
+	giveitem ITEM_RARE_CANDY, 99
+	giveitem ITEM_POMEG_BERRY, 99
+	release
+	end
+
 OldaleTown_EventScript_MartEmployee::
 	lock
 	faceplayer
@@ -384,3 +394,8 @@ OldaleTown_Text_TownSign:
 	.string "OLDALE TOWN\n"
 	.string "“Where things start off scarce.”$"
 
+OldaleTown_Text_CandyGiverGift:
+	.string "Training POKéMON is really boring.\n"
+	.string "It's much better to dope them!\p"
+	.string "Here, take these. Come back to me\n"
+	.string "if you ever need more.$"
