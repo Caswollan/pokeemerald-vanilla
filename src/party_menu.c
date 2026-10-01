@@ -38,6 +38,7 @@
 #include "menu.h"
 #include "menu_helpers.h"
 #include "menu_specialized.h"
+#include "move_relearner.h"
 #include "metatile_behavior.h"
 #include "overworld.h"
 #include "palette.h"
@@ -93,6 +94,7 @@ enum {
     MENU_TRADE1,
     MENU_TRADE2,
     MENU_TOSS,
+    MENU_MOVE_RELEARN,
     MENU_FIELD_MOVES
 };
 
@@ -193,7 +195,7 @@ struct PartyMenuInternal
     u32 spriteIdCancelPokeball:7;
     u32 messageId:14;
     u8 windowId[3];
-    u8 actions[8];
+    u8 actions[9]; // one more slot for MOVE RELEARN
     u8 numActions;
     // In vanilla Emerald, only the first 0xB0 hwords (0x160 bytes) are actually used.
     // However, a full 0x100 hwords (0x200 bytes) are allocated.
@@ -458,6 +460,7 @@ static void ShiftMoveSlot(struct Pokemon *, u8, u8);
 static void BlitBitmapToPartyWindow_LeftColumn(u8, u8, u8, u8, u8, bool8);
 static void BlitBitmapToPartyWindow_RightColumn(u8, u8, u8, u8, u8, bool8);
 static void CursorCb_Summary(u8);
+static void CursorCb_MoveRelearn(u8);
 static void CursorCb_Switch(u8);
 static void CursorCb_Cancel1(u8);
 static void CursorCb_Item(u8);
@@ -2633,6 +2636,14 @@ static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
         else
             AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_ITEM);
     }
+
+    // Move Relearner straight from the party menu, only if the mon has something to relearn.
+    // Not offered in the Battle Pike / Battle Pyramid, where the party is temporary.
+    if (!InBattlePike() && !CurrentBattlePyramidLocation()
+     && !GetMonData(&mons[slotId], MON_DATA_IS_EGG)
+     && GetNumberOfRelearnableMoves(&mons[slotId]) != 0)
+        AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_MOVE_RELEARN);
+
     AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_CANCEL1);
 }
 
@@ -2791,6 +2802,21 @@ static void CB2_ReturnToPartyMenuFromSummaryScreen(void)
 {
     gPaletteFade.bufferTransferDisabled = TRUE;
     gPartyMenu.slotId = gLastViewedMonIndex;
+    InitPartyMenu(gPartyMenu.menuType, KEEP_PARTY_LAYOUT, gPartyMenu.action, TRUE, PARTY_MSG_DO_WHAT_WITH_MON, Task_TryCreateSelectionWindow, gPartyMenu.exitCallback);
+}
+
+// Close the party menu and open the Move Relearner screen for the selected mon
+static void CursorCb_MoveRelearn(u8 taskId)
+{
+    PlaySE(SE_SELECT);
+    sPartyMenuInternal->exitCallback = CB2_OpenMoveRelearnerFromPartyMenu;
+    Task_ClosePartyMenu(taskId);
+}
+
+// Called by the Move Relearner screen when it was opened from the party menu
+void CB2_ReturnToPartyMenuFromMoveRelearner(void)
+{
+    gPaletteFade.bufferTransferDisabled = TRUE;
     InitPartyMenu(gPartyMenu.menuType, KEEP_PARTY_LAYOUT, gPartyMenu.action, TRUE, PARTY_MSG_DO_WHAT_WITH_MON, Task_TryCreateSelectionWindow, gPartyMenu.exitCallback);
 }
 

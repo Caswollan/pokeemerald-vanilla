@@ -15,6 +15,7 @@
 #include "menu_specialized.h"
 #include "overworld.h"
 #include "palette.h"
+#include "party_menu.h"
 #include "pokemon_summary_screen.h"
 #include "script.h"
 #include "sound.h"
@@ -369,9 +370,21 @@ static void VBlankCB_MoveRelearner(void)
     TransferPlttBuffer();
 }
 
+// TRUE when the screen was opened from the party menu instead of the Move Relearner NPC
+static EWRAM_DATA bool8 sOpenedFromPartyMenu = FALSE;
+
+// Entry point from the party menu's MOVE RELEARN option
+void CB2_OpenMoveRelearnerFromPartyMenu(void)
+{
+    sOpenedFromPartyMenu = TRUE;
+    gSpecialVar_0x8004 = gPartyMenu.slotId;
+    SetMainCallback2(CB2_InitLearnMove);
+}
+
 // Script arguments: The Pokémon to teach is in VAR_0x8004
 void TeachMoveRelearnerMove(void)
 {
+    sOpenedFromPartyMenu = FALSE;
     LockPlayerFieldControls();
     CreateTask(Task_WaitForFadeOut, 10);
     // Fade to black
@@ -679,7 +692,15 @@ static void DoMoveRelearnerMain(void)
         if (!gPaletteFade.active)
         {
             FreeMoveRelearnerResources();
-            SetMainCallback2(CB2_ReturnToField);
+            if (sOpenedFromPartyMenu)
+            {
+                sOpenedFromPartyMenu = FALSE;
+                SetMainCallback2(CB2_ReturnToPartyMenuFromMoveRelearner);
+            }
+            else
+            {
+                SetMainCallback2(CB2_ReturnToField);
+            }
         }
         break;
     case MENU_STATE_FADE_FROM_SUMMARY_SCREEN:

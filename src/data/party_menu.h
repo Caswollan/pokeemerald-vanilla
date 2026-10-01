@@ -651,6 +651,8 @@ static const u16 sUnusedData[] =
     0x0121, 0x013b, 0x000f, 0x0013, 0x0039, 0x0046, 0x0094, 0x00f9, 0x007f, 0x0123,
 };
 
+static const u8 sText_MoveRelearn[] = _("MOVE RELEARN");
+
 struct
 {
     const u8 *text;
@@ -658,6 +660,7 @@ struct
 } static const sCursorOptions[] =
 {
     [MENU_SUMMARY] = {gText_Summary5, CursorCb_Summary},
+    [MENU_MOVE_RELEARN] = {sText_MoveRelearn, CursorCb_MoveRelearn},
     [MENU_SWITCH] = {gText_Switch2, CursorCb_Switch},
     [MENU_CANCEL1] = {gText_Cancel2, CursorCb_Cancel1},
     [MENU_ITEM] = {gText_Item, CursorCb_Item},
