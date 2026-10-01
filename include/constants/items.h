@@ -470,11 +470,13 @@ enum {
 #define NUM_TECHNICAL_MACHINES 70
 #define NUM_HIDDEN_MACHINES     8
 
-#define MAX_BAG_ITEM_CAPACITY  99
+#define MAX_BAG_ITEM_CAPACITY  999
+// The Battle Pyramid bag stores quantities as u8, so it keeps the original limit
+#define MAX_PYRAMID_BAG_ITEM_CAPACITY 99
 #define MAX_PC_ITEM_CAPACITY   999
 #define MAX_BERRY_CAPACITY     999
 
-#define BAG_ITEM_CAPACITY_DIGITS 2
+#define BAG_ITEM_CAPACITY_DIGITS 3
 #define BERRY_CAPACITY_DIGITS 3
 #define MAX_ITEM_DIGITS BERRY_CAPACITY_DIGITS
 

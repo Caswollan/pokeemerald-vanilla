@@ -98,7 +98,7 @@ struct ShopData
     u16 itemsShowed;
     u16 selectedRow;
     u16 scrollOffset;
-    u8 maxQuantity;
+    u16 maxQuantity; // u16: the bag item cap is now 999
     u8 scrollIndicatorsTaskId;
     u8 iconSlot;
     u8 itemSpriteIds[2];
@@ -1058,7 +1058,7 @@ static void Task_BuyHowManyDialogueInit(u8 taskId)
     s16 *data = gTasks[taskId].data;
 
     u16 quantityInBag = CountTotalItemQuantityInBag(tItemId);
-    u16 maxQuantity;
+    u32 maxQuantity; // u32: money / price can exceed 65535
 
     DrawStdFrameWithCustomTileAndPalette(WIN_QUANTITY_IN_BAG, FALSE, 1, 13);
     ConvertIntToDecimalStringN(gStringVar1, quantityInBag, STR_CONV_MODE_RIGHT_ALIGN, MAX_ITEM_DIGITS + 1);
