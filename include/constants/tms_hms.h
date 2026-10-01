@@ -6,8 +6,8 @@
     F(TWINEEDLE) \
     F(LEECH_LIFE) \
     F(SIGNAL_BEAM) \
-    F(TORMENT) \
     F(TAUNT) \
+    F(TORMENT) \
     F(KNOCK_OFF) \
     F(CRUNCH) \
     F(DRAGON_DANCE) \
@@ -20,7 +20,6 @@
     F(THUNDER) \
     F(BULK_UP) \
     F(ARM_THRUST) \
-    F(MACH_PUNCH) \
     F(BRICK_BREAK) \
     F(SUPERPOWER) \
     F(SUNNY_DAY) \
@@ -31,6 +30,8 @@
     F(FIRE_BLAST) \
     F(OVERHEAT) \
     F(AERIAL_ACE) \
+    F(RAZOR_WIND) \
+    F(SKY_ATTACK) \
     F(SHADOW_PUNCH) \
     F(SHADOW_BALL) \
     F(BULLET_SEED) \
@@ -45,10 +46,9 @@
     F(ICE_PUNCH) \
     F(ICE_BEAM) \
     F(BLIZZARD) \
-    F(SWORDS_DANCE) \
     F(DOUBLE_TEAM) \
     F(PROTECT) \
-    F(SAFEGUARD) \
+    F(SWORDS_DANCE) \
     F(RETURN) \
     F(WEATHER_BALL) \
     F(FACADE) \
@@ -59,10 +59,10 @@
     F(POISON_FANG) \
     F(SLUDGE_BOMB) \
     F(AGILITY) \
+    F(CALM_MIND) \
     F(LIGHT_SCREEN) \
     F(REFLECT) \
     F(REST) \
-    F(CALM_MIND) \
     F(PSYCHIC) \
     F(SANDSTORM) \
     F(ROCK_BLAST) \
