@@ -3244,7 +3244,7 @@ enum
         if (gBattleMons[battler].hp + gBattleMoveDamage > gBattleMons[battler].maxHP)   \
             gBattleMoveDamage = gBattleMons[battler].maxHP - gBattleMons[battler].hp;   \
         gBattleMoveDamage *= -1;                                                            \
-        if (GetFlavorRelationByPersonality(gBattleMons[battler].personality, flavor) < 0) \
+        if (GetMonFlavorRelation(&(GetBattlerSide(battler) == B_SIDE_PLAYER ? gPlayerParty : gEnemyParty)[gBattlerPartyIndexes[battler]], flavor) < 0) \
             BattleScriptExecute(BattleScript_BerryConfuseHealEnd2);                         \
         else                                                                                \
             BattleScriptExecute(BattleScript_ItemHealHP_RemoveItem);                        \
@@ -3941,6 +3941,13 @@ static bool32 IsBattlerModernFatefulEncounter(u8 battler)
         && GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler]], MON_DATA_SPECIES, NULL) != SPECIES_MEW)
             return TRUE;
     return GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler]], MON_DATA_MODERN_FATEFUL_ENCOUNTER, NULL);
+}
+
+// Nature of the party mon behind a battler (respects the Nature Changer override)
+u8 GetBattlerNature(u8 battler)
+{
+    struct Pokemon *party = (GetBattlerSide(battler) == B_SIDE_PLAYER) ? gPlayerParty : gEnemyParty;
+    return GetNature(&party[gBattlerPartyIndexes[battler]]);
 }
 
 u8 IsMonDisobedient(void)

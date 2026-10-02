@@ -1051,6 +1051,7 @@ Common_EventScript_LegendaryFlewAway::
 	.include "data/text/event_ticket_2.inc"
 	.include "data/text/move_tutors.inc"
 	.include "data/scripts/move_tutors.inc"
+	.include "data/scripts/nature_changer.inc"
 	.include "data/scripts/trainer_hill.inc"
 	.include "data/scripts/test_signpost.inc"
 	.include "data/text/frontier_brain.inc"

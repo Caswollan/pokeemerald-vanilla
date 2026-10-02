@@ -6417,7 +6417,7 @@ static void Cmd_various(void)
         {
             gBattleStruct->palaceFlags |= gBitTable[gActiveBattler];
             gBattleCommunication[0] = TRUE;
-            gBattleCommunication[MULTISTRING_CHOOSER] = sBattlePalaceNatureToFlavorTextId[GetNatureFromPersonality(gBattleMons[gActiveBattler].personality)];
+            gBattleCommunication[MULTISTRING_CHOOSER] = sBattlePalaceNatureToFlavorTextId[GetBattlerNature(gActiveBattler)];
         }
         break;
     case VARIOUS_ARENA_JUDGMENT_WINDOW:

@@ -207,7 +207,7 @@ struct BoxPokemon
     u8 otName[PLAYER_NAME_LENGTH];
     u8 markings;
     u16 checksum;
-    u16 unknown;
+    u16 natureOverride; // Formerly unused. 0 = nature from the personality, otherwise (nature + 1). Set by the Nature Changer NPC
 
     union
     {
@@ -475,6 +475,7 @@ bool8 HealStatusConditions(struct Pokemon *mon, u32 battlePartyId, u32 healMask,
 u8 GetItemEffectParamOffset(u16 itemId, u8 effectByte, u8 effectBit);
 u8 *UseStatIncreaseItem(u16 itemId);
 u8 GetNature(struct Pokemon *mon);
+void SetMonNatureOverride(struct Pokemon *mon, u8 nature);
 u8 GetNatureFromPersonality(u32 personality);
 u16 GetEvolutionTargetSpecies(struct Pokemon *mon, u8 mode, u16 evolutionItem);
 u16 HoennPokedexNumToSpecies(u16 hoennNum);

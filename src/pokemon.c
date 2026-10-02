@@ -3851,7 +3851,7 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
         retVal = boxMon->checksum;
         break;
     case MON_DATA_ENCRYPT_SEPARATOR:
-        retVal = boxMon->unknown;
+        retVal = boxMon->natureOverride;
         break;
     case MON_DATA_SPECIES:
         retVal = boxMon->isBadEgg ? SPECIES_EGG : substruct0->species;
@@ -4241,7 +4241,7 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         SET16(boxMon->checksum);
         break;
     case MON_DATA_ENCRYPT_SEPARATOR:
-        SET16(boxMon->unknown);
+        SET16(boxMon->natureOverride);
         break;
     case MON_DATA_SPECIES:
     {
@@ -5527,7 +5527,19 @@ u8 *UseStatIncreaseItem(u16 itemId)
 
 u8 GetNature(struct Pokemon *mon)
 {
+    // A nature chosen at the Nature Changer NPC takes priority over the personality-based one
+    if (mon->box.natureOverride != 0 && mon->box.natureOverride <= NUM_NATURES)
+        return mon->box.natureOverride - 1;
     return GetMonData(mon, MON_DATA_PERSONALITY, 0) % NUM_NATURES;
+}
+
+// Stores the chosen nature without touching the personality, so gender, ability and shininess are unchanged
+void SetMonNatureOverride(struct Pokemon *mon, u8 nature)
+{
+    if (nature == GetMonData(mon, MON_DATA_PERSONALITY, 0) % NUM_NATURES)
+        mon->box.natureOverride = 0; // back to the original nature
+    else
+        mon->box.natureOverride = nature + 1;
 }
 
 u8 GetNatureFromPersonality(u32 personality)

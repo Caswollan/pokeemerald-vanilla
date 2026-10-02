@@ -29,6 +29,7 @@
 #include "party_menu.h"
 #include "pokeblock.h"
 #include "pokemon.h"
+#include "pokemon_summary_screen.h"
 #include "pokemon_storage_system.h"
 #include "random.h"
 #include "rayquaza_scene.h"
@@ -2380,12 +2381,71 @@ void ShowScrollableMultichoice(void)
         task->tKeepOpenAfterSelect = FALSE;
         task->tTaskId = taskId;
         break;
+    case SCROLL_MULTI_NATURES:
+        task->tMaxItemsOnScreen = MAX_SCROLL_MULTI_ON_SCREEN;
+        task->tNumItems = NATURE_CHANGER_NUM_OPTIONS + 1; // + EXIT
+        task->tLeft = 1;
+        task->tTop = 1;
+        task->tWidth = 12; // recalculated from the text width
+        task->tHeight = 12;
+        task->tKeepOpenAfterSelect = FALSE;
+        task->tTaskId = taskId;
+        break;
     default:
         gSpecialVar_Result = MULTI_B_PRESSED;
         DestroyTask(taskId);
         break;
     }
 }
+
+// Nature Changer list: nature name, then the raised stat in red and the lowered stat in blue
+static const u8 sText_NatureOption00[] = _("Hardy{CLEAR_TO 62}Neutral");
+static const u8 sText_NatureOption01[] = _("Lonely{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+Atk{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-Def");
+static const u8 sText_NatureOption02[] = _("Brave{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+Atk{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-Speed");
+static const u8 sText_NatureOption03[] = _("Adamant{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+Atk{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-SpAtk");
+static const u8 sText_NatureOption04[] = _("Naughty{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+Atk{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-SpDef");
+static const u8 sText_NatureOption05[] = _("Bold{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+Def{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-Atk");
+static const u8 sText_NatureOption06[] = _("Relaxed{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+Def{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-Speed");
+static const u8 sText_NatureOption07[] = _("Impish{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+Def{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-SpAtk");
+static const u8 sText_NatureOption08[] = _("Lax{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+Def{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-SpDef");
+static const u8 sText_NatureOption09[] = _("Timid{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+Speed{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-Atk");
+static const u8 sText_NatureOption10[] = _("Hasty{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+Speed{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-Def");
+static const u8 sText_NatureOption11[] = _("Jolly{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+Speed{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-SpAtk");
+static const u8 sText_NatureOption12[] = _("Naive{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+Speed{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-SpDef");
+static const u8 sText_NatureOption13[] = _("Modest{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+SpAtk{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-Atk");
+static const u8 sText_NatureOption14[] = _("Mild{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+SpAtk{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-Def");
+static const u8 sText_NatureOption15[] = _("Quiet{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+SpAtk{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-Speed");
+static const u8 sText_NatureOption16[] = _("Rash{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+SpAtk{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-SpDef");
+static const u8 sText_NatureOption17[] = _("Calm{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+SpDef{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-Atk");
+static const u8 sText_NatureOption18[] = _("Gentle{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+SpDef{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-Def");
+static const u8 sText_NatureOption19[] = _("Sassy{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+SpDef{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-Speed");
+static const u8 sText_NatureOption20[] = _("Careful{CLEAR_TO 52}{COLOR RED}{SHADOW LIGHT_RED}+SpDef{COLOR DARK_GRAY}{SHADOW LIGHT_GRAY}/{COLOR BLUE}{SHADOW LIGHT_BLUE}-SpAtk");
+
+// Nature given by each option of the list. Hardy is the only neutral nature offered
+static const u8 sNatureChangerNatures[NATURE_CHANGER_NUM_OPTIONS] =
+{
+    NATURE_HARDY,
+    NATURE_LONELY,
+    NATURE_BRAVE,
+    NATURE_ADAMANT,
+    NATURE_NAUGHTY,
+    NATURE_BOLD,
+    NATURE_RELAXED,
+    NATURE_IMPISH,
+    NATURE_LAX,
+    NATURE_TIMID,
+    NATURE_HASTY,
+    NATURE_JOLLY,
+    NATURE_NAIVE,
+    NATURE_MODEST,
+    NATURE_MILD,
+    NATURE_QUIET,
+    NATURE_RASH,
+    NATURE_CALM,
+    NATURE_GENTLE,
+    NATURE_SASSY,
+    NATURE_CAREFUL,
+};
 
 static const u8 *const sScrollableMultichoiceOptions[][MAX_SCROLL_MULTI_LENGTH] =
 {
@@ -2539,6 +2599,31 @@ static const u8 *const sScrollableMultichoiceOptions[][MAX_SCROLL_MULTI_LENGTH] 
         gText_PokemonMoves,
         gText_Underpowered,
         gText_WhenInDanger,
+        gText_Exit
+    },
+    [SCROLL_MULTI_NATURES] =
+    {
+        sText_NatureOption00,
+        sText_NatureOption01,
+        sText_NatureOption02,
+        sText_NatureOption03,
+        sText_NatureOption04,
+        sText_NatureOption05,
+        sText_NatureOption06,
+        sText_NatureOption07,
+        sText_NatureOption08,
+        sText_NatureOption09,
+        sText_NatureOption10,
+        sText_NatureOption11,
+        sText_NatureOption12,
+        sText_NatureOption13,
+        sText_NatureOption14,
+        sText_NatureOption15,
+        sText_NatureOption16,
+        sText_NatureOption17,
+        sText_NatureOption18,
+        sText_NatureOption19,
+        sText_NatureOption20,
         gText_Exit
     }
 };
@@ -2701,6 +2786,28 @@ static void Task_ScrollableMultichoice_WaitReturnToList(u8 taskId)
         gTasks[taskId].func = Task_ScrollableMultichoice_ReturnToList;
         break;
     }
+}
+
+// Nature Changer NPC. VAR_0x8008 holds the party slot.
+// Buffers the mon's nickname in STR_VAR_1 and its current nature in STR_VAR_2.
+void BufferNatureChangerMonInfo(void)
+{
+    struct Pokemon *mon = &gPlayerParty[gSpecialVar_0x8008];
+
+    GetMonNickname(mon, gStringVar1);
+    StringCopy(gStringVar2, gNatureNamePointers[GetNature(mon)]);
+}
+
+// Nature Changer NPC. VAR_0x8008 holds the party slot, VAR_RESULT the chosen option of the list.
+// Applies the nature, recalculates the stats and buffers the new nature name in STR_VAR_2.
+void ChangeMonNature(void)
+{
+    struct Pokemon *mon = &gPlayerParty[gSpecialVar_0x8008];
+    u8 nature = sNatureChangerNatures[gSpecialVar_Result];
+
+    SetMonNatureOverride(mon, nature);
+    CalculateMonStats(mon);
+    StringCopy(gStringVar2, gNatureNamePointers[nature]);
 }
 
 // Never called
