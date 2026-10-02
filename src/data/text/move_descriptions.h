@@ -203,7 +203,7 @@ static const u8 sDisableDescription[] = _(
 
 static const u8 sAcidDescription[] = _(
     "Sprays a hide-melting acid.\n"
-    "May lower DEFENSE.");
+    "May lower SP. DEF.");
 
 static const u8 sEmberDescription[] = _(
     "A weak fire attack that may\n"
@@ -318,8 +318,8 @@ static const u8 sSleepPowderDescription[] = _(
     "cause the foe to sleep.");
 
 static const u8 sPetalDanceDescription[] = _(
-    "A rampage of 2 to 3 turns\n"
-    "that confuses the user.");
+    "A storm of petals that\n"
+    "sharply lowers SP. ATK.");
 
 static const u8 sStringShotDescription[] = _(
     "Binds the foe with string\n"
@@ -1375,7 +1375,7 @@ static const u8 sCovetDescription[] = _(
 
 static const u8 sVoltTackleDescription[] = _(
     "A life-risking tackle that\n"
-    "slightly hurts the user.");
+    "hurts user. May paralyze.");
 
 static const u8 sMagicalLeafDescription[] = _(
     "Attacks with a strange leaf\n"
@@ -1410,8 +1410,8 @@ static const u8 sWaterPulseDescription[] = _(
     "waves. May confuse the foe.");
 
 static const u8 sDoomDesireDescription[] = _(
-    "Summons strong sunlight to\n"
-    "attack 2 turns later.");
+    "A full-power steel blast\n"
+    "but sharply lowers SP. ATK.");
 
 static const u8 sPsychoBoostDescription[] = _(
     "Allows a full-power attack,\n"

@@ -481,6 +481,35 @@ const struct SpriteTemplate gPetalDanceSmallFlowerSpriteTemplate =
     .callback = AnimPetalDanceSmallFlower,
 };
 
+// Petal Dance flowers thrown at the target in an arc
+// arg 0: initial x pixel offset
+// arg 1: initial y pixel offset
+// arg 2: target x pixel offset
+// arg 3: target y pixel offset
+// arg 4: duration
+// arg 5: arc height (negative = upward)
+const struct SpriteTemplate gPetalDanceThrownBigFlowerSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_FLOWER,
+    .paletteTag = ANIM_TAG_FLOWER,
+    .oam = &gOamData_AffineOff_ObjNormal_16x16,
+    .anims = gPetalDanceBigFlowerAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimThrowProjectile,
+};
+
+const struct SpriteTemplate gPetalDanceThrownSmallFlowerSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_FLOWER,
+    .paletteTag = ANIM_TAG_FLOWER,
+    .oam = &gOamData_AffineOff_ObjNormal_8x8,
+    .anims = gPetalDanceSmallFlowerAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimThrowProjectile,
+};
+
 const union AnimCmd gRazorLeafParticleAnimCmds1[] =
 {
     ANIMCMD_FRAME(0, 5),

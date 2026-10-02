@@ -6796,34 +6796,54 @@ Move_PETAL_DANCE:
 	loadspritegfx ANIM_TAG_IMPACT
 	monbg ANIM_DEF_PARTNER
 	setalpha 12, 8
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=0, target_blend_y=10, color=RGB(31, 18, 24)
 	playsewithpan SE_M_PETAL_DANCE, SOUND_PAN_ATTACKER
-	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_ATTACKER, 12, 6, 6, 3
-	create_petal_dance_big_flower_sprite ANIM_ATTACKER, 2, initial_x=0, initial_y=-24, target_y=8, duration=140
-	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=16, initial_y=-24, target_y=8, duration=100
-	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=-16, initial_y=-24, target_y=8, duration=100
-	delay 15
-	create_petal_dance_big_flower_sprite ANIM_ATTACKER, 2, initial_x=0, initial_y=-24, target_y=8, duration=140
-	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=32, initial_y=-24, target_y=8, duration=100
-	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=-32, initial_y=-24, target_y=8, duration=100
-	delay 15
-	create_petal_dance_big_flower_sprite ANIM_ATTACKER, 2, initial_x=0, initial_y=-24, target_y=8, duration=140
-	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=24, initial_y=-24, target_y=8, duration=100
-	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=-24, initial_y=-24, target_y=8, duration=100
-	delay 30
-	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=16, initial_y=-24, target_y=0, duration=100
-	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=-16, initial_y=-24, target_y=0, duration=100
-	delay 30
-	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=20, initial_y=-16, target_y=14, duration=80
-	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=-20, initial_y=-14, target_y=16, duration=80
+	createvisualtask AnimTask_TranslateMonEllipticalRespectSide, 2, ANIM_ATTACKER, 12, 6, 4, 3
+	create_petal_dance_big_flower_sprite ANIM_ATTACKER, 2, initial_x=0, initial_y=-24, target_y=8, duration=60
+	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=16, initial_y=-24, target_y=8, duration=50
+	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=-16, initial_y=-24, target_y=8, duration=50
+	delay 12
+	create_petal_dance_big_flower_sprite ANIM_ATTACKER, 2, initial_x=0, initial_y=-24, target_y=8, duration=60
+	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=32, initial_y=-24, target_y=8, duration=50
+	create_petal_dance_small_flower_sprite ANIM_ATTACKER, 2, initial_x=-32, initial_y=-24, target_y=8, duration=50
 	waitforvisualfinish
-	createsprite gSlideMonToOffsetSpriteTemplate, ANIM_ATTACKER, 2, 0, 24, 0, 0, 5
-	delay 3
+	loopsewithpan SE_M_PETAL_DANCE, SOUND_PAN_TARGET, 12, 4
+	createsprite gPetalDanceThrownBigFlowerSpriteTemplate, ANIM_TARGET, 3, 0, 0, 0, 0, 20, -24
+	createsprite gPetalDanceThrownSmallFlowerSpriteTemplate, ANIM_TARGET, 3, 8, -8, 8, -8, 18, 16
+	createsprite gPetalDanceThrownSmallFlowerSpriteTemplate, ANIM_TARGET, 3, -8, 8, -8, 8, 18, -12
+	delay 4
+	createsprite gPetalDanceThrownBigFlowerSpriteTemplate, ANIM_TARGET, 3, 0, -8, 4, 4, 20, 20
+	createsprite gPetalDanceThrownSmallFlowerSpriteTemplate, ANIM_TARGET, 3, 4, 4, -10, -6, 16, -20
+	createsprite gPetalDanceThrownSmallFlowerSpriteTemplate, ANIM_TARGET, 3, -4, -4, 10, 6, 16, 24
+	delay 4
+	createsprite gPetalDanceThrownBigFlowerSpriteTemplate, ANIM_TARGET, 3, 0, 8, -6, -4, 20, -16
+	createsprite gPetalDanceThrownSmallFlowerSpriteTemplate, ANIM_TARGET, 3, 8, 0, 12, -10, 16, 12
+	createsprite gPetalDanceThrownSmallFlowerSpriteTemplate, ANIM_TARGET, 3, -8, 0, -12, 10, 16, -28
+	delay 4
+	createsprite gPetalDanceThrownBigFlowerSpriteTemplate, ANIM_TARGET, 3, 0, 0, 2, -2, 18, 28
+	createsprite gPetalDanceThrownSmallFlowerSpriteTemplate, ANIM_TARGET, 3, 6, -6, -4, 12, 14, -8
+	createsprite gPetalDanceThrownSmallFlowerSpriteTemplate, ANIM_TARGET, 3, -6, 6, 4, -12, 14, 8
+	delay 14
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 9, RGB(31, 18, 24)
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 24, 1
 	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
-	create_basic_hitsplat_sprite ANIM_ATTACKER, 3, x=0, y=0, relative_to=ANIM_TARGET, animation=0
-	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 6, 0, 8, 1
+	create_basic_hitsplat_sprite ANIM_TARGET, 4, x=0, y=0, relative_to=ANIM_TARGET, animation=1
+	delay 5
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_TARGET, 4, x=-12, y=-8, relative_to=ANIM_TARGET, animation=2
+	delay 5
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_TARGET, 4, x=12, y=8, relative_to=ANIM_TARGET, animation=2
+	delay 5
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_TARGET, 4, x=-8, y=10, relative_to=ANIM_TARGET, animation=2
+	delay 5
+	playsewithpan SE_M_MEGA_KICK2, SOUND_PAN_TARGET
+	create_basic_hitsplat_sprite ANIM_TARGET, 4, x=10, y=-10, relative_to=ANIM_TARGET, animation=2
+	delay 5
 	waitforvisualfinish
-	delay 8
-	createsprite gSlideMonToOriginalPosSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 7
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 9, 0, RGB(31, 18, 24)
+	simple_palette_blend selector=F_PAL_BG, delay=2, initial_blend_y=10, target_blend_y=0, color=RGB(31, 18, 24)
 	waitforvisualfinish
 	clearmonbg ANIM_DEF_PARTNER
 	blendoff
@@ -9576,9 +9596,8 @@ Move_KNOCK_OFF:
 	waitforvisualfinish
 	end
 
+@ Doom Desire hits immediately: charge-up on the user, then the hit animation
 Move_DOOM_DESIRE:
-	createvisualtask GetIsDoomDesireHitTurn, 2
-	delay 1
 	monbg ANIM_ATK_PARTNER
 	set_grayscale_pal battler=ANIM_TARGET
 	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=4, color=RGB_BLACK
@@ -9593,7 +9612,7 @@ Move_DOOM_DESIRE:
 	waitforvisualfinish
 	clearmonbg ANIM_ATK_PARTNER
 	blendoff
-	end
+	goto General_DoomDesireHit
 
 Move_SKY_UPPERCUT:
 	loadspritegfx ANIM_TAG_IMPACT
