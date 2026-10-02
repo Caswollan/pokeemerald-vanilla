@@ -278,11 +278,8 @@ static const u16 sIgnoredPowerfulMoveEffects[] =
     EFFECT_RECHARGE,
     EFFECT_SKULL_BASH,
     EFFECT_SOLAR_BEAM,
-    EFFECT_SPIT_UP,
     EFFECT_FOCUS_PUNCH,
     EFFECT_SUPERPOWER,
-    EFFECT_ERUPTION,
-    EFFECT_OVERHEAT,
     IGNORED_MOVES_END
 };
 
@@ -1188,14 +1185,11 @@ static void Cmd_get_how_powerful_move_is(void)
             break;
     }
 
-    if (gBattleMoves[AI_THINKING_STRUCT->moveConsidered].power > 1
+    if (AI_IsDamagingMove(AI_THINKING_STRUCT->moveConsidered)
         && sIgnoredPowerfulMoveEffects[i] == IGNORED_MOVES_END)
     {
-        gDynamicBasePower = 0;
-        *(&gBattleStruct->dynamicMoveType) = 0;
-        gBattleScripting.dmgMultiplier = 1;
-        gMoveResultFlags = 0;
-        gCritMultiplier = 1;
+        // Moves that can't be used (no PP, Disable, Taunt, Imprison, Encore, Choice Band) aren't compared
+        u8 unusableMoves = CheckMoveLimitations(sBattler_AI, 0, MOVE_LIMITATIONS_ALL);
 
         // Considered move has power and is not in sIgnoredPowerfulMoveEffects
         // Check all other moves and calculate their power
@@ -1208,15 +1202,12 @@ static void Cmd_get_how_powerful_move_is(void)
             }
 
             if (gBattleMons[sBattler_AI].moves[checkedMove] != MOVE_NONE
+                && !(unusableMoves & gBitTable[checkedMove])
                 && sIgnoredPowerfulMoveEffects[i] == IGNORED_MOVES_END
-                && gBattleMoves[gBattleMons[sBattler_AI].moves[checkedMove]].power > 1)
+                && AI_IsDamagingMove(gBattleMons[sBattler_AI].moves[checkedMove]))
             {
-                gCurrentMove = gBattleMons[sBattler_AI].moves[checkedMove];
-                AI_CalcDmg(sBattler_AI, gBattlerTarget);
-                TypeCalc(gCurrentMove, sBattler_AI, gBattlerTarget);
-                moveDmgs[checkedMove] = gBattleMoveDamage * AI_THINKING_STRUCT->simulatedRNG[checkedMove] / 100;
-                if (moveDmgs[checkedMove] == 0)
-                    moveDmgs[checkedMove] = 1;
+                moveDmgs[checkedMove] = AI_CalcMoveDamage(gBattleMons[sBattler_AI].moves[checkedMove], sBattler_AI, gBattlerTarget,
+                                                          AI_THINKING_STRUCT->simulatedRNG[checkedMove]);
             }
             else
             {
@@ -1238,7 +1229,7 @@ static void Cmd_get_how_powerful_move_is(void)
     }
     else
     {
-        // Move has a power of 0/1, or is in the group sIgnoredPowerfulMoveEffects
+        // Move doesn't deal damage, or is in the group sIgnoredPowerfulMoveEffects
         AI_THINKING_STRUCT->funcResult = MOVE_POWER_OTHER;
     }
 
@@ -1748,28 +1739,16 @@ static void Cmd_if_stat_level_not_equal(void)
 
 static void Cmd_if_can_faint(void)
 {
-    if (gBattleMoves[AI_THINKING_STRUCT->moveConsidered].power < 2)
+    if (!AI_IsDamagingMove(AI_THINKING_STRUCT->moveConsidered))
     {
         gAIScriptPtr += 5;
         return;
     }
 
-    gDynamicBasePower = 0;
-    gBattleStruct->dynamicMoveType = 0;
-    gBattleScripting.dmgMultiplier = 1;
-    gMoveResultFlags = 0;
-    gCritMultiplier = 1;
-    gCurrentMove = AI_THINKING_STRUCT->moveConsidered;
-    AI_CalcDmg(sBattler_AI, gBattlerTarget);
-    TypeCalc(gCurrentMove, sBattler_AI, gBattlerTarget);
+    gBattleMoveDamage = AI_CalcMoveDamage(AI_THINKING_STRUCT->moveConsidered, sBattler_AI, gBattlerTarget,
+                                          AI_THINKING_STRUCT->simulatedRNG[AI_THINKING_STRUCT->movesetIndex]);
 
-    gBattleMoveDamage = gBattleMoveDamage * AI_THINKING_STRUCT->simulatedRNG[AI_THINKING_STRUCT->movesetIndex] / 100;
-
-    // Moves always do at least 1 damage.
-    if (gBattleMoveDamage == 0)
-        gBattleMoveDamage = 1;
-
-    if (gBattleMons[gBattlerTarget].hp <= gBattleMoveDamage)
+    if (gBattleMoveDamage != 0 && gBattleMons[gBattlerTarget].hp <= gBattleMoveDamage)
         gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 1);
     else
         gAIScriptPtr += 5;
@@ -1777,30 +1756,16 @@ static void Cmd_if_can_faint(void)
 
 static void Cmd_if_cant_faint(void)
 {
-    if (gBattleMoves[AI_THINKING_STRUCT->moveConsidered].power < 2)
+    if (!AI_IsDamagingMove(AI_THINKING_STRUCT->moveConsidered))
     {
         gAIScriptPtr += 5;
         return;
     }
 
-    gDynamicBasePower = 0;
-    gBattleStruct->dynamicMoveType = 0;
-    gBattleScripting.dmgMultiplier = 1;
-    gMoveResultFlags = 0;
-    gCritMultiplier = 1;
-    gCurrentMove = AI_THINKING_STRUCT->moveConsidered;
-    AI_CalcDmg(sBattler_AI, gBattlerTarget);
-    TypeCalc(gCurrentMove, sBattler_AI, gBattlerTarget);
+    gBattleMoveDamage = AI_CalcMoveDamage(AI_THINKING_STRUCT->moveConsidered, sBattler_AI, gBattlerTarget,
+                                          AI_THINKING_STRUCT->simulatedRNG[AI_THINKING_STRUCT->movesetIndex]);
 
-    gBattleMoveDamage = gBattleMoveDamage * AI_THINKING_STRUCT->simulatedRNG[AI_THINKING_STRUCT->movesetIndex] / 100;
-
-#ifdef BUGFIX
-    // Moves always do at least 1 damage.
-    if (gBattleMoveDamage == 0)
-        gBattleMoveDamage = 1;
-#endif
-
-    if (gBattleMons[gBattlerTarget].hp > gBattleMoveDamage)
+    if (gBattleMoveDamage == 0 || gBattleMons[gBattlerTarget].hp > gBattleMoveDamage)
         gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 1);
     else
         gAIScriptPtr += 5;

@@ -1317,6 +1317,21 @@ void AI_CalcDmg(u8 attacker, u8 defender)
         gBattleMoveDamage *= 2;
     if (gProtectStructs[attacker].helpingHand)
         gBattleMoveDamage = gBattleMoveDamage * 15 / 10;
+
+    // The damage above is for a single hit: scale it by the expected number of hits
+    switch (gBattleMoves[gCurrentMove].effect)
+    {
+        case EFFECT_MULTI_HIT: // 2-5 hits, always 4
+            gBattleMoveDamage *= 4;
+            break;
+        case EFFECT_DOUBLE_HIT:
+        case EFFECT_TWINEEDLE:
+            gBattleMoveDamage *= 2;
+            break;
+        case EFFECT_TRIPLE_KICK: // power x1 + x2 + x3
+            gBattleMoveDamage *= 6;
+            break;
+    }
 }
 
 static void ModulateDmgByType(u8 multiplier)
@@ -1534,16 +1549,13 @@ static void ModulateDmgByType2(u8 multiplier, u16 move, u8 *flags)
     }
 }
 
-u8 TypeCalc(u16 move, u8 attacker, u8 defender)
+static u8 TypeCalcWithMoveType(u16 move, u8 moveType, u8 attacker, u8 defender)
 {
     s32 i = 0;
     u8 flags = 0;
-    u8 moveType;
 
     if (move == MOVE_STRUGGLE)
         return 0;
-
-    moveType = gBattleMoves[move].type;
 
     // check stab
     if (IS_BATTLER_OF_TYPE(attacker, moveType))
@@ -1590,6 +1602,11 @@ u8 TypeCalc(u16 move, u8 attacker, u8 defender)
         flags |= MOVE_RESULT_MISSED;
     }
     return flags;
+}
+
+u8 TypeCalc(u16 move, u8 attacker, u8 defender)
+{
+    return TypeCalcWithMoveType(move, gBattleMoves[move].type, attacker, defender);
 }
 
 u8 AI_TypeCalc(u16 move, u16 targetSpecies, u8 targetAbility)
@@ -1657,6 +1674,236 @@ static void UNUSED Unused_ApplyRandomDmgMultiplier(void)
 }
 
 #define STURDY_PREVENTS_KO(battler) (gBattleMons[battler].ability == ABILITY_STURDY && gBattleMons[battler].hp == gBattleMons[battler].maxHP)
+
+static void SetHiddenPowerPowerAndType(u8 battler)
+{
+    u8 powerBits = ((gBattleMons[battler].hpIV & 2) >> 1)
+                 | ((gBattleMons[battler].attackIV & 2) << 0)
+                 | ((gBattleMons[battler].defenseIV & 2) << 1)
+                 | ((gBattleMons[battler].speedIV & 2) << 2)
+                 | ((gBattleMons[battler].spAttackIV & 2) << 3)
+                 | ((gBattleMons[battler].spDefenseIV & 2) << 4);
+
+    u8 typeBits  = ((gBattleMons[battler].hpIV & 1) << 0)
+                 | ((gBattleMons[battler].attackIV & 1) << 1)
+                 | ((gBattleMons[battler].defenseIV & 1) << 2)
+                 | ((gBattleMons[battler].speedIV & 1) << 3)
+                 | ((gBattleMons[battler].spAttackIV & 1) << 4)
+                 | ((gBattleMons[battler].spDefenseIV & 1) << 5);
+
+    gDynamicBasePower = (40 * powerBits) / 63 + 30;
+
+    // Subtract 3 instead of 1 below because 2 types are excluded (TYPE_NORMAL and TYPE_MYSTERY)
+    // The final + 1 skips past Normal, and the following conditional skips TYPE_MYSTERY
+    gBattleStruct->dynamicMoveType = ((NUMBER_OF_MON_TYPES - 3) * typeBits) / 63 + 1;
+    if (gBattleStruct->dynamicMoveType >= TYPE_MYSTERY)
+        gBattleStruct->dynamicMoveType++;
+    gBattleStruct->dynamicMoveType |= F_DYNAMIC_TYPE_IGNORE_PHYSICALITY | F_DYNAMIC_TYPE_SET;
+}
+
+static void SetWeatherBallTypeAndMultiplier(void)
+{
+    if (WEATHER_HAS_EFFECT)
+    {
+        if (gBattleWeather & B_WEATHER_ANY)
+            gBattleScripting.dmgMultiplier = 2;
+        if (gBattleWeather & B_WEATHER_RAIN)
+            *(&gBattleStruct->dynamicMoveType) = TYPE_WATER | F_DYNAMIC_TYPE_SET;
+        else if (gBattleWeather & B_WEATHER_SANDSTORM)
+            *(&gBattleStruct->dynamicMoveType) = TYPE_ROCK | F_DYNAMIC_TYPE_SET;
+        else if (gBattleWeather & B_WEATHER_SUN)
+            *(&gBattleStruct->dynamicMoveType) = TYPE_FIRE | F_DYNAMIC_TYPE_SET;
+        else if (gBattleWeather & B_WEATHER_HAIL)
+            *(&gBattleStruct->dynamicMoveType) = TYPE_ICE | F_DYNAMIC_TYPE_SET;
+        else
+            *(&gBattleStruct->dynamicMoveType) = TYPE_NORMAL | F_DYNAMIC_TYPE_SET;
+    }
+}
+
+// Flail / Reversal
+static u8 GetRemainingHpPower(u8 battler)
+{
+    s32 i;
+    s32 hpFraction = GetScaledHPFraction(gBattleMons[battler].hp, gBattleMons[battler].maxHP, 48);
+
+    for (i = 0; i < (s32) sizeof(sFlailHpScaleToPowerTable); i += 2)
+    {
+        if (hpFraction <= sFlailHpScaleToPowerTable[i])
+            break;
+    }
+
+    return sFlailHpScaleToPowerTable[i + 1];
+}
+
+// Low Kick
+static u16 GetWeightPower(u8 target)
+{
+    s32 i;
+    for (i = 0; sWeightToDamageTable[i] != 0xFFFF; i += 2)
+    {
+        if (sWeightToDamageTable[i] > GetPokedexHeightWeight(SpeciesToNationalPokedexNum(gBattleMons[target].species), 1))
+            break;
+    }
+
+    if (sWeightToDamageTable[i] != 0xFFFF)
+        return sWeightToDamageTable[i + 1];
+    else
+        return 120;
+}
+
+// Moves the AI can estimate damage for with AI_CalcMoveDamage
+bool32 AI_IsDamagingMove(u16 move)
+{
+    switch (gBattleMoves[move].effect)
+    {
+    case EFFECT_LEVEL_DAMAGE:
+    case EFFECT_PSYWAVE:
+    case EFFECT_SONICBOOM:
+    case EFFECT_DRAGON_RAGE:
+    case EFFECT_SUPER_FANG:
+    case EFFECT_ENDEAVOR:
+    case EFFECT_FLAIL:
+    case EFFECT_LOW_KICK:
+    case EFFECT_RETURN:
+    case EFFECT_FRUSTRATION:
+    case EFFECT_MAGNITUDE:
+    case EFFECT_HIDDEN_POWER:
+        return TRUE;
+    }
+    return gBattleMoves[move].power > 1;
+}
+
+// Damage the AI expects 'move' to deal to 'defender', used for its decisions.
+// On top of AI_CalcDmg it handles fixed and variable damage moves, the damage boosts
+// applied by the moves' battle scripts, dynamic move types, type effectiveness and Sturdy.
+// rngPercent simulates the damage roll (85-100).
+s32 AI_CalcMoveDamage(u16 move, u8 attacker, u8 defender, u8 rngPercent)
+{
+    struct BattlePokemon *atkMon = &gBattleMons[attacker];
+    struct BattlePokemon *defMon = &gBattleMons[defender];
+    s32 fixedDamage = -1;
+    u8 moveType = gBattleMoves[move].type;
+    u8 flags;
+    s32 i;
+
+    gCurrentMove = move;
+    gDynamicBasePower = 0;
+    gBattleStruct->dynamicMoveType = 0;
+    gBattleScripting.dmgMultiplier = 1;
+    gMoveResultFlags = 0;
+    gCritMultiplier = 1;
+
+    switch (gBattleMoves[move].effect)
+    {
+    // Fixed damage
+    case EFFECT_LEVEL_DAMAGE:
+    case EFFECT_PSYWAVE: // 50-150% of the level, 100% on average
+        fixedDamage = atkMon->level;
+        break;
+    case EFFECT_SONICBOOM:
+        fixedDamage = 20;
+        break;
+    case EFFECT_DRAGON_RAGE:
+        fixedDamage = 40;
+        break;
+    case EFFECT_SUPER_FANG:
+        fixedDamage = max(defMon->hp / 2, 1);
+        break;
+    case EFFECT_ENDEAVOR:
+        fixedDamage = (defMon->hp > atkMon->hp) ? defMon->hp - atkMon->hp : 0;
+        break;
+    // Variable power
+    case EFFECT_FLAIL:
+        gDynamicBasePower = GetRemainingHpPower(attacker);
+        break;
+    case EFFECT_LOW_KICK:
+        gDynamicBasePower = GetWeightPower(defender);
+        break;
+    case EFFECT_RETURN:
+        gDynamicBasePower = 10 * atkMon->friendship / 25;
+        break;
+    case EFFECT_FRUSTRATION:
+        gDynamicBasePower = 10 * (MAX_FRIENDSHIP - atkMon->friendship) / 25;
+        break;
+    case EFFECT_MAGNITUDE: // 71 on average
+        gDynamicBasePower = 70;
+        if (gStatuses3[defender] & STATUS3_UNDERGROUND)
+            gBattleScripting.dmgMultiplier = 2;
+        break;
+    case EFFECT_HIDDEN_POWER:
+        SetHiddenPowerPowerAndType(attacker);
+        break;
+    case EFFECT_WEATHER_BALL:
+        SetWeatherBallTypeAndMultiplier();
+        break;
+    case EFFECT_ERUPTION:
+        gDynamicBasePower = max(atkMon->hp * gBattleMoves[move].power / atkMon->maxHP, 1);
+        break;
+    case EFFECT_FURY_CUTTER:
+        gDynamicBasePower = gBattleMoves[move].power;
+        for (i = 0; i < gDisableStructs[attacker].furyCutterCounter && i < 4; i++)
+            gDynamicBasePower *= 2;
+        if (gDynamicBasePower > 160)
+            gDynamicBasePower = 160;
+        break;
+    // Damage boosts applied by the moves' battle scripts
+    case EFFECT_FACADE:
+        if (atkMon->status1 & (STATUS1_POISON | STATUS1_BURN | STATUS1_FREEZE | STATUS1_PARALYSIS | STATUS1_TOXIC_POISON))
+            gBattleScripting.dmgMultiplier = 2;
+        break;
+    case EFFECT_SMELLINGSALT:
+        if ((defMon->status1 & STATUS1_PARALYSIS) && !(defMon->status2 & STATUS2_SUBSTITUTE))
+            gBattleScripting.dmgMultiplier = 2;
+        break;
+    case EFFECT_EARTHQUAKE:
+        if (gStatuses3[defender] & STATUS3_UNDERGROUND)
+            gBattleScripting.dmgMultiplier = 2;
+        break;
+    case EFFECT_GUST:
+    case EFFECT_TWISTER:
+        if (gStatuses3[defender] & STATUS3_ON_AIR)
+            gBattleScripting.dmgMultiplier = 2;
+        break;
+    case EFFECT_FLINCH_MINIMIZE_HIT:
+        if (gStatuses3[defender] & STATUS3_MINIMIZED)
+            gBattleScripting.dmgMultiplier = 2;
+        break;
+    }
+
+    if ((move == MOVE_SURF || move == MOVE_WHIRLPOOL) && (gStatuses3[defender] & STATUS3_UNDERWATER))
+        gBattleScripting.dmgMultiplier = 2;
+
+    if (fixedDamage >= 0)
+    {
+        // Fixed damage ignores type effectiveness, but not immunities
+        flags = TypeCalc(move, attacker, defender);
+        gBattleMoveDamage = (flags & MOVE_RESULT_NO_EFFECT) ? 0 : fixedDamage;
+    }
+    else
+    {
+        if (gBattleStruct->dynamicMoveType & F_DYNAMIC_TYPE_SET)
+            moveType = gBattleStruct->dynamicMoveType & DYNAMIC_TYPE_MASK;
+
+        AI_CalcDmg(attacker, defender);
+        flags = TypeCalcWithMoveType(move, moveType, attacker, defender);
+
+        if (gBattleMoves[move].effect == EFFECT_SPIT_UP)
+            gBattleMoveDamage *= gDisableStructs[attacker].stockpileCounter;
+
+        gBattleMoveDamage = gBattleMoveDamage * rngPercent / 100;
+        if (gBattleMoveDamage == 0 && !(flags & MOVE_RESULT_NO_EFFECT) && gBattleMoves[move].effect != EFFECT_SPIT_UP)
+            gBattleMoveDamage = 1;
+    }
+
+    gBattleStruct->dynamicMoveType = 0;
+    gBattleScripting.dmgMultiplier = 1;
+
+    // Sturdy lets a Pokemon at full HP survive any hit
+    if (STURDY_PREVENTS_KO(defender) && gBattleMoveDamage >= defMon->hp)
+        gBattleMoveDamage = defMon->hp - 1;
+
+    return gBattleMoveDamage;
+}
 
 static void Cmd_adjustnormaldamage(void)
 {
@@ -8328,16 +8575,7 @@ static void Cmd_trysetdestinybondtohappen(void)
 
 static void Cmd_remaininghptopower(void)
 {
-    s32 i;
-    s32 hpFraction = GetScaledHPFraction(gBattleMons[gBattlerAttacker].hp, gBattleMons[gBattlerAttacker].maxHP, 48);
-
-    for (i = 0; i < (s32) sizeof(sFlailHpScaleToPowerTable); i += 2)
-    {
-        if (hpFraction <= sFlailHpScaleToPowerTable[i])
-            break;
-    }
-
-    gDynamicBasePower = sFlailHpScaleToPowerTable[i + 1];
+    gDynamicBasePower = GetRemainingHpPower(gBattlerAttacker);
     gBattlescriptCurrInstr++;
 }
 
@@ -8917,29 +9155,7 @@ static void Cmd_recoverbasedonsunlight(void)
 
 static void Cmd_hiddenpowercalc(void)
 {
-    u8 powerBits = ((gBattleMons[gBattlerAttacker].hpIV & 2) >> 1)
-                 | ((gBattleMons[gBattlerAttacker].attackIV & 2) << 0)
-                 | ((gBattleMons[gBattlerAttacker].defenseIV & 2) << 1)
-                 | ((gBattleMons[gBattlerAttacker].speedIV & 2) << 2)
-                 | ((gBattleMons[gBattlerAttacker].spAttackIV & 2) << 3)
-                 | ((gBattleMons[gBattlerAttacker].spDefenseIV & 2) << 4);
-
-    u8 typeBits  = ((gBattleMons[gBattlerAttacker].hpIV & 1) << 0)
-                 | ((gBattleMons[gBattlerAttacker].attackIV & 1) << 1)
-                 | ((gBattleMons[gBattlerAttacker].defenseIV & 1) << 2)
-                 | ((gBattleMons[gBattlerAttacker].speedIV & 1) << 3)
-                 | ((gBattleMons[gBattlerAttacker].spAttackIV & 1) << 4)
-                 | ((gBattleMons[gBattlerAttacker].spDefenseIV & 1) << 5);
-
-    gDynamicBasePower = (40 * powerBits) / 63 + 30;
-
-    // Subtract 3 instead of 1 below because 2 types are excluded (TYPE_NORMAL and TYPE_MYSTERY)
-    // The final + 1 skips past Normal, and the following conditional skips TYPE_MYSTERY
-    gBattleStruct->dynamicMoveType = ((NUMBER_OF_MON_TYPES - 3) * typeBits) / 63 + 1;
-    if (gBattleStruct->dynamicMoveType >= TYPE_MYSTERY)
-        gBattleStruct->dynamicMoveType++;
-    gBattleStruct->dynamicMoveType |= F_DYNAMIC_TYPE_IGNORE_PHYSICALITY | F_DYNAMIC_TYPE_SET;
-
+    SetHiddenPowerPowerAndType(gBattlerAttacker);
     gBattlescriptCurrInstr++;
 }
 
@@ -9495,18 +9711,7 @@ static void Cmd_trysetgrudge(void)
 
 static void Cmd_weightdamagecalculation(void)
 {
-    s32 i;
-    for (i = 0; sWeightToDamageTable[i] != 0xFFFF; i += 2)
-    {
-        if (sWeightToDamageTable[i] > GetPokedexHeightWeight(SpeciesToNationalPokedexNum(gBattleMons[gBattlerTarget].species), 1))
-            break;
-    }
-
-    if (sWeightToDamageTable[i] != 0xFFFF)
-        gDynamicBasePower = sWeightToDamageTable[i + 1];
-    else
-        gDynamicBasePower = 120;
-
+    gDynamicBasePower = GetWeightPower(gBattlerTarget);
     gBattlescriptCurrInstr++;
 }
 
@@ -9815,22 +10020,7 @@ static void Cmd_settypebasedhalvers(void)
 
 static void Cmd_setweatherballtype(void)
 {
-    if (WEATHER_HAS_EFFECT)
-    {
-        if (gBattleWeather & B_WEATHER_ANY)
-            gBattleScripting.dmgMultiplier = 2;
-        if (gBattleWeather & B_WEATHER_RAIN)
-            *(&gBattleStruct->dynamicMoveType) = TYPE_WATER | F_DYNAMIC_TYPE_SET;
-        else if (gBattleWeather & B_WEATHER_SANDSTORM)
-            *(&gBattleStruct->dynamicMoveType) = TYPE_ROCK | F_DYNAMIC_TYPE_SET;
-        else if (gBattleWeather & B_WEATHER_SUN)
-            *(&gBattleStruct->dynamicMoveType) = TYPE_FIRE | F_DYNAMIC_TYPE_SET;
-        else if (gBattleWeather & B_WEATHER_HAIL)
-            *(&gBattleStruct->dynamicMoveType) = TYPE_ICE | F_DYNAMIC_TYPE_SET;
-        else
-            *(&gBattleStruct->dynamicMoveType) = TYPE_NORMAL | F_DYNAMIC_TYPE_SET;
-    }
-
+    SetWeatherBallTypeAndMultiplier();
     gBattlescriptCurrInstr++;
 }
 
