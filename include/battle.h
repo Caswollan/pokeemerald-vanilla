@@ -463,10 +463,6 @@ STATIC_ASSERT(sizeof(((struct BattleStruct *)0)->palaceFlags) * 8 >= MAX_BATTLER
         typeArg = gBattleMoves[move].type;                            \
 }
 
-// Gen 3 type-based physical/special split. Modified: Dark is physical, Ghost is special.
-#define IS_TYPE_PHYSICAL(moveType) (((moveType) < TYPE_MYSTERY && (moveType) != TYPE_GHOST) || (moveType) == TYPE_DARK)
-#define IS_TYPE_SPECIAL(moveType) (((moveType) > TYPE_MYSTERY && (moveType) != TYPE_DARK) || (moveType) == TYPE_GHOST)
-
 // Per-move physical/special split
 #define IS_MOVE_PHYSICAL(move) (gBattleMoves[move].split == SPLIT_PHYSICAL)
 #define IS_MOVE_SPECIAL(move)  (gBattleMoves[move].split == SPLIT_SPECIAL)
