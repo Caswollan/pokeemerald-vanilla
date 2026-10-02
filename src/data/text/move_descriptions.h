@@ -1126,8 +1126,8 @@ static const u8 sYawnDescription[] = _(
     "then sleeping next turn.");
 
 static const u8 sKnockOffDescription[] = _(
-    "Knocks down the foe's held\n"
-    "item to prevent its use.");
+    "Knocks off the foe's item.\n"
+    "More damage if it has one.");
 
 static const u8 sEndeavorDescription[] = _(
     "Gains power if the user's HP\n"

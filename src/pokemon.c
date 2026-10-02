@@ -3132,6 +3132,11 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     else
         gBattleMovePower = powerOverride;
 
+    // Knock Off deals 30% more damage if the target is holding an item it can lose
+    if (gBattleMoves[move].effect == EFFECT_KNOCK_OFF && defender->item != ITEM_NONE
+     && defender->ability != ABILITY_STICKY_HOLD)
+        gBattleMovePower = gBattleMovePower * 130 / 100;
+
     if (!typeOverride)
         type = gBattleMoves[move].type;
     else
