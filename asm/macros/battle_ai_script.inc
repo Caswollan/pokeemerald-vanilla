@@ -551,6 +551,23 @@
 	.4byte \param2
 	.endm
 
+	@ Physical/special split: category of the move stored in the result
+	.macro get_move_split_from_result
+	.byte 0x63
+	.endm
+
+	@ Jumps if the target's Attack is at least as high as its Sp. Attack
+	.macro if_target_physical_attacker ptr:req
+	.byte 0x64
+	.4byte \ptr
+	.endm
+
+	@ Jumps if the target's Sp. Attack is at least as high as its Attack
+	.macro if_target_special_attacker ptr:req
+	.byte 0x65
+	.4byte \ptr
+	.endm
+
 @ useful script macros
 	.macro get_curr_move_type
 	get_type AI_TYPE_MOVE

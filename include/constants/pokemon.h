@@ -208,6 +208,11 @@
 #define EV_ITEM_RAISE_LIMIT 100
 
 // Battle move flags
+// Move category (physical/special split): each move has its own category instead of deriving it from its type
+#define SPLIT_PHYSICAL  0
+#define SPLIT_SPECIAL   1
+#define SPLIT_STATUS    2
+
 #define FLAG_MAKES_CONTACT          (1 << 0)
 #define FLAG_PROTECT_AFFECTED       (1 << 1)
 #define FLAG_MAGIC_COAT_AFFECTED    (1 << 2)

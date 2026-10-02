@@ -149,6 +149,9 @@ static void Cmd_is_of_type(void);
 static void Cmd_if_target_is_ally(void);
 static void Cmd_if_flash_fired(void);
 static void Cmd_if_holds_item(void);
+static void Cmd_get_move_split_from_result(void);
+static void Cmd_if_target_physical_attacker(void);
+static void Cmd_if_target_special_attacker(void);
 
 // ewram
 EWRAM_DATA const u8 *gAIScriptPtr = NULL;
@@ -258,6 +261,9 @@ static const BattleAICmdFunc sBattleAICmdTable[] =
     Cmd_check_ability,                              // 0x60
     Cmd_if_flash_fired,                             // 0x61
     Cmd_if_holds_item,                              // 0x62
+    Cmd_get_move_split_from_result,                 // 0x63
+    Cmd_if_target_physical_attacker,                // 0x64
+    Cmd_if_target_special_attacker,                 // 0x65
 };
 
 // For the purposes of determining the most powerful move in a moveset, these
@@ -2153,6 +2159,34 @@ static void Cmd_get_move_type_from_result(void)
     AI_THINKING_STRUCT->funcResult = gBattleMoves[AI_THINKING_STRUCT->funcResult].type;
 
     gAIScriptPtr += 1;
+}
+
+// Physical/special split: category of the move stored in the result
+static void Cmd_get_move_split_from_result(void)
+{
+    AI_THINKING_STRUCT->funcResult = gBattleMoves[AI_THINKING_STRUCT->funcResult].split;
+
+    gAIScriptPtr += 1;
+}
+
+// Jumps if the target's Attack is at least as high as its Sp. Attack.
+// Replaces the old "is the target of a physical type" checks.
+static void Cmd_if_target_physical_attacker(void)
+{
+    if (gBattleMons[gBattlerTarget].attack >= gBattleMons[gBattlerTarget].spAttack)
+        gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 1);
+    else
+        gAIScriptPtr += 5;
+}
+
+// Jumps if the target's Sp. Attack is at least as high as its Attack.
+// Replaces the old "is the target of a special type" checks.
+static void Cmd_if_target_special_attacker(void)
+{
+    if (gBattleMons[gBattlerTarget].spAttack >= gBattleMons[gBattlerTarget].attack)
+        gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 1);
+    else
+        gAIScriptPtr += 5;
 }
 
 static void Cmd_get_move_power_from_result(void)

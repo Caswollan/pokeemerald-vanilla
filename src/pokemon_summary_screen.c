@@ -117,7 +117,8 @@ enum
     SPRITE_ARR_ID_TYPE, // 2 for mon types, 5 for move types(4 moves and 1 to learn), used interchangeably, because mon types and move types aren't shown on the same screen
     SPRITE_ARR_ID_MOVE_SELECTOR1 = SPRITE_ARR_ID_TYPE + TYPE_ICON_SPRITE_COUNT, // 10 sprites that make up the selector
     SPRITE_ARR_ID_MOVE_SELECTOR2 = SPRITE_ARR_ID_MOVE_SELECTOR1 + MOVE_SELECTOR_SPRITES_COUNT,
-    SPRITE_ARR_ID_COUNT = SPRITE_ARR_ID_MOVE_SELECTOR2 + MOVE_SELECTOR_SPRITES_COUNT
+    SPRITE_ARR_ID_CATEGORY = SPRITE_ARR_ID_MOVE_SELECTOR2 + MOVE_SELECTOR_SPRITES_COUNT, // physical/special/status icon of the selected move
+    SPRITE_ARR_ID_COUNT
 };
 
 #define TILE_EMPTY_APPEAL_HEART  0x1039
@@ -283,6 +284,8 @@ static void PrintContestMoves(void);
 static void Task_PrintContestMoves(u8);
 static void PrintContestMoveDescription(u8);
 static void PrintMoveDetails(u16);
+static void ShowCategoryIcon(u16);
+static void HideCategoryIcon(void);
 static void PrintNewMoveDetailsOrCancelText(void);
 static void AddAndFillMoveNamesWindow(void);
 static void SwapMovesNamesPP(u8, u8);
@@ -769,6 +772,11 @@ static const u8 sMovesPPLayout[] = _("{PP}{DYNAMIC 0}/{DYNAMIC 1}");
 #define TAG_MON_STATUS 30001
 #define TAG_MOVE_TYPES 30002
 #define TAG_MON_MARKINGS 30003
+#define TAG_CATEGORY_ICONS 30004
+
+// Screen position (center) of the move category icon
+#define CATEGORY_ICON_X 50
+#define CATEGORY_ICON_Y 129
 
 static const struct OamData sOamData_MoveTypes =
 {
@@ -902,6 +910,65 @@ static const union AnimCmd *const sSpriteAnimTable_MoveTypes[NUMBER_OF_MON_TYPES
     sSpriteAnim_CategoryCute,
     sSpriteAnim_CategorySmart,
     sSpriteAnim_CategoryTough,
+};
+
+// Move category icons (physical/special/status), shown next to POWER when a move is selected
+static const u8 sCategoryIcons_Gfx[] = INCGFX_U8("graphics/interface/category_icons.png", ".4bpp");
+static const u16 sCategoryIcons_Pal[] = INCGFX_U16("graphics/interface/category_icons.png", ".gbapal");
+
+static const struct OamData sOamData_CategoryIcons =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(16x16),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+static const struct SpriteSheet sSpriteSheet_CategoryIcons =
+{
+    .data = sCategoryIcons_Gfx,
+    .size = 16 * 16 * 3 / 2,
+    .tag = TAG_CATEGORY_ICONS
+};
+static const struct SpritePalette sSpritePal_CategoryIcons =
+{
+    .data = sCategoryIcons_Pal,
+    .tag = TAG_CATEGORY_ICONS
+};
+static const union AnimCmd sSpriteAnim_CategoryPhysical[] = {
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END
+};
+static const union AnimCmd sSpriteAnim_CategorySpecial[] = {
+    ANIMCMD_FRAME(4, 0),
+    ANIMCMD_END
+};
+static const union AnimCmd sSpriteAnim_CategoryStatus[] = {
+    ANIMCMD_FRAME(8, 0),
+    ANIMCMD_END
+};
+static const union AnimCmd *const sSpriteAnimTable_CategoryIcons[] = {
+    [SPLIT_PHYSICAL] = sSpriteAnim_CategoryPhysical,
+    [SPLIT_SPECIAL]  = sSpriteAnim_CategorySpecial,
+    [SPLIT_STATUS]   = sSpriteAnim_CategoryStatus,
+};
+static const struct SpriteTemplate sSpriteTemplate_CategoryIcons =
+{
+    .tileTag = TAG_CATEGORY_ICONS,
+    .paletteTag = TAG_CATEGORY_ICONS,
+    .oam = &sOamData_CategoryIcons,
+    .anims = sSpriteAnimTable_CategoryIcons,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
 };
 
 static const struct CompressedSpriteSheet sSpriteSheet_MoveTypes =
@@ -1382,10 +1449,12 @@ static bool8 DecompressGraphics(void)
         break;
     case 9:
         LoadCompressedSpriteSheet(&sStatusIconsSpriteSheet);
+        LoadSpriteSheet(&sSpriteSheet_CategoryIcons);
         sMonSummaryScreen->switchCounter++;
         break;
     case 10:
         LoadCompressedSpritePalette(&sStatusIconsSpritePalette);
+        LoadSpritePalette(&sSpritePal_CategoryIcons);
         sMonSummaryScreen->switchCounter++;
         break;
     case 11:
@@ -3717,19 +3786,44 @@ static void PrintMoveDetails(u16 move)
         {
             PrintMovePowerAndAccuracy(move);
             PrintTextOnWindow(windowId, gMoveDescriptionPointers[move - 1], 6, 1, 0, 0);
+            ShowCategoryIcon(move);
         }
         else
         {
             PrintTextOnWindow(windowId, gContestEffectDescriptionPointers[gContestMoves[move].effect], 6, 1, 0, 0);
+            HideCategoryIcon();
         }
         PutWindowTilemap(windowId);
     }
     else
     {
         ClearWindowTilemap(windowId);
+        HideCategoryIcon();
     }
 
     ScheduleBgCopyTilemapToVram(0);
+}
+
+// Shows the physical/special/status icon of the given move next to POWER
+static void ShowCategoryIcon(u16 move)
+{
+    u8 *spriteId = &sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_CATEGORY];
+
+    if (*spriteId == SPRITE_NONE)
+        *spriteId = CreateSprite(&sSpriteTemplate_CategoryIcons, CATEGORY_ICON_X, CATEGORY_ICON_Y, 0);
+    if (*spriteId == MAX_SPRITES)
+    {
+        *spriteId = SPRITE_NONE;
+        return;
+    }
+    StartSpriteAnim(&gSprites[*spriteId], gBattleMoves[move].split);
+    gSprites[*spriteId].invisible = FALSE;
+}
+
+static void HideCategoryIcon(void)
+{
+    if (sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_CATEGORY] != SPRITE_NONE)
+        SetSpriteInvisibility(SPRITE_ARR_ID_CATEGORY, TRUE);
 }
 
 static void PrintNewMoveDetailsOrCancelText(void)

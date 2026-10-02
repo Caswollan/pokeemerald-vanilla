@@ -101,6 +101,7 @@ static void MoveSelectionDestroyCursorAt(u8);
 static void MoveSelectionDisplayPPNumber(void);
 static void MoveSelectionDisplayPPString(void);
 static void MoveSelectionDisplayMoveType(void);
+static void MoveSelectionDisplayCategoryIcon(void);
 static void MoveSelectionDisplayMoveNames(void);
 static void HandleMoveSwitching(void);
 static void SwitchIn_HandleSoundAndEnd(void);
@@ -1505,6 +1506,21 @@ static void MoveSelectionDisplayMoveType(void)
 
     StringCopy(txtPtr, gTypeNames[gBattleMoves[moveInfo->moves[gMoveSelectionCursor[gActiveBattler]]].type]);
     BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_MOVE_TYPE);
+    MoveSelectionDisplayCategoryIcon();
+}
+
+// Draws the physical/special/status icon of the selected move between "PP" and the PP count
+static void MoveSelectionDisplayCategoryIcon(void)
+{
+    static const u16 sCategoryIcons_Pal[] = INCGFX_U16("graphics/battle_interface/category_icons_menu.png", ".gbapal");
+    static const u8 sCategoryIcons_Gfx[] = INCGFX_U8("graphics/battle_interface/category_icons_menu.png", ".4bpp");
+    struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleBufferA[gActiveBattler][4]);
+    u8 split = gBattleMoves[moveInfo->moves[gMoveSelectionCursor[gActiveBattler]]].split;
+
+    LoadPalette(sCategoryIcons_Pal, BG_PLTT_ID(10), PLTT_SIZE_4BPP);
+    BlitBitmapToWindow(B_WIN_DUMMY, &sCategoryIcons_Gfx[split * 0x80], 0, 0, 16, 16); // each 16x16 icon is 0x80 bytes
+    PutWindowTilemap(B_WIN_DUMMY);
+    CopyWindowToVram(B_WIN_DUMMY, COPYWIN_FULL);
 }
 
 static void MoveSelectionCreateCursorAt(u8 cursorPosition, u8 baseTileNum)
