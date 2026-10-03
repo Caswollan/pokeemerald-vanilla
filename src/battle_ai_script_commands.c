@@ -49,6 +49,7 @@ extern const u8 *const gBattleAI_ScriptsTable[];
 static u8 ChooseMoveOrAction_Singles(void);
 static u8 ChooseMoveOrAction_Doubles(void);
 static void RecordLastUsedMoveByTarget(void);
+static void BattleAI_RunScripts(void);
 static void BattleAI_DoAIProcessing(void);
 static void AIStackPushVar(const u8 *);
 static bool8 AIStackPop(void);
@@ -396,13 +397,9 @@ u8 BattleAI_ChooseMoveOrAction(void)
     return ret;
 }
 
-static u8 ChooseMoveOrAction_Singles(void)
+// Runs every AI script enabled by the trainer's AI flags on all the moves
+static void BattleAI_RunScripts(void)
 {
-    u8 currentMoveArray[MAX_MON_MOVES];
-    u8 consideredMoveArray[MAX_MON_MOVES];
-    u8 numOfBestMoves;
-    s32 i;
-
     RecordLastUsedMoveByTarget();
 
     while (AI_THINKING_STRUCT->aiFlags != 0)
@@ -416,6 +413,36 @@ static u8 ChooseMoveOrAction_Singles(void)
         AI_THINKING_STRUCT->aiLogicId++;
         AI_THINKING_STRUCT->movesetIndex = 0;
     }
+}
+
+// Scores the active battler's moves like BattleAI_ChooseMoveOrAction and returns the best score.
+// Used by the switch AI, which decides before a move is chosen.
+s32 AI_GetBestMoveScore(void)
+{
+    u16 savedCurrentMove = gCurrentMove;
+    s32 i, bestScore = 0;
+
+    BattleAI_SetupAIData(ALL_MOVES_MASK);
+    BattleAI_RunScripts();
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        if (gBattleMons[sBattler_AI].moves[i] != MOVE_NONE && AI_THINKING_STRUCT->score[i] > bestScore)
+            bestScore = AI_THINKING_STRUCT->score[i];
+    }
+
+    gCurrentMove = savedCurrentMove;
+    return bestScore;
+}
+
+static u8 ChooseMoveOrAction_Singles(void)
+{
+    u8 currentMoveArray[MAX_MON_MOVES];
+    u8 consideredMoveArray[MAX_MON_MOVES];
+    u8 numOfBestMoves;
+    s32 i;
+
+    BattleAI_RunScripts();
 
     // Check special AI actions.
     if (AI_THINKING_STRUCT->aiAction & AI_ACTION_FLEE)

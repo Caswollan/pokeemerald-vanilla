@@ -9,6 +9,7 @@
 void BattleAI_HandleItemUseBeforeAISetup(u8 defaultScoreMoves);
 void BattleAI_SetupAIData(u8 defaultScoreMoves);
 u8 BattleAI_ChooseMoveOrAction(void);
+s32 AI_GetBestMoveScore(void);
 void ClearBattlerMoveHistory(u8 battler);
 void RecordAbilityBattle(u8 battler, u8 abilityId);
 void ClearBattlerAbilityHistory(u8 battler);
