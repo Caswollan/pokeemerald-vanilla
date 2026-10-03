@@ -2,6 +2,8 @@
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_ai_script_commands.h"
+#include "battle_main.h"
+#include "battle_script_commands.h"
 #include "battle_factory.h"
 #include "battle_setup.h"
 #include "data.h"
@@ -92,16 +94,16 @@ static void Cmd_if_equal_(void);
 static void Cmd_if_not_equal_(void);
 static void Cmd_if_user_goes(void);
 static void Cmd_if_user_doesnt_go(void);
-static void Cmd_nop_2A(void);
-static void Cmd_nop_2B(void);
+static void Cmd_get_hits_to_ko_user(void);
+static void Cmd_get_hits_to_ko_target(void);
 static void Cmd_count_usable_party_mons(void);
 static void Cmd_get_considered_move(void);
 static void Cmd_get_considered_move_effect(void);
 static void Cmd_get_ability(void);
 static void Cmd_get_highest_type_effectiveness(void);
 static void Cmd_if_type_effectiveness(void);
-static void Cmd_nop_32(void);
-static void Cmd_nop_33(void);
+static void Cmd_if_considered_move_has_priority(void);
+static void Cmd_if_cleaner_ko_move_available(void);
 static void Cmd_if_status_in_party(void);
 static void Cmd_if_status_not_in_party(void);
 static void Cmd_get_weather(void);
@@ -204,16 +206,16 @@ static const BattleAICmdFunc sBattleAICmdTable[] =
     Cmd_if_not_equal_,                              // 0x27
     Cmd_if_user_goes,                               // 0x28
     Cmd_if_user_doesnt_go,                          // 0x29
-    Cmd_nop_2A,                                     // 0x2A
-    Cmd_nop_2B,                                     // 0x2B
+    Cmd_get_hits_to_ko_user,                        // 0x2A
+    Cmd_get_hits_to_ko_target,                      // 0x2B
     Cmd_count_usable_party_mons,                    // 0x2C
     Cmd_get_considered_move,                        // 0x2D
     Cmd_get_considered_move_effect,                 // 0x2E
     Cmd_get_ability,                                // 0x2F
     Cmd_get_highest_type_effectiveness,             // 0x30
     Cmd_if_type_effectiveness,                      // 0x31
-    Cmd_nop_32,                                     // 0x32
-    Cmd_nop_33,                                     // 0x33
+    Cmd_if_considered_move_has_priority,            // 0x32
+    Cmd_if_cleaner_ko_move_available,               // 0x33
     Cmd_if_status_in_party,                         // 0x34
     Cmd_if_status_not_in_party,                     // 0x35
     Cmd_get_weather,                                // 0x36
@@ -704,10 +706,14 @@ static void Cmd_if_random_not_equal(void)
 
 static void Cmd_score(void)
 {
-    AI_THINKING_STRUCT->score[AI_THINKING_STRUCT->movesetIndex] += gAIScriptPtr[1]; // Add the result to the array of the move consider's score.
+    s32 score = AI_THINKING_STRUCT->score[AI_THINKING_STRUCT->movesetIndex] + (s8)gAIScriptPtr[1];
 
-    if (AI_THINKING_STRUCT->score[AI_THINKING_STRUCT->movesetIndex] < 0) // If the score is negative, flatten it to 0.
-        AI_THINKING_STRUCT->score[AI_THINKING_STRUCT->movesetIndex] = 0;
+    // Keep the score in the 0-127 range
+    if (score < 0)
+        score = 0;
+    else if (score > 127)
+        score = 127;
+    AI_THINKING_STRUCT->score[AI_THINKING_STRUCT->movesetIndex] = score;
 
     gAIScriptPtr += 2; // AI return.
 }
@@ -1207,6 +1213,9 @@ static void Cmd_get_how_powerful_move_is(void)
             {
                 moveDmgs[checkedMove] = AI_CalcMoveDamage(gBattleMons[sBattler_AI].moves[checkedMove], sBattler_AI, gBattlerTarget,
                                                           AI_THINKING_STRUCT->simulatedRNG[checkedMove]);
+                // All moves that KO count as the most powerful
+                if (moveDmgs[checkedMove] > gBattleMons[gBattlerTarget].hp)
+                    moveDmgs[checkedMove] = gBattleMons[gBattlerTarget].hp;
             }
             else
             {
@@ -1261,9 +1270,18 @@ static void Cmd_if_not_equal_(void) // Same as if_not_equal.
         gAIScriptPtr += 6;
 }
 
+// 0 if the AI moves first, 1 if the target does. Speed ties count as the AI being faster.
+static u8 GetAITurnOrder(void)
+{
+    if (GetBattlerTurnOrderSpeed(sBattler_AI) >= GetBattlerTurnOrderSpeed(gBattlerTarget))
+        return 0;
+    else
+        return 1;
+}
+
 static void Cmd_if_user_goes(void)
 {
-    if (GetWhoStrikesFirst(sBattler_AI, gBattlerTarget, TRUE) == gAIScriptPtr[1])
+    if (GetAITurnOrder() == gAIScriptPtr[1])
         gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 2);
     else
         gAIScriptPtr += 6;
@@ -1271,18 +1289,24 @@ static void Cmd_if_user_goes(void)
 
 static void Cmd_if_user_doesnt_go(void)
 {
-    if (GetWhoStrikesFirst(sBattler_AI, gBattlerTarget, TRUE) != gAIScriptPtr[1])
+    if (GetAITurnOrder() != gAIScriptPtr[1])
         gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 2);
     else
         gAIScriptPtr += 6;
 }
 
-static void Cmd_nop_2A(void)
+// Number of hits the target needs to KO the AI with its best move (0 = it can't damage it)
+static void Cmd_get_hits_to_ko_user(void)
 {
+    AI_THINKING_STRUCT->funcResult = AI_GetHitsToKO(gBattlerTarget, sBattler_AI);
+    gAIScriptPtr += 1;
 }
 
-static void Cmd_nop_2B(void)
+// Number of hits the AI needs to KO the target with its best move (0 = it can't damage it)
+static void Cmd_get_hits_to_ko_target(void)
 {
+    AI_THINKING_STRUCT->funcResult = AI_GetHitsToKO(sBattler_AI, gBattlerTarget);
+    gAIScriptPtr += 1;
 }
 
 static void Cmd_count_usable_party_mons(void)
@@ -1553,12 +1577,58 @@ static void Cmd_if_type_effectiveness(void)
         gAIScriptPtr += 6;
 }
 
-static void Cmd_nop_32(void)
+static void Cmd_if_considered_move_has_priority(void)
 {
+    if (gBattleMoves[AI_THINKING_STRUCT->moveConsidered].priority > 0)
+        gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 1);
+    else
+        gAIScriptPtr += 5;
 }
 
-static void Cmd_nop_33(void)
+// Accuracy 0 means the move never misses
+static u16 GetMoveAccuracyForAI(u16 move)
 {
+    if (gBattleMoves[move].accuracy == 0)
+        return 101;
+    return gBattleMoves[move].accuracy;
+}
+
+// TRUE if 'move' has fewer drawbacks than 'than': no recharge turn, then higher accuracy
+static bool32 IsCleanerMove(u16 move, u16 than)
+{
+    bool32 recharge = (gBattleMoves[move].effect == EFFECT_RECHARGE);
+    bool32 thanRecharge = (gBattleMoves[than].effect == EFFECT_RECHARGE);
+
+    if (recharge != thanRecharge)
+        return !recharge;
+    return GetMoveAccuracyForAI(move) > GetMoveAccuracyForAI(than);
+}
+
+// Jumps if another usable move of the AI also KOs the target and is cleaner than the considered move
+static void Cmd_if_cleaner_ko_move_available(void)
+{
+    s32 i;
+    u16 consideredMove = AI_THINKING_STRUCT->moveConsidered;
+    u8 unusableMoves = CheckMoveLimitations(sBattler_AI, 0, MOVE_LIMITATIONS_ALL);
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        u16 move = gBattleMons[sBattler_AI].moves[i];
+
+        if (move == MOVE_NONE || move == consideredMove || (unusableMoves & gBitTable[i]))
+            continue;
+        if (!AI_IsDamagingMove(move) || gBattleMoves[move].effect == EFFECT_EXPLOSION)
+            continue;
+        if (!IsCleanerMove(move, consideredMove))
+            continue;
+        if (AI_CalcMoveDamage(move, sBattler_AI, gBattlerTarget, AI_THINKING_STRUCT->simulatedRNG[i]) >= gBattleMons[gBattlerTarget].hp)
+        {
+            gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 1);
+            return;
+        }
+    }
+
+    gAIScriptPtr += 5;
 }
 
 static void Cmd_if_status_in_party(void)

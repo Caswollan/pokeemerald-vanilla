@@ -251,11 +251,13 @@
 	.4byte \param1
 	.endm
 
-	.macro nop_2A
+	@ Hits the target needs to KO the AI (0 = it can't damage it)
+	.macro get_hits_to_ko_user
 	.byte 0x2a
 	.endm
 
-	.macro nop_2B
+	@ Hits the AI needs to KO the target (0 = it can't damage it)
+	.macro get_hits_to_ko_target
 	.byte 0x2b
 	.endm
 
@@ -287,12 +289,15 @@
 	.4byte \param1
 	.endm
 
-	.macro nop_32
+	.macro if_considered_move_has_priority ptr:req
 	.byte 0x32
+	.4byte \ptr
 	.endm
 
-	.macro nop_33
+	@ Jumps if another usable move also KOs the target with fewer drawbacks (no recharge, higher accuracy)
+	.macro if_cleaner_ko_move_available ptr:req
 	.byte 0x33
+	.4byte \ptr
 	.endm
 
 	.macro if_status_in_party battler:req, status1:req, param2:req
@@ -611,6 +616,11 @@
 
 	.macro if_target_faster ptr:req
 	if_user_goes 1, \ptr
+	.endm
+
+	.macro if_target_can_ko_user ptr:req
+	get_hits_to_ko_user
+	if_equal 1, \ptr
 	.endm
 
 	.macro if_user_faster ptr:req

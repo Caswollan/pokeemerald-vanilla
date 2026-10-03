@@ -2502,25 +2502,86 @@ AI_CV_DragonDance2:
 AI_CV_DragonDance_End:
 	end
 
+@ Damaging moves, Run & Bun style. Status moves keep the base score, which counts as
+@ "as good as the strongest attack": the strongest move gets +0 (+2 20% of the time),
+@ the other damaging moves -6, a KO +6 (AI faster or priority move) or +3 (AI slower).
 AI_TryToFaint:
 	if_target_is_ally AI_Ret
-	if_can_faint AI_TryToFaint_TryToEncourageQuickAttack
 	get_how_powerful_move_is
-	if_equal MOVE_NOT_MOST_POWERFUL, Score_Minus1
-	if_type_effectiveness AI_EFFECTIVENESS_x4, AI_TryToFaint_DoubleSuperEffective
+	if_equal MOVE_POWER_OTHER, AI_TryToFaint_CheckKO
+	if_equal MOVE_MOST_POWERFUL, AI_TryToFaint_Strongest
+	@ Not the strongest damaging move, but some are worth using anyway
+	if_effect EFFECT_TRAP, AI_TryToFaint_Strongest
+	if_effect EFFECT_FUTURE_SIGHT, AI_TryToFaint_FutureSight
+	if_effect EFFECT_FAKE_OUT, AI_TryToFaint_CheckKO
+	if_move MOVE_ICY_WIND, AI_TryToFaint_SpeedDown
+	if_move MOVE_ROCK_TOMB, AI_TryToFaint_SpeedDown
+	if_move MOVE_MUD_SHOT, AI_TryToFaint_SpeedDown
+	score -6
+	goto AI_TryToFaint_CheckKO
+
+AI_TryToFaint_Strongest:
+	if_random_less_than 205, AI_TryToFaint_CheckKO
+	score +2
+	goto AI_TryToFaint_CheckKO
+
+@ Icy Wind, Rock Tomb, Mud Shot: worth it if the AI is slower and the target's speed can drop
+AI_TryToFaint_SpeedDown:
+	if_user_faster AI_TryToFaint_SpeedDownWeak
+	get_ability AI_TARGET
+	if_equal ABILITY_CLEAR_BODY, AI_TryToFaint_SpeedDownWeak
+	if_equal ABILITY_WHITE_SMOKE, AI_TryToFaint_SpeedDownWeak
+	goto AI_TryToFaint_CheckKO
+
+AI_TryToFaint_SpeedDownWeak:
+	score -1
+	goto AI_TryToFaint_CheckKO
+
+@ Future Sight: like a status move, +2 if the AI is faster and the target KOs it
+AI_TryToFaint_FutureSight:
+	if_target_faster AI_TryToFaint_CheckKO
+	if_target_can_ko_user AI_TryToFaint_FutureSightUp
+	goto AI_TryToFaint_CheckKO
+
+AI_TryToFaint_FutureSightUp:
+	score +2
+AI_TryToFaint_CheckKO:
+	if_effect EFFECT_EXPLOSION, AI_TryToFaint_Priority
+	if_can_faint AI_TryToFaint_KO
+	goto AI_TryToFaint_Priority
+
+AI_TryToFaint_KO:
+	if_cleaner_ko_move_available AI_TryToFaint_KOWithDrawback
+AI_TryToFaint_KOBonus:
+	if_considered_move_has_priority AI_TryToFaint_FastKO
+	if_target_faster AI_TryToFaint_SlowKO
+AI_TryToFaint_FastKO:
+	score +6
+	goto AI_TryToFaint_Priority
+
+AI_TryToFaint_SlowKO:
+	score +3
+	goto AI_TryToFaint_Priority
+
+@ Another move KOs too without a recharge turn or with better accuracy: prefer that one
+AI_TryToFaint_KOWithDrawback:
+	score -3
+	goto AI_TryToFaint_KOBonus
+
+@ The AI is slower and the target KOs it: attacking priority moves hit first
+AI_TryToFaint_Priority:
+	if_considered_move_has_priority AI_TryToFaint_PriorityCheck
 	end
 
-AI_TryToFaint_DoubleSuperEffective:
-	if_random_less_than 80, AI_TryToFaint_End
-	score +2
+AI_TryToFaint_PriorityCheck:
+	get_considered_move_power
+	if_equal 0, AI_TryToFaint_End
+	if_user_faster AI_TryToFaint_End
+	if_target_can_ko_user AI_TryToFaint_PriorityUp
 	end
 
-AI_TryToFaint_TryToEncourageQuickAttack:
-	if_effect EFFECT_EXPLOSION, AI_TryToFaint_End
-	if_not_effect EFFECT_QUICK_ATTACK, AI_TryToFaint_ScoreUp4
-	score +2
-AI_TryToFaint_ScoreUp4:
-	score +4
+AI_TryToFaint_PriorityUp:
+	score +11
 AI_TryToFaint_End:
 	end
 
