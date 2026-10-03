@@ -1,0 +1,1296 @@
+[
+  {
+    "id": 1,
+    "ability": "STENCH",
+    "name": "Stench",
+    "gameName": "STENCH",
+    "description": "Helps repel wild POKéMON.",
+    "effect": "Halves the wild encounter rate when the Pokemon leads the party. No effect in battle.",
+    "pokemon": [
+      "GRIMER",
+      "MUK"
+    ]
+  },
+  {
+    "id": 2,
+    "ability": "DRIZZLE",
+    "name": "Drizzle",
+    "gameName": "DRIZZLE",
+    "description": "Summons rain in battle.",
+    "effect": "Summons rain for 8 turns when the Pokemon enters battle.",
+    "pokemon": [
+      "PELIPPER",
+      "KYOGRE"
+    ]
+  },
+  {
+    "id": 3,
+    "ability": "SPEED_BOOST",
+    "name": "Speed Boost",
+    "gameName": "SPEED BOOST",
+    "description": "Gradually boosts SPEED.",
+    "effect": "Raises Speed by one stage at the end of each turn.",
+    "pokemon": [
+      "YANMA",
+      "NINJASK",
+      "CARVANHA",
+      "SHARPEDO"
+    ]
+  },
+  {
+    "id": 4,
+    "ability": "BATTLE_ARMOR",
+    "name": "Battle Armor",
+    "gameName": "BATTLE ARMOR",
+    "description": "Blocks critical hits.",
+    "effect": "The Pokemon can't be hit by critical hits.",
+    "pokemon": [
+      "KABUTO",
+      "KABUTOPS",
+      "ANORITH",
+      "ARMALDO"
+    ]
+  },
+  {
+    "id": 5,
+    "ability": "STURDY",
+    "name": "Sturdy",
+    "gameName": "STURDY",
+    "description": "Survives KOs from full HP.",
+    "effect": "At full HP the Pokemon survives any hit with 1 HP. Immune to one-hit KO moves.",
+    "pokemon": [
+      "GEODUDE",
+      "GRAVELER",
+      "GOLEM",
+      "MAGNEMITE",
+      "MAGNETON",
+      "ONIX",
+      "SUDOWOODO",
+      "PINECO",
+      "FORRETRESS",
+      "STEELIX",
+      "SHUCKLE",
+      "SKARMORY",
+      "DONPHAN",
+      "NOSEPASS",
+      "ARON",
+      "LAIRON",
+      "AGGRON"
+    ]
+  },
+  {
+    "id": 6,
+    "ability": "DAMP",
+    "name": "Damp",
+    "gameName": "DAMP",
+    "description": "Prevents self-destruction.",
+    "effect": "Prevents Self-Destruct and Explosion from being used by any Pokemon on the field.",
+    "pokemon": [
+      "PSYDUCK",
+      "GOLDUCK",
+      "POLIWAG",
+      "POLIWHIRL",
+      "POLIWRATH",
+      "POLITOED",
+      "WOOPER",
+      "QUAGSIRE"
+    ]
+  },
+  {
+    "id": 7,
+    "ability": "LIMBER",
+    "name": "Limber",
+    "gameName": "LIMBER",
+    "description": "Prevents paralysis.",
+    "effect": "The Pokemon can't be paralyzed.",
+    "pokemon": [
+      "PERSIAN",
+      "HITMONLEE",
+      "DITTO"
+    ]
+  },
+  {
+    "id": 8,
+    "ability": "SAND_VEIL",
+    "name": "Sand Veil",
+    "gameName": "SAND VEIL",
+    "description": "Ups evasion in a sandstorm.",
+    "effect": "Raises evasion in a sandstorm and prevents sandstorm damage.",
+    "pokemon": [
+      "SANDSHREW",
+      "SANDSLASH",
+      "DIGLETT",
+      "DUGTRIO",
+      "GLIGAR"
+    ]
+  },
+  {
+    "id": 9,
+    "ability": "STATIC",
+    "name": "Static",
+    "gameName": "STATIC",
+    "description": "Paralyzes on contact.",
+    "effect": "1/3 chance to paralyze a Pokemon that makes contact with it.",
+    "pokemon": [
+      "PIKACHU",
+      "RAICHU",
+      "VOLTORB",
+      "ELECTRODE",
+      "ELECTABUZZ",
+      "PICHU",
+      "MAREEP",
+      "FLAAFFY",
+      "AMPHAROS",
+      "ELEKID",
+      "ELECTRIKE",
+      "MANECTRIC"
+    ]
+  },
+  {
+    "id": 10,
+    "ability": "VOLT_ABSORB",
+    "name": "Volt Absorb",
+    "gameName": "VOLT ABSORB",
+    "description": "Turns electricity into HP.",
+    "effect": "Electric moves restore 1/4 of max HP instead of dealing damage.",
+    "pokemon": [
+      "JOLTEON",
+      "CHINCHOU",
+      "LANTURN"
+    ]
+  },
+  {
+    "id": 11,
+    "ability": "WATER_ABSORB",
+    "name": "Water Absorb",
+    "gameName": "WATER ABSORB",
+    "description": "Changes water into HP.",
+    "effect": "Water moves restore 1/4 of max HP instead of dealing damage.",
+    "pokemon": [
+      "POLIWAG",
+      "POLIWHIRL",
+      "POLIWRATH",
+      "LAPRAS",
+      "VAPOREON",
+      "CHINCHOU",
+      "LANTURN",
+      "POLITOED",
+      "WOOPER",
+      "QUAGSIRE",
+      "MANTINE",
+      "CACNEA",
+      "CACTURNE"
+    ]
+  },
+  {
+    "id": 12,
+    "ability": "OBLIVIOUS",
+    "name": "Oblivious",
+    "gameName": "OBLIVIOUS",
+    "description": "Prevents attraction.",
+    "effect": "The Pokemon can't be infatuated.",
+    "pokemon": [
+      "SLOWPOKE",
+      "SLOWBRO",
+      "JYNX",
+      "SLOWKING",
+      "SMOOCHUM",
+      "ILLUMISE",
+      "WAILMER",
+      "WAILORD",
+      "BARBOACH",
+      "WHISCASH"
+    ]
+  },
+  {
+    "id": 13,
+    "ability": "CLOUD_NINE",
+    "name": "Cloud Nine",
+    "gameName": "CLOUD NINE",
+    "description": "Negates weather effects.",
+    "effect": "Cancels the effects of the weather.",
+    "pokemon": [
+      "PSYDUCK",
+      "GOLDUCK"
+    ]
+  },
+  {
+    "id": 14,
+    "ability": "COMPOUND_EYES",
+    "name": "Compound Eyes",
+    "gameName": "COMPOUNDEYES",
+    "description": "Raises accuracy.",
+    "effect": "Raises the accuracy of the Pokemon's moves by 30%.",
+    "pokemon": [
+      "BUTTERFREE",
+      "VENONAT",
+      "YANMA",
+      "NINCADA"
+    ]
+  },
+  {
+    "id": 15,
+    "ability": "INSOMNIA",
+    "name": "Insomnia",
+    "gameName": "INSOMNIA",
+    "description": "Prevents sleep.",
+    "effect": "The Pokemon can't fall asleep.",
+    "pokemon": [
+      "DROWZEE",
+      "HYPNO",
+      "HOOTHOOT",
+      "NOCTOWL",
+      "SPINARAK",
+      "ARIADOS",
+      "MURKROW",
+      "SHUPPET",
+      "BANETTE"
+    ]
+  },
+  {
+    "id": 16,
+    "ability": "COLOR_CHANGE",
+    "name": "Color Change",
+    "gameName": "COLOR CHANGE",
+    "description": "Changes type to foe's move.",
+    "effect": "The Pokemon's type changes to the type of the move that hits it.",
+    "pokemon": [
+      "KECLEON"
+    ]
+  },
+  {
+    "id": 17,
+    "ability": "IMMUNITY",
+    "name": "Immunity",
+    "gameName": "IMMUNITY",
+    "description": "Prevents poisoning.",
+    "effect": "The Pokemon can't be poisoned.",
+    "pokemon": [
+      "SNORLAX",
+      "ZANGOOSE"
+    ]
+  },
+  {
+    "id": 18,
+    "ability": "FLASH_FIRE",
+    "name": "Flash Fire",
+    "gameName": "FLASH FIRE",
+    "description": "Powers up if hit by fire.",
+    "effect": "Fire moves don't affect the Pokemon and power up its own Fire moves by 50%.",
+    "pokemon": [
+      "VULPIX",
+      "NINETALES",
+      "GROWLITHE",
+      "ARCANINE",
+      "PONYTA",
+      "RAPIDASH",
+      "FLAREON",
+      "HOUNDOUR",
+      "HOUNDOOM"
+    ]
+  },
+  {
+    "id": 19,
+    "ability": "SHIELD_DUST",
+    "name": "Shield Dust",
+    "gameName": "SHIELD DUST",
+    "description": "Prevents added effects.",
+    "effect": "Blocks the secondary effects of moves that hit the Pokemon.",
+    "pokemon": [
+      "CATERPIE",
+      "WEEDLE",
+      "VENOMOTH",
+      "WURMPLE",
+      "DUSTOX"
+    ]
+  },
+  {
+    "id": 20,
+    "ability": "OWN_TEMPO",
+    "name": "Own Tempo",
+    "gameName": "OWN TEMPO",
+    "description": "Prevents confusion.",
+    "effect": "The Pokemon can't be confused.",
+    "pokemon": [
+      "SLOWPOKE",
+      "SLOWBRO",
+      "SLOWKING",
+      "SMEARGLE",
+      "SPOINK",
+      "GRUMPIG",
+      "SPINDA"
+    ]
+  },
+  {
+    "id": 21,
+    "ability": "SUCTION_CUPS",
+    "name": "Suction Cups",
+    "gameName": "SUCTION CUPS",
+    "description": "Firmly anchors the body.",
+    "effect": "The Pokemon can't be forced to switch out.",
+    "pokemon": [
+      "OCTILLERY",
+      "LILEEP",
+      "CRADILY"
+    ]
+  },
+  {
+    "id": 22,
+    "ability": "INTIMIDATE",
+    "name": "Intimidate",
+    "gameName": "INTIMIDATE",
+    "description": "Lowers the foe's ATTACK.",
+    "effect": "Lowers the opponents' Attack by one stage when the Pokemon enters battle.",
+    "pokemon": [
+      "EKANS",
+      "ARBOK",
+      "GROWLITHE",
+      "ARCANINE",
+      "TAUROS",
+      "GYARADOS",
+      "SNUBBULL",
+      "GRANBULL",
+      "STANTLER",
+      "HITMONTOP",
+      "MIGHTYENA",
+      "MASQUERAIN",
+      "MAWILE",
+      "SALAMENCE"
+    ]
+  },
+  {
+    "id": 23,
+    "ability": "SHADOW_TAG",
+    "name": "Shadow Tag",
+    "gameName": "SHADOW TAG",
+    "description": "Prevents the foe's escape.",
+    "effect": "Opponents can't flee or switch out.",
+    "pokemon": [
+      "WOBBUFFET",
+      "WYNAUT"
+    ]
+  },
+  {
+    "id": 24,
+    "ability": "ROUGH_SKIN",
+    "name": "Rough Skin",
+    "gameName": "ROUGH SKIN",
+    "description": "Hurts to touch.",
+    "effect": "A Pokemon that makes contact with it loses 1/8 of its max HP.",
+    "pokemon": [
+      "PINECO",
+      "FORRETRESS",
+      "CACNEA",
+      "CACTURNE"
+    ]
+  },
+  {
+    "id": 25,
+    "ability": "WONDER_GUARD",
+    "name": "Wonder Guard",
+    "gameName": "WONDER GUARD",
+    "description": "“Super effective” hits.",
+    "effect": "Only super effective moves can hit the Pokemon.",
+    "pokemon": [
+      "SHEDINJA"
+    ]
+  },
+  {
+    "id": 26,
+    "ability": "LEVITATE",
+    "name": "Levitate",
+    "gameName": "LEVITATE",
+    "description": "Not hit by GROUND attacks.",
+    "effect": "The Pokemon is immune to Ground moves.",
+    "pokemon": [
+      "GASTLY",
+      "HAUNTER",
+      "GENGAR",
+      "KOFFING",
+      "WEEZING",
+      "MISDREAVUS",
+      "UNOWN",
+      "VOLBEAT",
+      "VIBRAVA",
+      "VIBRAVA",
+      "FLYGON",
+      "FLYGON",
+      "LUNATONE",
+      "SOLROCK",
+      "BALTOY",
+      "CLAYDOL",
+      "DUSKULL",
+      "CHIMECHO",
+      "LATIAS",
+      "LATIOS"
+    ]
+  },
+  {
+    "id": 27,
+    "ability": "EFFECT_SPORE",
+    "name": "Effect Spore",
+    "gameName": "EFFECT SPORE",
+    "description": "Leaves spores on contact.",
+    "effect": "10% chance to poison, paralyze or put to sleep a Pokemon that makes contact with it.",
+    "pokemon": [
+      "PARAS",
+      "PARASECT",
+      "SHROOMISH",
+      "BRELOOM"
+    ]
+  },
+  {
+    "id": 28,
+    "ability": "SYNCHRONIZE",
+    "name": "Synchronize",
+    "gameName": "SYNCHRONIZE",
+    "description": "Passes on status problems.",
+    "effect": "When the Pokemon is burned, paralyzed or poisoned, the opponent gets the same status.",
+    "pokemon": [
+      "ABRA",
+      "KADABRA",
+      "ALAKAZAM",
+      "MEW",
+      "NATU",
+      "XATU",
+      "ESPEON",
+      "UMBREON",
+      "RALTS",
+      "KIRLIA",
+      "GARDEVOIR"
+    ]
+  },
+  {
+    "id": 29,
+    "ability": "CLEAR_BODY",
+    "name": "Clear Body",
+    "gameName": "CLEAR BODY",
+    "description": "Prevents ability reduction.",
+    "effect": "Opponents can't lower the Pokemon's stats.",
+    "pokemon": [
+      "TENTACOOL",
+      "TENTACRUEL",
+      "BELDUM",
+      "METANG",
+      "METAGROSS",
+      "REGIROCK",
+      "REGICE",
+      "REGISTEEL"
+    ]
+  },
+  {
+    "id": 30,
+    "ability": "NATURAL_CURE",
+    "name": "Natural Cure",
+    "gameName": "NATURAL CURE",
+    "description": "Heals upon switching out.",
+    "effect": "Status conditions are cured when the Pokemon switches out.",
+    "pokemon": [
+      "CHANSEY",
+      "STARYU",
+      "STARMIE",
+      "CORSOLA",
+      "BLISSEY",
+      "CELEBI",
+      "ROSELIA"
+    ]
+  },
+  {
+    "id": 31,
+    "ability": "LIGHTNING_ROD",
+    "name": "Lightning Rod",
+    "gameName": "LIGHTNINGROD",
+    "description": "Absorbs ELECTRIC moves.",
+    "effect": "Draws Electric moves, is immune to them and raises Sp. Atk by one stage when hit by one.",
+    "pokemon": [
+      "PIKACHU",
+      "RAICHU",
+      "CUBONE",
+      "MAROWAK",
+      "RHYHORN",
+      "RHYDON",
+      "GOLDEEN",
+      "SEAKING",
+      "PICHU",
+      "ELECTRIKE",
+      "MANECTRIC"
+    ]
+  },
+  {
+    "id": 32,
+    "ability": "SERENE_GRACE",
+    "name": "Serene Grace",
+    "gameName": "SERENE GRACE",
+    "description": "Promotes added effects.",
+    "effect": "Doubles the chance of the secondary effects of the Pokemon's moves.",
+    "pokemon": [
+      "CHANSEY",
+      "STARYU",
+      "STARMIE",
+      "TOGEPI",
+      "TOGETIC",
+      "DUNSPARCE",
+      "BLISSEY",
+      "SWABLU",
+      "ALTARIA",
+      "JIRACHI"
+    ]
+  },
+  {
+    "id": 33,
+    "ability": "SWIFT_SWIM",
+    "name": "Swift Swim",
+    "gameName": "SWIFT SWIM",
+    "description": "Raises SPEED in rain.",
+    "effect": "Doubles Speed in the rain.",
+    "pokemon": [
+      "HORSEA",
+      "SEADRA",
+      "GOLDEEN",
+      "SEAKING",
+      "MAGIKARP",
+      "OMANYTE",
+      "OMASTAR",
+      "KABUTO",
+      "KABUTOPS",
+      "QWILFISH",
+      "MANTINE",
+      "KINGDRA",
+      "LOTAD",
+      "LOMBRE",
+      "LUDICOLO",
+      "SURSKIT",
+      "FEEBAS",
+      "HUNTAIL",
+      "GOREBYSS",
+      "RELICANTH",
+      "LUVDISC"
+    ]
+  },
+  {
+    "id": 34,
+    "ability": "CHLOROPHYLL",
+    "name": "Chlorophyll",
+    "gameName": "CHLOROPHYLL",
+    "description": "Raises SPEED in sunshine.",
+    "effect": "Doubles Speed in the sun.",
+    "pokemon": [
+      "ODDISH",
+      "GLOOM",
+      "VILEPLUME",
+      "BELLSPROUT",
+      "WEEPINBELL",
+      "VICTREEBEL",
+      "EXEGGCUTE",
+      "EXEGGUTOR",
+      "TANGELA",
+      "BELLOSSOM",
+      "HOPPIP",
+      "SKIPLOOM",
+      "JUMPLUFF",
+      "SUNKERN",
+      "SUNFLORA",
+      "SEEDOT",
+      "NUZLEAF",
+      "SHIFTRY"
+    ]
+  },
+  {
+    "id": 35,
+    "ability": "ILLUMINATE",
+    "name": "Illuminate",
+    "gameName": "ILLUMINATE",
+    "description": "Encounter rate increases.",
+    "effect": "Raises the wild encounter rate when the Pokemon leads the party. No effect in battle.",
+    "pokemon": []
+  },
+  {
+    "id": 36,
+    "ability": "TRACE",
+    "name": "Trace",
+    "gameName": "TRACE",
+    "description": "Copies special ability.",
+    "effect": "Copies the opponent's ability when the Pokemon enters battle.",
+    "pokemon": [
+      "PORYGON",
+      "PORYGON2",
+      "RALTS",
+      "KIRLIA",
+      "GARDEVOIR"
+    ]
+  },
+  {
+    "id": 37,
+    "ability": "HUGE_POWER",
+    "name": "Huge Power",
+    "gameName": "HUGE POWER",
+    "description": "Raises ATTACK.",
+    "effect": "Doubles the Pokemon's Attack.",
+    "pokemon": [
+      "MARILL",
+      "AZUMARILL",
+      "AZURILL"
+    ]
+  },
+  {
+    "id": 38,
+    "ability": "POISON_POINT",
+    "name": "Poison Point",
+    "gameName": "POISON POINT",
+    "description": "Poisons foe on contact.",
+    "effect": "1/3 chance to poison a Pokemon that makes contact with it.",
+    "pokemon": [
+      "NIDORAN_F",
+      "NIDORINA",
+      "NIDOQUEEN",
+      "NIDORAN_M",
+      "NIDORINO",
+      "NIDOKING",
+      "QWILFISH",
+      "ROSELIA"
+    ]
+  },
+  {
+    "id": 39,
+    "ability": "INNER_FOCUS",
+    "name": "Inner Focus",
+    "gameName": "INNER FOCUS",
+    "description": "Prevents flinching.",
+    "effect": "The Pokemon can't flinch.",
+    "pokemon": [
+      "ZUBAT",
+      "GOLBAT",
+      "ABRA",
+      "KADABRA",
+      "ALAKAZAM",
+      "FARFETCHD",
+      "DRAGONITE",
+      "CROBAT",
+      "GIRAFARIG",
+      "SNEASEL",
+      "SNORUNT",
+      "GLALIE"
+    ]
+  },
+  {
+    "id": 40,
+    "ability": "MAGMA_ARMOR",
+    "name": "Magma Armor",
+    "gameName": "MAGMA ARMOR",
+    "description": "Prevents freezing.",
+    "effect": "The Pokemon can't get Frostbite.",
+    "pokemon": [
+      "SLUGMA",
+      "MAGCARGO",
+      "NUMEL",
+      "CAMERUPT"
+    ]
+  },
+  {
+    "id": 41,
+    "ability": "WATER_VEIL",
+    "name": "Water Veil",
+    "gameName": "WATER VEIL",
+    "description": "Prevents burns.",
+    "effect": "The Pokemon can't be burned.",
+    "pokemon": [
+      "WAILMER",
+      "WAILORD"
+    ]
+  },
+  {
+    "id": 42,
+    "ability": "MAGNET_PULL",
+    "name": "Magnet Pull",
+    "gameName": "MAGNET PULL",
+    "description": "Traps STEEL-type POKéMON.",
+    "effect": "Steel-type opponents can't flee or switch out.",
+    "pokemon": [
+      "MAGNEMITE",
+      "MAGNETON",
+      "NOSEPASS"
+    ]
+  },
+  {
+    "id": 43,
+    "ability": "SOUNDPROOF",
+    "name": "Soundproof",
+    "gameName": "SOUNDPROOF",
+    "description": "Avoids sound-based moves.",
+    "effect": "The Pokemon is immune to sound-based moves.",
+    "pokemon": [
+      "VOLTORB",
+      "ELECTRODE",
+      "MR_MIME",
+      "WHISMUR",
+      "LOUDRED",
+      "EXPLOUD"
+    ]
+  },
+  {
+    "id": 44,
+    "ability": "RAIN_DISH",
+    "name": "Rain Dish",
+    "gameName": "RAIN DISH",
+    "description": "Slight HP recovery in rain.",
+    "effect": "Restores 1/16 of max HP each turn in the rain.",
+    "pokemon": [
+      "LOTAD",
+      "LOMBRE",
+      "LUDICOLO",
+      "WINGULL",
+      "PELIPPER"
+    ]
+  },
+  {
+    "id": 45,
+    "ability": "SAND_STREAM",
+    "name": "Sand Stream",
+    "gameName": "SAND STREAM",
+    "description": "Summons a sandstorm.",
+    "effect": "Summons a sandstorm for 8 turns when the Pokemon enters battle.",
+    "pokemon": [
+      "GOLEM",
+      "TYRANITAR"
+    ]
+  },
+  {
+    "id": 46,
+    "ability": "PRESSURE",
+    "name": "Pressure",
+    "gameName": "PRESSURE",
+    "description": "Raises foe's PP usage.",
+    "effect": "Moves used against the Pokemon lose 2 PP instead of 1.",
+    "pokemon": [
+      "AERODACTYL",
+      "ARTICUNO",
+      "ZAPDOS",
+      "MOLTRES",
+      "MEWTWO",
+      "RAIKOU",
+      "ENTEI",
+      "SUICUNE",
+      "LUGIA",
+      "HO_OH",
+      "DUSCLOPS",
+      "ABSOL",
+      "DEOXYS"
+    ]
+  },
+  {
+    "id": 47,
+    "ability": "THICK_FAT",
+    "name": "Thick Fat",
+    "gameName": "THICK FAT",
+    "description": "Heat-and-cold protection.",
+    "effect": "Halves the damage of Fire and Ice moves.",
+    "pokemon": [
+      "SEEL",
+      "DEWGONG",
+      "LICKITUNG",
+      "SNORLAX",
+      "MARILL",
+      "AZUMARILL",
+      "SWINUB",
+      "PILOSWINE",
+      "MILTANK",
+      "MAKUHITA",
+      "HARIYAMA",
+      "AZURILL",
+      "SPOINK",
+      "GRUMPIG",
+      "TROPIUS",
+      "SPHEAL",
+      "SEALEO",
+      "WALREIN"
+    ]
+  },
+  {
+    "id": 48,
+    "ability": "EARLY_BIRD",
+    "name": "Early Bird",
+    "gameName": "EARLY BIRD",
+    "description": "Awakens quickly from sleep.",
+    "effect": "The Pokemon wakes up twice as fast.",
+    "pokemon": [
+      "DODUO",
+      "DODRIO",
+      "KANGASKHAN",
+      "LEDYBA",
+      "LEDIAN",
+      "NATU",
+      "XATU",
+      "GIRAFARIG",
+      "HOUNDOUR",
+      "HOUNDOOM",
+      "SEEDOT",
+      "NUZLEAF",
+      "SHIFTRY"
+    ]
+  },
+  {
+    "id": 49,
+    "ability": "FLAME_BODY",
+    "name": "Flame Body",
+    "gameName": "FLAME BODY",
+    "description": "Burns the foe on contact.",
+    "effect": "1/3 chance to burn a Pokemon that makes contact with it.",
+    "pokemon": [
+      "MAGMAR",
+      "SLUGMA",
+      "MAGCARGO",
+      "MAGBY"
+    ]
+  },
+  {
+    "id": 50,
+    "ability": "RUN_AWAY",
+    "name": "Run Away",
+    "gameName": "RUN AWAY",
+    "description": "Makes escaping easier.",
+    "effect": "The Pokemon can always flee from wild battles.",
+    "pokemon": [
+      "EEVEE",
+      "FURRET",
+      "AIPOM",
+      "DUNSPARCE",
+      "POOCHYENA"
+    ]
+  },
+  {
+    "id": 51,
+    "ability": "KEEN_EYE",
+    "name": "Keen Eye",
+    "gameName": "KEEN EYE",
+    "description": "Prevents loss of accuracy.",
+    "effect": "Opponents can't lower the Pokemon's accuracy.",
+    "pokemon": [
+      "PIDGEY",
+      "PIDGEOTTO",
+      "PIDGEOT",
+      "SPEAROW",
+      "FEAROW",
+      "FARFETCHD",
+      "HITMONCHAN",
+      "FURRET",
+      "HOOTHOOT",
+      "NOCTOWL",
+      "SNEASEL",
+      "SKARMORY",
+      "SABLEYE"
+    ]
+  },
+  {
+    "id": 52,
+    "ability": "HYPER_CUTTER",
+    "name": "Hyper Cutter",
+    "gameName": "HYPER CUTTER",
+    "description": "Prevents ATTACK reduction.",
+    "effect": "Opponents can't lower the Pokemon's Attack.",
+    "pokemon": [
+      "KRABBY",
+      "KINGLER",
+      "PINSIR",
+      "GLIGAR",
+      "MAWILE",
+      "TRAPINCH",
+      "CORPHISH",
+      "CRAWDAUNT"
+    ]
+  },
+  {
+    "id": 53,
+    "ability": "PICKUP",
+    "name": "Pickup",
+    "gameName": "PICKUP",
+    "description": "May pick up items.",
+    "effect": "May pick up an item after a battle.",
+    "pokemon": [
+      "MEOWTH",
+      "SENTRET",
+      "AIPOM",
+      "TEDDIURSA",
+      "PHANPY",
+      "ZIGZAGOON",
+      "LINOONE"
+    ]
+  },
+  {
+    "id": 54,
+    "ability": "TRUANT",
+    "name": "Truant",
+    "gameName": "TRUANT",
+    "description": "Moves only every two turns.",
+    "effect": "The Pokemon can only act every other turn.",
+    "pokemon": [
+      "SLAKOTH",
+      "SLAKING"
+    ]
+  },
+  {
+    "id": 55,
+    "ability": "HUSTLE",
+    "name": "Hustle",
+    "gameName": "HUSTLE",
+    "description": "Trades accuracy for power.",
+    "effect": "Raises Attack by 50% but lowers the accuracy of physical moves by 20%.",
+    "pokemon": [
+      "TOGEPI",
+      "TOGETIC",
+      "CORSOLA",
+      "REMORAID",
+      "DELIBIRD"
+    ]
+  },
+  {
+    "id": 56,
+    "ability": "CUTE_CHARM",
+    "name": "Cute Charm",
+    "gameName": "CUTE CHARM",
+    "description": "Infatuates on contact.",
+    "effect": "1/3 chance to infatuate a Pokemon of the opposite gender that makes contact with it.",
+    "pokemon": [
+      "CLEFAIRY",
+      "CLEFABLE",
+      "JIGGLYPUFF",
+      "WIGGLYTUFF",
+      "CLEFFA",
+      "IGGLYBUFF",
+      "SKITTY",
+      "DELCATTY"
+    ]
+  },
+  {
+    "id": 57,
+    "ability": "PLUS",
+    "name": "Plus",
+    "gameName": "PLUS",
+    "description": "Powers up with MINUS.",
+    "effect": "Raises Sp. Atk by 50% if a Pokemon with Minus is on the field.",
+    "pokemon": [
+      "PLUSLE"
+    ]
+  },
+  {
+    "id": 58,
+    "ability": "MINUS",
+    "name": "Minus",
+    "gameName": "MINUS",
+    "description": "Powers up with PLUS.",
+    "effect": "Raises Sp. Atk by 50% if a Pokemon with Plus is on the field.",
+    "pokemon": [
+      "MINUN"
+    ]
+  },
+  {
+    "id": 59,
+    "ability": "FORECAST",
+    "name": "Forecast",
+    "gameName": "FORECAST",
+    "description": "Changes with the weather.",
+    "effect": "Castform changes type and form with the weather.",
+    "pokemon": [
+      "CASTFORM"
+    ]
+  },
+  {
+    "id": 60,
+    "ability": "STICKY_HOLD",
+    "name": "Sticky Hold",
+    "gameName": "STICKY HOLD",
+    "description": "Prevents item theft.",
+    "effect": "The Pokemon's held item can't be removed or stolen.",
+    "pokemon": [
+      "GRIMER",
+      "MUK",
+      "GULPIN",
+      "SWALOT"
+    ]
+  },
+  {
+    "id": 61,
+    "ability": "SHED_SKIN",
+    "name": "Shed Skin",
+    "gameName": "SHED SKIN",
+    "description": "Heals the body by shedding.",
+    "effect": "1/3 chance to cure its status condition at the end of each turn.",
+    "pokemon": [
+      "METAPOD",
+      "KAKUNA",
+      "EKANS",
+      "ARBOK",
+      "DRATINI",
+      "DRAGONAIR",
+      "PUPITAR",
+      "SILCOON",
+      "CASCOON",
+      "SEVIPER"
+    ]
+  },
+  {
+    "id": 62,
+    "ability": "GUTS",
+    "name": "Guts",
+    "gameName": "GUTS",
+    "description": "Ups ATTACK if suffering.",
+    "effect": "Raises Attack by 50% when the Pokemon has a status condition.",
+    "pokemon": [
+      "RATTATA",
+      "RATICATE",
+      "MACHOP",
+      "MACHOKE",
+      "MACHAMP",
+      "HERACROSS",
+      "URSARING",
+      "TYROGUE",
+      "LARVITAR",
+      "TAILLOW",
+      "SWELLOW",
+      "MAKUHITA",
+      "HARIYAMA"
+    ]
+  },
+  {
+    "id": 63,
+    "ability": "MARVEL_SCALE",
+    "name": "Marvel Scale",
+    "gameName": "MARVEL SCALE",
+    "description": "Ups DEFENSE if suffering.",
+    "effect": "Raises Defense by 50% when the Pokemon has a status condition.",
+    "pokemon": [
+      "MILOTIC"
+    ]
+  },
+  {
+    "id": 64,
+    "ability": "LIQUID_OOZE",
+    "name": "Liquid Ooze",
+    "gameName": "LIQUID OOZE",
+    "description": "Draining causes injury.",
+    "effect": "Moves that drain HP from the Pokemon hurt the attacker instead.",
+    "pokemon": [
+      "TENTACOOL",
+      "TENTACRUEL",
+      "GULPIN",
+      "SWALOT"
+    ]
+  },
+  {
+    "id": 65,
+    "ability": "OVERGROW",
+    "name": "Overgrow",
+    "gameName": "OVERGROW",
+    "description": "Ups GRASS moves in a pinch.",
+    "effect": "Raises the power of Grass moves by 50% when HP is at 1/3 or less.",
+    "pokemon": [
+      "BULBASAUR",
+      "IVYSAUR",
+      "VENUSAUR",
+      "CHIKORITA",
+      "BAYLEEF",
+      "MEGANIUM",
+      "TREECKO",
+      "GROVYLE",
+      "SCEPTILE"
+    ]
+  },
+  {
+    "id": 66,
+    "ability": "BLAZE",
+    "name": "Blaze",
+    "gameName": "BLAZE",
+    "description": "Ups FIRE moves in a pinch.",
+    "effect": "Raises the power of Fire moves by 50% when HP is at 1/3 or less.",
+    "pokemon": [
+      "CHARMANDER",
+      "CHARMELEON",
+      "CHARIZARD",
+      "CYNDAQUIL",
+      "QUILAVA",
+      "TYPHLOSION",
+      "TORCHIC",
+      "COMBUSKEN",
+      "BLAZIKEN"
+    ]
+  },
+  {
+    "id": 67,
+    "ability": "TORRENT",
+    "name": "Torrent",
+    "gameName": "TORRENT",
+    "description": "Ups WATER moves in a pinch.",
+    "effect": "Raises the power of Water moves by 50% when HP is at 1/3 or less.",
+    "pokemon": [
+      "SQUIRTLE",
+      "WARTORTLE",
+      "BLASTOISE",
+      "TOTODILE",
+      "CROCONAW",
+      "FERALIGATR",
+      "MUDKIP",
+      "MARSHTOMP",
+      "SWAMPERT"
+    ]
+  },
+  {
+    "id": 68,
+    "ability": "SWARM",
+    "name": "Swarm",
+    "gameName": "SWARM",
+    "description": "Ups BUG moves in a pinch.",
+    "effect": "Raises the power of Bug moves by 50% when HP is at 1/3 or less.",
+    "pokemon": [
+      "BEEDRILL",
+      "SCYTHER",
+      "LEDYBA",
+      "LEDIAN",
+      "SPINARAK",
+      "ARIADOS",
+      "SCIZOR",
+      "BEAUTIFLY"
+    ]
+  },
+  {
+    "id": 69,
+    "ability": "ROCK_HEAD",
+    "name": "Rock Head",
+    "gameName": "ROCK HEAD",
+    "description": "Prevents recoil damage.",
+    "effect": "The Pokemon takes no recoil damage.",
+    "pokemon": [
+      "GEODUDE",
+      "GRAVELER",
+      "PONYTA",
+      "RAPIDASH",
+      "DODUO",
+      "DODRIO",
+      "ONIX",
+      "CUBONE",
+      "MAROWAK",
+      "RHYHORN",
+      "RHYDON",
+      "AERODACTYL",
+      "SUDOWOODO",
+      "STEELIX",
+      "ARON",
+      "LAIRON",
+      "AGGRON",
+      "RELICANTH",
+      "BAGON",
+      "SHELGON"
+    ]
+  },
+  {
+    "id": 70,
+    "ability": "DROUGHT",
+    "name": "Drought",
+    "gameName": "DROUGHT",
+    "description": "Summons sunlight in battle.",
+    "effect": "Summons sun for 8 turns when the Pokemon enters battle.",
+    "pokemon": [
+      "NINETALES",
+      "GROUDON"
+    ]
+  },
+  {
+    "id": 71,
+    "ability": "ARENA_TRAP",
+    "name": "Arena Trap",
+    "gameName": "ARENA TRAP",
+    "description": "Prevents fleeing.",
+    "effect": "Grounded opponents can't flee or switch out.",
+    "pokemon": [
+      "DIGLETT",
+      "DUGTRIO",
+      "TRAPINCH"
+    ]
+  },
+  {
+    "id": 72,
+    "ability": "VITAL_SPIRIT",
+    "name": "Vital Spirit",
+    "gameName": "VITAL SPIRIT",
+    "description": "Prevents sleep.",
+    "effect": "The Pokemon can't fall asleep.",
+    "pokemon": [
+      "MANKEY",
+      "PRIMEAPE",
+      "DELIBIRD",
+      "VIGOROTH"
+    ]
+  },
+  {
+    "id": 73,
+    "ability": "WHITE_SMOKE",
+    "name": "White Smoke",
+    "gameName": "WHITE SMOKE",
+    "description": "Prevents ability reduction.",
+    "effect": "Opponents can't lower the Pokemon's stats.",
+    "pokemon": [
+      "TORKOAL"
+    ]
+  },
+  {
+    "id": 74,
+    "ability": "PURE_POWER",
+    "name": "Pure Power",
+    "gameName": "PURE POWER",
+    "description": "Raises ATTACK.",
+    "effect": "Doubles the Pokemon's Attack.",
+    "pokemon": [
+      "MEDITITE",
+      "MEDICHAM"
+    ]
+  },
+  {
+    "id": 75,
+    "ability": "SHELL_ARMOR",
+    "name": "Shell Armor",
+    "gameName": "SHELL ARMOR",
+    "description": "Blocks critical hits.",
+    "effect": "The Pokemon can't be hit by critical hits.",
+    "pokemon": [
+      "SHELLDER",
+      "CLOYSTER",
+      "KRABBY",
+      "KINGLER",
+      "LAPRAS",
+      "OMANYTE",
+      "OMASTAR",
+      "CORPHISH",
+      "CRAWDAUNT",
+      "CLAMPERL"
+    ]
+  },
+  {
+    "id": 76,
+    "ability": "CACOPHONY",
+    "name": "Cacophony",
+    "gameName": "CACOPHONY",
+    "description": "Avoids sound-based moves.",
+    "effect": "The Pokemon is immune to sound-based moves.",
+    "pokemon": []
+  },
+  {
+    "id": 77,
+    "ability": "AIR_LOCK",
+    "name": "Air Lock",
+    "gameName": "AIR LOCK",
+    "description": "Negates weather effects.",
+    "effect": "Cancels the effects of the weather.",
+    "pokemon": [
+      "RAYQUAZA"
+    ]
+  },
+  {
+    "id": 78,
+    "ability": "SNOW_WARNING",
+    "name": "Snow Warning",
+    "gameName": "SNOW WARNING",
+    "description": "Summons hail in battle.",
+    "effect": "Summons hail for 8 turns when the Pokemon enters battle.",
+    "pokemon": [
+      "GLALIE"
+    ]
+  }
+]
