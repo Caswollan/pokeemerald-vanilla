@@ -140,8 +140,8 @@ static u8 GetAITurnOrder(void);
 static void Cmd_if_target_incapacitated(void);
 static void Cmd_if_should_recover(void);
 static void Cmd_if_safe_after_belly_drum(void);
-static void Cmd_nop_56(void);
-static void Cmd_nop_57(void);
+static void Cmd_if_target_shares_move(void);
+static void Cmd_if_paralysis_makes_user_faster(void);
 static void Cmd_call(void);
 static void Cmd_goto(void);
 static void Cmd_end(void);
@@ -252,8 +252,8 @@ static const BattleAICmdFunc sBattleAICmdTable[] =
     Cmd_if_target_incapacitated,                    // 0x53
     Cmd_if_should_recover,                          // 0x54
     Cmd_if_safe_after_belly_drum,                   // 0x55
-    Cmd_nop_56,                                     // 0x56
-    Cmd_nop_57,                                     // 0x57
+    Cmd_if_target_shares_move,                      // 0x56
+    Cmd_if_paralysis_makes_user_faster,             // 0x57
     Cmd_call,                                       // 0x58
     Cmd_goto,                                       // 0x59
     Cmd_end,                                        // 0x5A
@@ -277,12 +277,9 @@ static const u16 sIgnoredPowerfulMoveEffects[] =
 {
     EFFECT_EXPLOSION,
     EFFECT_DREAM_EATER,
-    EFFECT_RAZOR_WIND,
-    EFFECT_SKY_ATTACK,
     EFFECT_SKULL_BASH,
     EFFECT_SOLAR_BEAM,
     EFFECT_FOCUS_PUNCH,
-    EFFECT_SUPERPOWER,
     IGNORED_MOVES_END
 };
 
@@ -2339,12 +2336,40 @@ static void Cmd_if_safe_after_belly_drum(void)
         gAIScriptPtr += 5;
 }
 
-static void Cmd_nop_56(void)
+// Jumps if the target knows at least one of the AI's moves (Imprison)
+static void Cmd_if_target_shares_move(void)
 {
+    s32 i, j;
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        u16 move = gBattleMons[sBattler_AI].moves[i];
+
+        if (move == MOVE_NONE)
+            continue;
+        for (j = 0; j < MAX_MON_MOVES; j++)
+        {
+            if (gBattleMons[gBattlerTarget].moves[j] == move)
+            {
+                gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 1);
+                return;
+            }
+        }
+    }
+
+    gAIScriptPtr += 5;
 }
 
-static void Cmd_nop_57(void)
+// Jumps if the target is faster than the AI now, but not anymore once paralyzed (1/4 speed)
+static void Cmd_if_paralysis_makes_user_faster(void)
 {
+    u32 aiSpeed = GetBattlerTurnOrderSpeed(sBattler_AI);
+    u32 targetSpeed = GetBattlerTurnOrderSpeed(gBattlerTarget);
+
+    if (targetSpeed > aiSpeed && targetSpeed / 4 <= aiSpeed)
+        gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 1);
+    else
+        gAIScriptPtr += 5;
 }
 
 static void Cmd_call(void)

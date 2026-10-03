@@ -498,12 +498,16 @@
 	.4byte \ptr
 	.endm
 
-	.macro nop_56
+	@ Jumps if the target knows at least one of the AI's moves
+	.macro if_target_shares_move ptr:req
 	.byte 0x56
+	.4byte \ptr
 	.endm
 
-	.macro nop_57
+	@ Jumps if the target is faster than the AI, but not once paralyzed
+	.macro if_paralysis_makes_user_faster ptr:req
 	.byte 0x57
+	.4byte \ptr
 	.endm
 
 	.macro call param0:req
