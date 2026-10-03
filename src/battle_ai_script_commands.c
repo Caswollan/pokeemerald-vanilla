@@ -347,7 +347,7 @@ void BattleAI_SetupAIData(u8 defaultScoreMoves)
         if (gBitTable[i] & moveLimitations)
             AI_THINKING_STRUCT->score[i] = 0;
 
-        AI_THINKING_STRUCT->simulatedRNG[i] = 100 - (Random() % 16);
+        AI_THINKING_STRUCT->simulatedRNG[i] = 100; // the AI always assumes the max damage roll
     }
 
     gBattleResources->AI_ScriptsStack->size = 0;
