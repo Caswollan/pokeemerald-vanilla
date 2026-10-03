@@ -1905,6 +1905,42 @@ s32 AI_CalcMoveDamage(u16 move, u8 attacker, u8 defender, u8 rngPercent)
     return gBattleMoveDamage;
 }
 
+// Highest damage 'attacker' can deal to 'defender' with the moves it can use right now.
+// Works both ways: AI -> player and player -> AI.
+s32 AI_GetBestDamage(u8 attacker, u8 defender, u8 rngPercent)
+{
+    s32 i, damage, bestDamage = 0;
+    u8 unusableMoves = CheckMoveLimitations(attacker, 0, MOVE_LIMITATIONS_ALL);
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        u16 move = gBattleMons[attacker].moves[i];
+
+        if (move == MOVE_NONE || (unusableMoves & gBitTable[i]) || !AI_IsDamagingMove(move))
+            continue;
+
+        damage = AI_CalcMoveDamage(move, attacker, defender, rngPercent);
+        if (damage > bestDamage)
+            bestDamage = damage;
+    }
+
+    return bestDamage;
+}
+
+// Number of hits 'attacker' needs to KO 'defender' with its best move, with max damage rolls.
+// 0 means it can't damage it at all.
+u8 AI_GetHitsToKO(u8 attacker, u8 defender)
+{
+    s32 damage = AI_GetBestDamage(attacker, defender, 100);
+    s32 hits;
+
+    if (damage <= 0)
+        return 0;
+
+    hits = (gBattleMons[defender].hp + damage - 1) / damage;
+    return min(hits, 255);
+}
+
 static void Cmd_adjustnormaldamage(void)
 {
     u8 holdEffect, param;

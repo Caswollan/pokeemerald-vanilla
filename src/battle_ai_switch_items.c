@@ -3,6 +3,7 @@
 #include "battle_anim.h"
 #include "battle_controllers.h"
 #include "battle_main.h"
+#include "battle_script_commands.h"
 #include "data.h"
 #include "pokemon.h"
 #include "random.h"
@@ -11,6 +12,7 @@
 #include "constants/item_effects.h"
 #include "constants/items.h"
 #include "constants/moves.h"
+#include "constants/species.h"
 
 // this file's functions
 static bool8 HasSuperEffectiveMoveAgainstOpponents(bool8 noRng);
@@ -602,46 +604,165 @@ void AI_TrySwitchOrUseItem(void)
     BtlController_EmitTwoReturnValues(B_COMM_TO_ENGINE, B_ACTION_USE_MOVE, BATTLE_OPPOSITE(gActiveBattler) << 8);
 }
 
-static void ModulateByTypeEffectiveness(u8 atkType, u8 defType1, u8 defType2, u8 *var)
+// Battle state changed while simulating a party mon in the AI's battler slot
+struct SwitchInSimulation
 {
-    s32 i = 0;
+    struct BattlePokemon mon;
+    struct DisableStruct disableStruct;
+    struct ProtectStruct protectStruct;
+    u32 status3;
+    u16 choicedMove;
+    u16 currentMove;
+    s32 battleMoveDamage;
+    u16 dynamicBasePower;
+    u8 dynamicMoveType;
+    u8 dmgMultiplier;
+    u8 moveResultFlags;
+    u8 critMultiplier;
+    u8 potentialItemEffectBattler;
+};
 
-    while (TYPE_EFFECT_ATK_TYPE(i) != TYPE_ENDTABLE)
+static void SaveSwitchInSimulationState(u8 battler, struct SwitchInSimulation *backup)
+{
+    backup->mon = gBattleMons[battler];
+    backup->disableStruct = gDisableStructs[battler];
+    backup->protectStruct = gProtectStructs[battler];
+    backup->status3 = gStatuses3[battler];
+    backup->choicedMove = gBattleStruct->choicedMove[battler];
+    backup->currentMove = gCurrentMove;
+    backup->battleMoveDamage = gBattleMoveDamage;
+    backup->dynamicBasePower = gDynamicBasePower;
+    backup->dynamicMoveType = gBattleStruct->dynamicMoveType;
+    backup->dmgMultiplier = gBattleScripting.dmgMultiplier;
+    backup->moveResultFlags = gMoveResultFlags;
+    backup->critMultiplier = gCritMultiplier;
+    backup->potentialItemEffectBattler = gPotentialItemEffectBattler;
+}
+
+static void RestoreSwitchInSimulationState(u8 battler, const struct SwitchInSimulation *backup)
+{
+    gBattleMons[battler] = backup->mon;
+    gDisableStructs[battler] = backup->disableStruct;
+    gProtectStructs[battler] = backup->protectStruct;
+    gStatuses3[battler] = backup->status3;
+    gBattleStruct->choicedMove[battler] = backup->choicedMove;
+    gCurrentMove = backup->currentMove;
+    gBattleMoveDamage = backup->battleMoveDamage;
+    gDynamicBasePower = backup->dynamicBasePower;
+    gBattleStruct->dynamicMoveType = backup->dynamicMoveType;
+    gBattleScripting.dmgMultiplier = backup->dmgMultiplier;
+    gMoveResultFlags = backup->moveResultFlags;
+    gCritMultiplier = backup->critMultiplier;
+    gPotentialItemEffectBattler = backup->potentialItemEffectBattler;
+}
+
+// Puts a party mon in the battler slot, as it would be right after switching in
+static void SimulateMonSwitchIn(u8 battler, struct Pokemon *mon)
+{
+    struct BattlePokemon *dst = &gBattleMons[battler];
+    u8 *bytes;
+    s32 i;
+
+    bytes = (u8 *)dst;
+    for (i = 0; i < (s32)sizeof(*dst); i++)
+        bytes[i] = 0;
+    bytes = (u8 *)&gDisableStructs[battler];
+    for (i = 0; i < (s32)sizeof(gDisableStructs[battler]); i++)
+        bytes[i] = 0;
+    bytes = (u8 *)&gProtectStructs[battler];
+    for (i = 0; i < (s32)sizeof(gProtectStructs[battler]); i++)
+        bytes[i] = 0;
+    gStatuses3[battler] = 0;
+    gBattleStruct->choicedMove[battler] = MOVE_NONE;
+
+    dst->species = GetMonData(mon, MON_DATA_SPECIES);
+    dst->level = GetMonData(mon, MON_DATA_LEVEL);
+    dst->hp = GetMonData(mon, MON_DATA_HP);
+    dst->maxHP = GetMonData(mon, MON_DATA_MAX_HP);
+    dst->attack = GetMonData(mon, MON_DATA_ATK);
+    dst->defense = GetMonData(mon, MON_DATA_DEF);
+    dst->speed = GetMonData(mon, MON_DATA_SPEED);
+    dst->spAttack = GetMonData(mon, MON_DATA_SPATK);
+    dst->spDefense = GetMonData(mon, MON_DATA_SPDEF);
+    dst->hpIV = GetMonData(mon, MON_DATA_HP_IV);
+    dst->attackIV = GetMonData(mon, MON_DATA_ATK_IV);
+    dst->defenseIV = GetMonData(mon, MON_DATA_DEF_IV);
+    dst->speedIV = GetMonData(mon, MON_DATA_SPEED_IV);
+    dst->spAttackIV = GetMonData(mon, MON_DATA_SPATK_IV);
+    dst->spDefenseIV = GetMonData(mon, MON_DATA_SPDEF_IV);
+    dst->abilityNum = GetMonData(mon, MON_DATA_ABILITY_NUM);
+    dst->ability = GetAbilityBySpecies(dst->species, dst->abilityNum);
+    dst->types[0] = gSpeciesInfo[dst->species].types[0];
+    dst->types[1] = gSpeciesInfo[dst->species].types[1];
+    dst->item = GetMonData(mon, MON_DATA_HELD_ITEM);
+    dst->friendship = GetMonData(mon, MON_DATA_FRIENDSHIP);
+    dst->personality = GetMonData(mon, MON_DATA_PERSONALITY);
+    dst->status1 = GetMonData(mon, MON_DATA_STATUS);
+    for (i = 0; i < MAX_MON_MOVES; i++)
     {
-        if (TYPE_EFFECT_ATK_TYPE(i) == TYPE_FORESIGHT)
-        {
-            i += 3;
-            continue;
-        }
-        else if (TYPE_EFFECT_ATK_TYPE(i) == atkType)
-        {
-            // Check type1.
-            if (TYPE_EFFECT_DEF_TYPE(i) == defType1)
-                *var = (*var * TYPE_EFFECT_MULTIPLIER(i)) / TYPE_MUL_NORMAL;
-            // Check type2.
-            if (TYPE_EFFECT_DEF_TYPE(i) == defType2 && defType1 != defType2)
-                *var = (*var * TYPE_EFFECT_MULTIPLIER(i)) / TYPE_MUL_NORMAL;
-        }
-        i += 3;
+        dst->moves[i] = GetMonData(mon, MON_DATA_MOVE1 + i);
+        dst->pp[i] = GetMonData(mon, MON_DATA_PP1 + i);
     }
+    for (i = 0; i < NUM_BATTLE_STATS; i++)
+        dst->statStages[i] = DEFAULT_STAT_STAGE;
+}
+
+// Switch-in score of the mon in 'battler' against 'opposingBattler' (Run & Bun post-KO switch AI).
+// Damage is compared as a percentage of the current HP, with max damage rolls.
+static s32 GetSwitchInScore(u8 battler, u8 opposingBattler)
+{
+    u16 species = gBattleMons[battler].species;
+    bool32 isFaster = GetBattlerTurnOrderSpeed(battler) >= GetBattlerTurnOrderSpeed(opposingBattler); // speed ties count as faster
+    s32 damageDealt = AI_GetBestDamage(battler, opposingBattler, 100);
+    s32 damageTaken = AI_GetBestDamage(opposingBattler, battler, 100);
+    bool32 ohkos = damageDealt >= gBattleMons[opposingBattler].hp;
+    bool32 isOhkod = damageTaken >= gBattleMons[battler].hp;
+    s32 dealtPercent = min(damageDealt * 100 / gBattleMons[opposingBattler].hp, 100);
+    s32 takenPercent = min(damageTaken * 100 / gBattleMons[battler].hp, 100);
+
+    if (species == SPECIES_DITTO)
+        return 2;
+    if ((species == SPECIES_WOBBUFFET || species == SPECIES_WYNAUT) && !(!isFaster && isOhkod))
+        return 2;
+
+    if (isFaster && ohkos)
+        return 5;
+    if (!isFaster && ohkos && !isOhkod)
+        return 4;
+    if (isFaster && dealtPercent > takenPercent)
+        return 3;
+    if (!isFaster && dealtPercent > takenPercent)
+        return 2;
+    if (isFaster)
+        return 1;
+    if (isOhkod)
+        return -1;
+    return 0;
+}
+
+// Opponent a switched-in mon will face. In doubles each slot looks at the slot in front of it.
+static u8 GetSwitchInOpponent(u8 battler)
+{
+    u8 opposingBattler = GetBattlerAtPosition(BATTLE_OPPOSITE(GetBattlerPosition(battler)));
+
+    if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
+        && ((gAbsentBattlerFlags & gBitTable[opposingBattler]) || gBattleMons[opposingBattler].hp == 0))
+        opposingBattler = GetBattlerAtPosition(BATTLE_PARTNER(GetBattlerPosition(opposingBattler)));
+
+    return opposingBattler;
 }
 
 u8 GetMostSuitableMonToSwitchInto(void)
 {
     u8 opposingBattler;
-#ifdef BUGFIX
-    s32 bestDmg;
-#else
-    u8 bestDmg; // Note: should be changed to s32 since it is also used for the actual damage done later
-#endif
     u8 bestMonId;
     u8 battlerIn1, battlerIn2;
     s32 firstId;
     s32 lastId; // + 1
     struct Pokemon *party;
-    s32 i, j;
-    u8 invalidMons;
-    u16 move;
+    s32 i, score, bestScore;
+    bool32 hasOpponent;
+    struct SwitchInSimulation backup;
 
     if (*(gBattleStruct->monToSwitchIntoId + gActiveBattler) != PARTY_SIZE)
         return *(gBattleStruct->monToSwitchIntoId + gActiveBattler);
@@ -655,15 +776,9 @@ u8 GetMostSuitableMonToSwitchInto(void)
             battlerIn2 = gActiveBattler;
         else
             battlerIn2 = GetBattlerAtPosition(BATTLE_PARTNER(GetBattlerPosition(gActiveBattler)));
-
-        // UB: It considers the opponent only player's side even though it can battle alongside player.
-        opposingBattler = Random() & BIT_FLANK;
-        if (gAbsentBattlerFlags & gBitTable[opposingBattler])
-            opposingBattler ^= BIT_FLANK;
     }
     else
     {
-        opposingBattler = GetBattlerAtPosition(BATTLE_OPPOSITE(GetBattlerPosition(gActiveBattler)));
         battlerIn1 = gActiveBattler;
         battlerIn2 = gActiveBattler;
     }
@@ -685,78 +800,18 @@ u8 GetMostSuitableMonToSwitchInto(void)
     else
         party = gEnemyParty;
 
-    invalidMons = 0;
+    opposingBattler = GetSwitchInOpponent(gActiveBattler);
+    hasOpponent = !(gAbsentBattlerFlags & gBitTable[opposingBattler]) && gBattleMons[opposingBattler].hp != 0;
 
-    while (invalidMons != (1 << PARTY_SIZE) - 1) // All mons are invalid.
-    {
-        bestDmg = TYPE_MUL_NO_EFFECT;
-        bestMonId = PARTY_SIZE;
-        // Find the mon whose type is the most suitable offensively.
-        for (i = firstId; i < lastId; i++)
-        {
-            u16 species = GetMonData(&party[i], MON_DATA_SPECIES);
-            if (species != SPECIES_NONE
-                && GetMonData(&party[i], MON_DATA_HP) != 0
-                && !(gBitTable[i] & invalidMons)
-                && gBattlerPartyIndexes[battlerIn1] != i
-                && gBattlerPartyIndexes[battlerIn2] != i
-                && i != *(gBattleStruct->monToSwitchIntoId + battlerIn1)
-                && i != *(gBattleStruct->monToSwitchIntoId + battlerIn2))
-            {
-                u8 type1 = gSpeciesInfo[species].types[0];
-                u8 type2 = gSpeciesInfo[species].types[1];
-                u8 typeDmg = TYPE_MUL_NORMAL;
-                ModulateByTypeEffectiveness(gBattleMons[opposingBattler].types[0], type1, type2, &typeDmg);
-                ModulateByTypeEffectiveness(gBattleMons[opposingBattler].types[1], type1, type2, &typeDmg);
+    SaveSwitchInSimulationState(gActiveBattler, &backup);
 
-                /* Possible bug: this comparison gives the type that takes the most damage, when
-                a "good" AI would want to select the type that takes the least damage. Unknown if this
-                is a legitimate mistake or if it's an intentional, if weird, design choice */
-                if (bestDmg < typeDmg)
-                {
-                    bestDmg = typeDmg;
-                    bestMonId = i;
-                }
-            }
-            else
-            {
-                invalidMons |= gBitTable[i];
-            }
-        }
-
-        // Ok, we know the mon has the right typing but does it have at least one super effective move?
-        if (bestMonId != PARTY_SIZE)
-        {
-            for (i = 0; i < MAX_MON_MOVES; i++)
-            {
-                move = GetMonData(&party[bestMonId], MON_DATA_MOVE1 + i);
-                if (move != MOVE_NONE && TypeCalc(move, gActiveBattler, opposingBattler) & MOVE_RESULT_SUPER_EFFECTIVE)
-                    break;
-            }
-
-            if (i != MAX_MON_MOVES)
-                return bestMonId; // Has both the typing and at least one super effective move.
-
-            invalidMons |= gBitTable[bestMonId]; // Sorry buddy, we want something better.
-        }
-        else
-        {
-            invalidMons = (1 << PARTY_SIZE) - 1; // No viable mon to switch.
-        }
-    }
-
-    gDynamicBasePower = 0;
-    gBattleStruct->dynamicMoveType = 0;
-    gBattleScripting.dmgMultiplier = 1;
-    gMoveResultFlags = 0;
-    gCritMultiplier = 1;
-    bestDmg = 0;
+    bestScore = 0;
     bestMonId = PARTY_SIZE;
-
-    // If we couldn't find the best mon in terms of typing, find the one that deals most damage.
     for (i = firstId; i < lastId; i++)
     {
-        if ((u16)(GetMonData(&party[i], MON_DATA_SPECIES)) == SPECIES_NONE)
+        u16 species = GetMonData(&party[i], MON_DATA_SPECIES_OR_EGG);
+
+        if (species == SPECIES_NONE || species == SPECIES_EGG)
             continue;
         if (GetMonData(&party[i], MON_DATA_HP) == 0)
             continue;
@@ -769,22 +824,25 @@ u8 GetMostSuitableMonToSwitchInto(void)
         if (i == *(gBattleStruct->monToSwitchIntoId + battlerIn2))
             continue;
 
-        for (j = 0; j < MAX_MON_MOVES; j++)
+        // No opponent on the field to compare against: send out the first available mon
+        if (!hasOpponent)
         {
-            move = GetMonData(&party[i], MON_DATA_MOVE1 + j);
-            gBattleMoveDamage = 0;
-            if (move != MOVE_NONE && gBattleMoves[move].power != 1)
-            {
-                AI_CalcDmg(gActiveBattler, opposingBattler);
-                TypeCalc(move, gActiveBattler, opposingBattler);
-            }
-            if (bestDmg < gBattleMoveDamage)
-            {
-                bestDmg = gBattleMoveDamage;
-                bestMonId = i;
-            }
+            bestMonId = i;
+            break;
+        }
+
+        SimulateMonSwitchIn(gActiveBattler, &party[i]);
+        score = GetSwitchInScore(gActiveBattler, opposingBattler);
+
+        // On ties the first mon in party order is kept
+        if (bestMonId == PARTY_SIZE || score > bestScore)
+        {
+            bestScore = score;
+            bestMonId = i;
         }
     }
+
+    RestoreSwitchInSimulationState(gActiveBattler, &backup);
 
     return bestMonId;
 }
