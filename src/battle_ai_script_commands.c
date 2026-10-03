@@ -15,6 +15,7 @@
 #include "constants/abilities.h"
 #include "constants/battle_ai.h"
 #include "constants/battle_move_effects.h"
+#include "constants/hold_effects.h"
 #include "constants/items.h"
 #include "constants/moves.h"
 
@@ -134,10 +135,11 @@ static void Cmd_get_move_type_from_result(void);
 static void Cmd_get_move_power_from_result(void);
 static void Cmd_get_move_effect_from_result(void);
 static void Cmd_get_protect_count(void);
-static void Cmd_nop_52(void);
-static void Cmd_nop_53(void);
-static void Cmd_nop_54(void);
-static void Cmd_nop_55(void);
+static void Cmd_if_target_has_move_split(void);
+static u8 GetAITurnOrder(void);
+static void Cmd_if_target_incapacitated(void);
+static void Cmd_if_should_recover(void);
+static void Cmd_if_safe_after_belly_drum(void);
 static void Cmd_nop_56(void);
 static void Cmd_nop_57(void);
 static void Cmd_call(void);
@@ -246,10 +248,10 @@ static const BattleAICmdFunc sBattleAICmdTable[] =
     Cmd_get_move_power_from_result,                 // 0x4F
     Cmd_get_move_effect_from_result,                // 0x50
     Cmd_get_protect_count,                          // 0x51
-    Cmd_nop_52,                                     // 0x52
-    Cmd_nop_53,                                     // 0x53
-    Cmd_nop_54,                                     // 0x54
-    Cmd_nop_55,                                     // 0x55
+    Cmd_if_target_has_move_split,                   // 0x52
+    Cmd_if_target_incapacitated,                    // 0x53
+    Cmd_if_should_recover,                          // 0x54
+    Cmd_if_safe_after_belly_drum,                   // 0x55
     Cmd_nop_56,                                     // 0x56
     Cmd_nop_57,                                     // 0x57
     Cmd_call,                                       // 0x58
@@ -1714,9 +1716,7 @@ static void Cmd_get_weather(void)
     //      as a result of this function.
     //      Assigning AI_WEATHER_NONE here matches the fix implemented in future
     //      generations.
-    #ifdef BUGFIX
-        AI_THINKING_STRUCT->funcResult = AI_WEATHER_NONE;
-    #endif
+    AI_THINKING_STRUCT->funcResult = AI_WEATHER_NONE;
 
     if (gBattleWeather & B_WEATHER_RAIN)
         AI_THINKING_STRUCT->funcResult = AI_WEATHER_RAIN;
@@ -2251,20 +2251,92 @@ static void Cmd_get_protect_count(void)
     gAIScriptPtr += 2;
 }
 
-static void Cmd_nop_52(void)
+// Jumps if the target has a move of the given split (SPLIT_PHYSICAL, SPLIT_SPECIAL or SPLIT_STATUS)
+static void Cmd_if_target_has_move_split(void)
 {
+    s32 i;
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        u16 move = gBattleMons[gBattlerTarget].moves[i];
+
+        if (move != MOVE_NONE && gBattleMoves[move].split == gAIScriptPtr[1])
+        {
+            gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 2);
+            return;
+        }
+    }
+
+    gAIScriptPtr += 6;
 }
 
-static void Cmd_nop_53(void)
+// Jumps if the target can't act this turn: asleep and not waking up, recharging or loafing (Truant)
+static void Cmd_if_target_incapacitated(void)
 {
+    struct BattlePokemon *target = &gBattleMons[gBattlerTarget];
+
+    if ((target->status1 & STATUS1_SLEEP) > 1
+        || (target->status2 & STATUS2_RECHARGE)
+        || (target->ability == ABILITY_TRUANT && gDisableStructs[gBattlerTarget].truantCounter))
+        gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 1);
+    else
+        gAIScriptPtr += 5;
 }
 
-static void Cmd_nop_54(void)
+// Jumps if the AI should use a recovery move that heals 'percent' of its max HP (Run & Bun logic)
+static void Cmd_if_should_recover(void)
 {
+    struct BattlePokemon *ai = &gBattleMons[sBattler_AI];
+    s32 heal = ai->maxHP * gAIScriptPtr[1] / 100;
+    s32 damage = AI_GetBestDamage(gBattlerTarget, sBattler_AI, 100);
+    s32 hpPercent = ai->hp * 100 / ai->maxHP;
+    bool32 shouldRecover = FALSE;
+
+    if (ai->status1 & STATUS1_TOXIC_POISON)
+        shouldRecover = FALSE;
+    else if (damage >= heal)
+        shouldRecover = FALSE; // the target deals as much as the AI would heal
+    else if (GetAITurnOrder() == 0)
+    {
+        if (damage >= ai->hp)
+            shouldRecover = (damage < min(ai->hp + heal, ai->maxHP)); // KO'd now, but not after healing
+        else if (hpPercent < 40)
+            shouldRecover = TRUE;
+        else if (hpPercent < 66)
+            shouldRecover = (Random() & 1);
+    }
+    else
+    {
+        if (hpPercent < 50)
+            shouldRecover = TRUE;
+        else if (hpPercent < 70)
+            shouldRecover = (Random() % 4) != 0;
+    }
+
+    if (shouldRecover)
+        gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 2);
+    else
+        gAIScriptPtr += 6;
 }
 
-static void Cmd_nop_55(void)
+// Jumps if the target can't KO the AI after Belly Drum halves its HP (healing berries included)
+static void Cmd_if_safe_after_belly_drum(void)
 {
+    struct BattlePokemon *ai = &gBattleMons[sBattler_AI];
+    s32 hp = ai->hp - ai->maxHP / 2;
+    s32 damage;
+
+    if (ai->item != ITEM_ENIGMA_BERRY
+        && GetItemHoldEffect(ai->item) == HOLD_EFFECT_RESTORE_HP
+        && hp <= ai->maxHP / 2)
+        hp = min(hp + GetItemHoldEffectParam(ai->item), ai->maxHP);
+
+    damage = AI_GetBestDamage(gBattlerTarget, sBattler_AI, 100);
+
+    if (hp > 0 && damage < hp)
+        gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 1);
+    else
+        gAIScriptPtr += 5;
 }
 
 static void Cmd_nop_56(void)

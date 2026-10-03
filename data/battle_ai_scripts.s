@@ -634,6 +634,10 @@ Score_Minus12:
 	score -12
 	end
 
+Score_Minus20:
+	score -20
+	end
+
 Score_Minus30:
 	score -30
 	end
@@ -665,11 +669,11 @@ AI_CheckViability:
 	if_effect EFFECT_EXPLOSION, AI_CV_SelfKO
 	if_effect EFFECT_DREAM_EATER, AI_CV_DreamEater
 	if_effect EFFECT_MIRROR_MOVE, AI_CV_MirrorMove
-	if_effect EFFECT_ATTACK_UP, AI_CV_AttackUp
-	if_effect EFFECT_DEFENSE_UP, AI_CV_DefenseUp
-	if_effect EFFECT_SPEED_UP, AI_CV_SpeedUp
-	if_effect EFFECT_SPECIAL_ATTACK_UP, AI_CV_SpAtkUp
-	if_effect EFFECT_SPECIAL_DEFENSE_UP, AI_CV_SpDefUp
+	if_effect EFFECT_ATTACK_UP, AI_CV_OffensiveSetup
+	if_effect EFFECT_DEFENSE_UP, AI_CV_DefensiveSetup
+	if_effect EFFECT_SPEED_UP, AI_CV_Agility
+	if_effect EFFECT_SPECIAL_ATTACK_UP, AI_CV_SpAtkSetup
+	if_effect EFFECT_SPECIAL_DEFENSE_UP, AI_CV_DefensiveSetup
 	if_effect EFFECT_ACCURACY_UP, AI_CV_AccuracyUp
 	if_effect EFFECT_EVASION_UP, AI_CV_EvasionUp
 	if_effect EFFECT_ALWAYS_HIT, AI_CV_AlwaysHit
@@ -684,21 +688,21 @@ AI_CheckViability:
 	if_effect EFFECT_BIDE, AI_CV_Bide
 	if_effect EFFECT_ROAR, AI_CV_Roar
 	if_effect EFFECT_CONVERSION, AI_CV_Conversion
-	if_effect EFFECT_RESTORE_HP, AI_CV_Heal
+	if_effect EFFECT_RESTORE_HP, AI_CV_Recover
 	if_effect EFFECT_TOXIC, AI_CV_Toxic
 	if_effect EFFECT_LIGHT_SCREEN, AI_CV_LightScreen
-	if_effect EFFECT_REST, AI_CV_Rest
+	if_effect EFFECT_REST, AI_CV_RestSetup
 	if_effect EFFECT_OHKO, AI_CV_OneHitKO
 	if_effect EFFECT_RAZOR_WIND, AI_CV_ChargeUpMove
 	if_effect EFFECT_SUPER_FANG, AI_CV_SuperFang
 	if_effect EFFECT_TRAP, AI_CV_Trap
 	if_effect EFFECT_HIGH_CRITICAL, AI_CV_HighCrit
 	if_effect EFFECT_CONFUSE, AI_CV_Confuse
-	if_effect EFFECT_ATTACK_UP_2, AI_CV_AttackUp
-	if_effect EFFECT_DEFENSE_UP_2, AI_CV_DefenseUp
-	if_effect EFFECT_SPEED_UP_2, AI_CV_SpeedUp
-	if_effect EFFECT_SPECIAL_ATTACK_UP_2, AI_CV_SpAtkUp
-	if_effect EFFECT_SPECIAL_DEFENSE_UP_2, AI_CV_SpDefUp
+	if_effect EFFECT_ATTACK_UP_2, AI_CV_OffensiveSetup
+	if_effect EFFECT_DEFENSE_UP_2, AI_CV_DefensiveSetup
+	if_effect EFFECT_SPEED_UP_2, AI_CV_Agility
+	if_effect EFFECT_SPECIAL_ATTACK_UP_2, AI_CV_SpAtkSetup
+	if_effect EFFECT_SPECIAL_DEFENSE_UP_2, AI_CV_DefensiveSetup
 	if_effect EFFECT_ACCURACY_UP_2, AI_CV_AccuracyUp
 	if_effect EFFECT_EVASION_UP_2, AI_CV_EvasionUp
 	if_effect EFFECT_ATTACK_DOWN_2, AI_CV_AttackDown
@@ -719,7 +723,7 @@ AI_CheckViability:
 	if_effect EFFECT_RECHARGE, AI_CV_Recharge
 	if_effect EFFECT_LEECH_SEED, AI_CV_Toxic
 	if_effect EFFECT_DISABLE, AI_CV_Disable
-	if_effect EFFECT_COUNTER, AI_CV_Counter
+	if_effect EFFECT_COUNTER, AI_CV_CounterSetup
 	if_effect EFFECT_ENCORE, AI_CV_Encore
 	if_effect EFFECT_PAIN_SPLIT, AI_CV_PainSplit
 	if_effect EFFECT_SNORE, AI_CV_Snore
@@ -731,24 +735,24 @@ AI_CheckViability:
 	if_effect EFFECT_THIEF, AI_CV_Thief
 	if_effect EFFECT_MEAN_LOOK, AI_CV_Trap
 	if_effect EFFECT_MINIMIZE, AI_CV_EvasionUp
-	if_effect EFFECT_CURSE, AI_CV_Curse
+	if_effect EFFECT_CURSE, AI_CV_CurseSetup
 	if_effect EFFECT_PROTECT, AI_CV_Protect
 	if_effect EFFECT_FORESIGHT, AI_CV_Foresight
 	if_effect EFFECT_ENDURE, AI_CV_Endure
 	if_effect EFFECT_BATON_PASS, AI_CV_BatonPass
 	if_effect EFFECT_PURSUIT, AI_CV_Pursuit
-	if_effect EFFECT_MORNING_SUN, AI_CV_HealWeather
-	if_effect EFFECT_SYNTHESIS, AI_CV_HealWeather
-	if_effect EFFECT_MOONLIGHT, AI_CV_HealWeather
+	if_effect EFFECT_MORNING_SUN, AI_CV_RecoverWeather
+	if_effect EFFECT_SYNTHESIS, AI_CV_RecoverWeather
+	if_effect EFFECT_MOONLIGHT, AI_CV_RecoverWeather
 	if_effect EFFECT_RAIN_DANCE, AI_CV_RainDance
 	if_effect EFFECT_SUNNY_DAY, AI_CV_SunnyDay
-	if_effect EFFECT_BELLY_DRUM, AI_CV_BellyDrum
+	if_effect EFFECT_BELLY_DRUM, AI_CV_BellyDrumSetup
 	if_effect EFFECT_PSYCH_UP, AI_CV_PsychUp
-	if_effect EFFECT_MIRROR_COAT, AI_CV_MirrorCoat
+	if_effect EFFECT_MIRROR_COAT, AI_CV_MirrorCoatSetup
 	if_effect EFFECT_SKULL_BASH, AI_CV_ChargeUpMove
 	if_effect EFFECT_SOLAR_BEAM, AI_CV_ChargeUpMove
 	if_effect EFFECT_SEMI_INVULNERABLE, AI_CV_SemiInvulnerable
-	if_effect EFFECT_SOFTBOILED, AI_CV_Heal
+	if_effect EFFECT_SOFTBOILED, AI_CV_Recover
 	if_effect EFFECT_FAKE_OUT, AI_CV_FakeOut
 	if_effect EFFECT_SPIT_UP, AI_CV_SpitUp
 	if_effect EFFECT_SWALLOW, AI_CV_Heal
@@ -776,12 +780,12 @@ AI_CheckViability:
 	if_effect EFFECT_MUD_SPORT, AI_CV_MudSport
 	if_effect EFFECT_OVERHEAT, AI_CV_Overheat
 	if_effect EFFECT_TICKLE, AI_CV_DefenseDown
-	if_effect EFFECT_COSMIC_POWER, AI_CV_SpDefUp
-	if_effect EFFECT_BULK_UP, AI_CV_DefenseUp
+	if_effect EFFECT_COSMIC_POWER, AI_CV_DefensiveSetup
+	if_effect EFFECT_BULK_UP, AI_CV_BulkUp
 	if_effect EFFECT_POISON_TAIL, AI_CV_HighCrit
 	if_effect EFFECT_WATER_SPORT, AI_CV_WaterSport
-	if_effect EFFECT_CALM_MIND, AI_CV_SpDefUp
-	if_effect EFFECT_DRAGON_DANCE, AI_CV_DragonDance
+	if_effect EFFECT_CALM_MIND, AI_CV_CalmMind
+	if_effect EFFECT_DRAGON_DANCE, AI_CV_OffensiveSetup
 	end
 
 AI_CV_Sleep:
@@ -902,112 +906,10 @@ AI_CV_MirrorMove_EncouragedMovesToMirror:
 	.2byte MOVE_SKILL_SWAP
 	.2byte -1
 
-AI_CV_AttackUp:
-	if_stat_level_less_than AI_USER, STAT_ATK, 9, AI_CV_AttackUp2
-	if_random_less_than 100, AI_CV_AttackUp3
-	score -1
-	goto AI_CV_AttackUp3
 
-AI_CV_AttackUp2:
-	if_hp_not_equal AI_USER, 100, AI_CV_AttackUp3
-	if_random_less_than 128, AI_CV_AttackUp3
-	score +2
-AI_CV_AttackUp3:
-	if_hp_more_than AI_USER, 70, AI_CV_AttackUp_End
-	if_hp_less_than AI_USER, 40, AI_CV_AttackUp_ScoreDown2
-	if_random_less_than 40, AI_CV_AttackUp_End
-AI_CV_AttackUp_ScoreDown2:
-	score -2
-AI_CV_AttackUp_End:
-	end
 
-AI_CV_DefenseUp:
-	if_stat_level_less_than AI_USER, STAT_DEF, 9, AI_CV_DefenseUp2
-	if_random_less_than 100, AI_CV_DefenseUp3
-	score -1
-	goto AI_CV_DefenseUp3
 
-AI_CV_DefenseUp2:
-	if_hp_not_equal AI_USER, 100, AI_CV_DefenseUp3
-	if_random_less_than 128, AI_CV_DefenseUp3
-	score +2
-AI_CV_DefenseUp3:
-	if_hp_less_than AI_USER, 70, AI_CV_DefenseUp4
-	if_random_less_than 200, AI_CV_DefenseUp_End
-AI_CV_DefenseUp4:
-	if_hp_less_than AI_USER, 40, AI_CV_DefenseUp_ScoreDown2
-	get_last_used_bank_move AI_TARGET
-	get_move_power_from_result
-	if_equal 0, AI_CV_DefenseUp5
-	get_last_used_bank_move AI_TARGET
-	get_move_split_from_result
-	if_not_equal SPLIT_PHYSICAL, AI_CV_DefenseUp_ScoreDown2
-	if_random_less_than 60, AI_CV_DefenseUp_End
-AI_CV_DefenseUp5:
-	if_random_less_than 60, AI_CV_DefenseUp_End
-AI_CV_DefenseUp_ScoreDown2:
-	score -2
-AI_CV_DefenseUp_End:
-	end
 
-AI_CV_SpeedUp:
-	if_target_faster AI_CV_SpeedUp2
-	score -3
-	goto AI_CV_SpeedUp_End
-
-AI_CV_SpeedUp2:
-	if_random_less_than 70, AI_CV_SpeedUp_End
-	score +3
-AI_CV_SpeedUp_End:
-	end
-
-AI_CV_SpAtkUp:
-	if_stat_level_less_than AI_USER, STAT_SPATK, 9, AI_CV_SpAtkUp2
-	if_random_less_than 100, AI_CV_SpAtkUp3
-	score -1
-	goto AI_CV_SpAtkUp3
-
-AI_CV_SpAtkUp2:
-	if_hp_not_equal AI_USER, 100, AI_CV_SpAtkUp3
-	if_random_less_than 128, AI_CV_SpAtkUp3
-	score +2
-AI_CV_SpAtkUp3:
-	if_hp_more_than AI_USER, 70, AI_CV_SpAtkUp_End
-	if_hp_less_than AI_USER, 40, AI_CV_SpAtkUp_ScoreDown2
-	if_random_less_than 70, AI_CV_SpAtkUp_End
-AI_CV_SpAtkUp_ScoreDown2:
-	score -2
-AI_CV_SpAtkUp_End:
-	end
-
-AI_CV_SpDefUp:
-	if_stat_level_less_than AI_USER, STAT_SPDEF, 9, AI_CV_SpDefUp2
-	if_random_less_than 100, AI_CV_SpDefUp3
-	score -1
-	goto AI_CV_SpDefUp3
-
-AI_CV_SpDefUp2:
-	if_hp_not_equal AI_USER, 100, AI_CV_SpDefUp3
-	if_random_less_than 128, AI_CV_SpDefUp3
-	score +2
-AI_CV_SpDefUp3:
-	if_hp_less_than AI_USER, 70, AI_CV_SpDefUp4
-	if_random_less_than 200, AI_CV_SpDefUp_End
-AI_CV_SpDefUp4:
-	if_hp_less_than AI_USER, 40, AI_CV_SpDefUp_ScoreDown2
-	get_last_used_bank_move AI_TARGET
-	get_move_power_from_result
-	if_equal 0, AI_CV_SpDefUp5
-	get_last_used_bank_move AI_TARGET
-	get_move_split_from_result
-	if_equal SPLIT_PHYSICAL, AI_CV_SpDefUp_ScoreDown2
-	if_random_less_than 60, AI_CV_SpDefUp_End
-AI_CV_SpDefUp5:
-	if_random_less_than 60, AI_CV_SpDefUp_End
-AI_CV_SpDefUp_ScoreDown2:
-	score -2
-AI_CV_SpDefUp_End:
-	end
 
 AI_CV_AccuracyUp:
 	if_stat_level_less_than AI_USER, STAT_ACC, 9, AI_CV_AccuracyUp2
@@ -1268,15 +1170,6 @@ AI_CV_Conversion2:
 AI_CV_Conversion_End:
 	end
 
-AI_CV_HealWeather:
-	get_weather
-	if_equal AI_WEATHER_HAIL, AI_CV_HealWeather_ScoreDown2
-	if_equal AI_WEATHER_RAIN, AI_CV_HealWeather_ScoreDown2
-	if_equal AI_WEATHER_SANDSTORM, AI_CV_HealWeather_ScoreDown2
-	goto AI_CV_Heal
-
-AI_CV_HealWeather_ScoreDown2:
-	score -2
 AI_CV_Heal:
 	if_hp_equal AI_USER, 100, AI_CV_Heal3
 	if_target_faster AI_CV_Heal4
@@ -1335,36 +1228,6 @@ AI_CV_LightScreen_ScoreDown2:
 AI_CV_LightScreen_End:
 	end
 
-AI_CV_Rest:
-	if_target_faster AI_CV_Rest4
-	if_hp_not_equal AI_USER, 100, AI_CV_Rest2
-	score -8
-	goto AI_CV_Rest_End
-
-AI_CV_Rest2:
-	if_hp_less_than AI_USER, 40, AI_CV_Rest6
-	if_hp_more_than AI_USER, 50, AI_CV_Rest3
-	if_random_less_than 70, AI_CV_Rest6
-AI_CV_Rest3:
-	score -3
-	goto AI_CV_Rest_End
-
-AI_CV_Rest4:
-	if_hp_less_than AI_USER, 60, AI_CV_Rest6
-	if_hp_more_than AI_USER, 70, AI_CV_Rest5
-	if_random_less_than 50, AI_CV_Rest6
-AI_CV_Rest5:
-	score -3
-	goto AI_CV_Rest_End
-
-AI_CV_Rest6:
-	if_doesnt_have_move_with_effect AI_TARGET, EFFECT_SNATCH, AI_CV_Rest7
-	if_random_less_than 50, AI_CV_Rest_End
-AI_CV_Rest7:
-	if_random_less_than 10, AI_CV_Rest_End
-	score +3
-AI_CV_Rest_End:
-	end
 
 AI_CV_OneHitKO:
 	end
@@ -1542,56 +1405,6 @@ AI_CV_Disable_End:
 
 @ BUG: The original script would score up Counter when the target's types were not physical
 @      This is incorrect since Counter only deals double the damage received if hit by a physical attack
-AI_CV_Counter:
-	if_status AI_TARGET, STATUS1_SLEEP, AI_CV_Counter_ScoreDown1
-	if_status2 AI_TARGET, STATUS2_INFATUATION, AI_CV_Counter_ScoreDown1
-	if_status2 AI_TARGET, STATUS2_CONFUSION, AI_CV_Counter_ScoreDown1
-	if_hp_more_than AI_USER, 30, AI_CV_Counter2
-	if_random_less_than 10, AI_CV_Counter2
-	score -1
-AI_CV_Counter2:
-	if_hp_more_than AI_USER, 50, AI_CV_Counter3
-	if_random_less_than 100, AI_CV_Counter3
-	score -1
-AI_CV_Counter3:
-	if_has_move AI_USER, MOVE_MIRROR_COAT, AI_CV_Counter8
-	get_last_used_bank_move AI_TARGET
-	get_move_power_from_result
-	if_equal 0, AI_CV_Counter5
-	if_target_not_taunted AI_CV_Counter4
-	if_random_less_than 100, AI_CV_Counter4
-	score +1
-AI_CV_Counter4:
-	get_last_used_bank_move AI_TARGET
-	get_move_split_from_result
-	if_not_equal SPLIT_PHYSICAL, AI_CV_Counter_ScoreDown1
-	if_random_less_than 100, AI_CV_Counter_End
-	score +1
-	goto AI_CV_Counter_End
-
-AI_CV_Counter5:
-	if_target_not_taunted AI_CV_Counter6
-	if_random_less_than 100, AI_CV_Counter6
-	score +1
-AI_CV_Counter6:
-#ifdef BUGFIX
-	if_target_physical_attacker AI_CV_Counter7
-	goto AI_CV_Counter_End
-#else
-	if_target_physical_attacker AI_CV_Counter_End
-#endif
-AI_CV_Counter7:
-	if_random_less_than 50, AI_CV_Counter_End
-AI_CV_Counter8:
-	if_random_less_than 100, AI_CV_Counter9
-	score +4
-AI_CV_Counter9:
-	end
-
-AI_CV_Counter_ScoreDown1:
-	score -1
-AI_CV_Counter_End:
-	end
 
 AI_CV_Encore:
 	if_any_move_disabled AI_TARGET, AI_CV_Encore2
@@ -1984,14 +1797,6 @@ AI_CV_SunnyDay_ScoreDown1:
 AI_CV_SunnyDay_End:
 	end
 
-AI_CV_BellyDrum:
-	if_hp_less_than AI_USER, 90, AI_CV_BellyDrum_ScoreDown2
-	goto AI_CV_BellyDrum_End
-
-AI_CV_BellyDrum_ScoreDown2:
-	score -2
-AI_CV_BellyDrum_End:
-	end
 
 AI_CV_PsychUp:
 	if_stat_level_more_than AI_TARGET, STAT_ATK, 8, AI_CV_PsychUp2
@@ -2023,56 +1828,6 @@ AI_CV_PsychUp_End:
 
 @ BUG: The original script would score up Mirror Coat when the target's types were not special
 @      This is incorrect since Mirror Coat only deals double the damage received if hit by a special attack
-AI_CV_MirrorCoat:
-	if_status AI_TARGET, STATUS1_SLEEP, AI_CV_MirrorCoat_ScoreDown1
-	if_status2 AI_TARGET, STATUS2_INFATUATION, AI_CV_MirrorCoat_ScoreDown1
-	if_status2 AI_TARGET, STATUS2_CONFUSION, AI_CV_MirrorCoat_ScoreDown1
-	if_hp_more_than AI_USER, 30, AI_CV_MirrorCoat2
-	if_random_less_than 10, AI_CV_MirrorCoat2
-	score -1
-AI_CV_MirrorCoat2:
-	if_hp_more_than AI_USER, 50, AI_CV_MirrorCoat3
-	if_random_less_than 100, AI_CV_MirrorCoat3
-	score -1
-AI_CV_MirrorCoat3:
-	if_has_move AI_USER, MOVE_COUNTER, AI_CV_MirrorCoat_ScoreUp4
-	get_last_used_bank_move AI_TARGET
-	get_move_power_from_result
-	if_equal 0, AI_CV_MirrorCoat5
-	if_target_not_taunted AI_CV_MirrorCoat4
-	if_random_less_than 100, AI_CV_MirrorCoat4
-	score +1
-AI_CV_MirrorCoat4:
-	get_last_used_bank_move AI_TARGET
-	get_move_split_from_result
-	if_not_equal SPLIT_SPECIAL, AI_CV_MirrorCoat_ScoreDown1
-	if_random_less_than 100, AI_CV_MirrorCoat_End
-	score +1
-	goto AI_CV_MirrorCoat_End
-
-AI_CV_MirrorCoat5:
-	if_target_not_taunted AI_CV_MirrorCoat6
-	if_random_less_than 100, AI_CV_MirrorCoat6
-	score +1
-AI_CV_MirrorCoat6:
-#ifdef BUGFIX
-	if_target_special_attacker AI_CV_MirrorCoat7
-	goto AI_CV_MirrorCoat_End
-#else
-	if_target_special_attacker AI_CV_MirrorCoat_End
-#endif
-AI_CV_MirrorCoat7:
-	if_random_less_than 50, AI_CV_MirrorCoat_End
-AI_CV_MirrorCoat_ScoreUp4:
-	if_random_less_than 100, AI_CV_MirrorCoat_ScoreUp4_End
-	score +4
-AI_CV_MirrorCoat_ScoreUp4_End:
-	end
-
-AI_CV_MirrorCoat_ScoreDown1:
-	score -1
-AI_CV_MirrorCoat_End:
-	end
 
 AI_CV_ChargeUpMove:
 	if_type_effectiveness AI_EFFECTIVENESS_x0_25, AI_CV_ChargeUpMove_ScoreDown2
@@ -2489,17 +2244,180 @@ AI_CV_WaterSport_ScoreDown1:
 AI_CV_WaterSport_End:
 	end
 
-AI_CV_DragonDance:
-	if_target_faster AI_CV_DragonDance2
-	if_hp_more_than AI_USER, 50, AI_CV_DragonDance_End
-	if_random_less_than 70, AI_CV_DragonDance_End
-	score -1
-	goto AI_CV_DragonDance_End
 
-AI_CV_DragonDance2:
-	if_random_less_than 128, AI_CV_DragonDance_End
+@ ---------------------------------------------------------------------------------------
+@ Run & Bun setup / recovery / Counter logic. The base score (100) is Run & Bun's +6 for
+@ status moves, so R&B "+7" is +1 here, "+5" is -1 and "never used" is -20.
+@ "KO'd" uses the target's best usable move with max damage rolls; Sturdy is accounted for.
+
+@ Swords Dance, Dragon Dance, Howl, Sharpen, Meditate, non-Ghost Curse
+AI_CV_OffensiveSetup:
+	if_target_can_ko_user Score_Minus20
+	if_target_incapacitated AI_CV_OffensiveSetup_Incapacitated
+	goto AI_CV_Setup_SlowerAnd2HKOd
+
+AI_CV_OffensiveSetup_Incapacitated:
+	score +3
+AI_CV_Setup_SlowerAnd2HKOd:
+	if_user_faster AI_CV_Setup_End
+	get_hits_to_ko_user
+	if_not_equal 2, AI_CV_Setup_End
+	score -5
+AI_CV_Setup_End:
+	end
+
+@ Harden, Withdraw, Barrier, Acid Armor, Iron Defense, Amnesia, Cosmic Power
+AI_CV_DefensiveSetup:
+	if_target_can_ko_user Score_Minus20
+	if_user_faster AI_CV_DefensiveSetup2
+	get_hits_to_ko_user
+	if_not_equal 2, AI_CV_DefensiveSetup2
+	score -5
+AI_CV_DefensiveSetup2:
+	if_random_less_than 13, AI_CV_Setup_End
+	if_target_incapacitated AI_CV_DefensiveSetup_Incapacitated
+	goto AI_CV_DefensiveSetup3
+
+AI_CV_DefensiveSetup_Incapacitated:
+	score +2
+AI_CV_DefensiveSetup3:
+	if_not_effect EFFECT_COSMIC_POWER, AI_CV_Setup_End
+	if_stat_level_less_than AI_USER, STAT_DEF, DEFAULT_STAT_STAGE + 2, Score_Plus2
+	if_stat_level_less_than AI_USER, STAT_SPDEF, DEFAULT_STAT_STAGE + 2, Score_Plus2
+	end
+
+@ Tail Glow, Growth
+AI_CV_SpAtkSetup:
+	if_target_can_ko_user Score_Minus20
+	if_target_incapacitated AI_CV_SpAtkSetup_Incapacitated
+	get_hits_to_ko_user
+	if_equal 0, AI_CV_SpAtkSetup_Safe
+	if_more_than 3, AI_CV_SpAtkSetup_Safe
+	goto AI_CV_SpAtkSetup_Threatened
+
+AI_CV_SpAtkSetup_Incapacitated:
+	score +3
+	goto AI_CV_SpAtkSetup_Threatened
+
+AI_CV_SpAtkSetup_Safe:
 	score +1
-AI_CV_DragonDance_End:
+	if_target_faster AI_CV_SpAtkSetup_Threatened
+	score +1
+AI_CV_SpAtkSetup_Threatened:
+	if_user_faster AI_CV_SpAtkSetup_Boosted
+	get_hits_to_ko_user
+	if_not_equal 2, AI_CV_SpAtkSetup_Boosted
+	score -5
+AI_CV_SpAtkSetup_Boosted:
+	if_stat_level_less_than AI_USER, STAT_SPATK, DEFAULT_STAT_STAGE + 2, AI_CV_Setup_End
+	score -1
+	end
+
+@ Defensive if the target only attacks on the side it boosts, otherwise offensive
+AI_CV_BulkUp:
+	if_target_has_move_split SPLIT_SPECIAL, AI_CV_OffensiveSetup
+	if_target_has_move_split SPLIT_PHYSICAL, AI_CV_DefensiveSetup
+	goto AI_CV_OffensiveSetup
+
+AI_CV_CalmMind:
+	if_target_has_move_split SPLIT_PHYSICAL, AI_CV_OffensiveSetup
+	if_target_has_move_split SPLIT_SPECIAL, AI_CV_DefensiveSetup
+	goto AI_CV_OffensiveSetup
+
+AI_CV_CurseSetup:
+	get_user_type1
+	if_equal TYPE_GHOST, AI_CV_Curse
+	get_user_type2
+	if_equal TYPE_GHOST, AI_CV_Curse
+	goto AI_CV_OffensiveSetup
+
+@ Agility: only if the AI is slower
+AI_CV_Agility:
+	if_user_faster Score_Minus20
+	score +1
+	end
+
+AI_CV_BellyDrumSetup:
+	if_target_incapacitated Score_Plus3
+	if_safe_after_belly_drum Score_Plus2
+	score -2
+	end
+
+@ Recover, Slack Off, Soft-Boiled, Milk Drink: heal 50%
+AI_CV_Recover:
+	if_hp_equal AI_USER, 100, Score_Minus20
+	if_hp_more_than AI_USER, 84, Score_Minus12
+	if_should_recover 50, Score_Plus1
+	score -1
+	end
+
+@ Morning Sun, Synthesis, Moonlight: 2/3 in the sun, 1/2 without weather, 1/4 in other weather
+AI_CV_RecoverWeather:
+	if_hp_equal AI_USER, 100, Score_Minus20
+	if_hp_more_than AI_USER, 84, Score_Minus12
+	get_weather
+	if_equal AI_WEATHER_SUN, AI_CV_RecoverWeather_Sun
+	if_equal AI_WEATHER_RAIN, AI_CV_RecoverWeather_OtherWeather
+	if_equal AI_WEATHER_SANDSTORM, AI_CV_RecoverWeather_OtherWeather
+	if_equal AI_WEATHER_HAIL, AI_CV_RecoverWeather_OtherWeather
+	goto AI_CV_RecoverWeather_Clear
+
+AI_CV_RecoverWeather_OtherWeather:
+	if_should_recover 25, Score_Plus1
+	score -1
+	end
+
+AI_CV_RecoverWeather_Sun:
+	if_should_recover 67, Score_Plus1
+AI_CV_RecoverWeather_Clear:
+	if_should_recover 50, Score_Plus1
+	score -1
+	end
+
+AI_CV_RestSetup:
+	if_should_recover 100, AI_CV_RestSetup_Recover
+	score -1
+	end
+
+AI_CV_RestSetup_Recover:
+	get_hold_effect AI_USER
+	if_equal HOLD_EFFECT_CURE_SLP, Score_Plus2
+	if_equal HOLD_EFFECT_CURE_STATUS, Score_Plus2
+	if_has_move_with_effect AI_USER, EFFECT_SLEEP_TALK, Score_Plus2
+	if_has_move_with_effect AI_USER, EFFECT_SNORE, Score_Plus2
+	get_ability AI_USER
+	if_equal ABILITY_SHED_SKIN, Score_Plus2
+	if_equal ABILITY_EARLY_BIRD, Score_Plus2
+	score +1
+	end
+
+@ Counter / Mirror Coat: never if the target KOs the AI, better if it only has moves of the right split
+AI_CV_CounterSetup:
+	if_target_can_ko_user Score_Minus20
+	if_target_has_move_split SPLIT_SPECIAL, AI_CV_CounterSetup_Penalties
+	if_target_has_move_split SPLIT_PHYSICAL, AI_CV_CounterSetup_OnlyRightSplit
+	goto AI_CV_CounterSetup_Penalties
+
+AI_CV_MirrorCoatSetup:
+	if_target_can_ko_user Score_Minus20
+	if_target_has_move_split SPLIT_PHYSICAL, AI_CV_CounterSetup_Penalties
+	if_target_has_move_split SPLIT_SPECIAL, AI_CV_CounterSetup_OnlyRightSplit
+	goto AI_CV_CounterSetup_Penalties
+
+AI_CV_CounterSetup_OnlyRightSplit:
+	if_random_less_than 51, AI_CV_CounterSetup_Penalties
+	score +2
+AI_CV_CounterSetup_Penalties:
+	if_target_faster AI_CV_CounterSetup_StatusMoves
+	if_random_less_than 192, AI_CV_CounterSetup_StatusMoves
+	score -1
+AI_CV_CounterSetup_StatusMoves:
+	if_target_has_move_split SPLIT_STATUS, AI_CV_CounterSetup_StatusMoves2
+	end
+
+AI_CV_CounterSetup_StatusMoves2:
+	if_random_less_than 192, AI_CV_Setup_End
+	score -1
 	end
 
 @ Damaging moves, Run & Bun style. Status moves keep the base score, which counts as

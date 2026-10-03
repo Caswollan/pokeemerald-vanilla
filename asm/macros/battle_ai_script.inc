@@ -472,20 +472,30 @@
 	.byte \battler
 	.endm
 
-	.macro nop_52
+	@ Jumps if the target has a move of the given split (SPLIT_PHYSICAL, SPLIT_SPECIAL or SPLIT_STATUS)
+	.macro if_target_has_move_split split:req, ptr:req
 	.byte 0x52
+	.byte \split
+	.4byte \ptr
 	.endm
 
-	.macro nop_53
+	@ Jumps if the target can't act this turn (asleep, recharging, Truant)
+	.macro if_target_incapacitated ptr:req
 	.byte 0x53
+	.4byte \ptr
 	.endm
 
-	.macro nop_54
+	@ Jumps if the AI should use a recovery move healing 'percent' of its max HP
+	.macro if_should_recover percent:req, ptr:req
 	.byte 0x54
+	.byte \percent
+	.4byte \ptr
 	.endm
 
-	.macro nop_55
+	@ Jumps if the target can't KO the AI after Belly Drum
+	.macro if_safe_after_belly_drum ptr:req
 	.byte 0x55
+	.4byte \ptr
 	.endm
 
 	.macro nop_56
