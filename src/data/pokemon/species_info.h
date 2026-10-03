@@ -9718,12 +9718,12 @@ const struct SpeciesInfo gSpeciesInfo[] =
 
     [SPECIES_GLALIE] =
     {
-        .baseHP        = 80,
-        .baseAttack    = 80,
-        .baseDefense   = 80,
-        .baseSpeed     = 80,
-        .baseSpAttack  = 80,
-        .baseSpDefense = 80,
+        .baseHP        = 85,
+        .baseAttack    = 85,
+        .baseDefense   = 85,
+        .baseSpeed     = 85,
+        .baseSpAttack  = 85,
+        .baseSpDefense = 85,
         .types = { TYPE_ICE, TYPE_ICE },
         .catchRate = 75,
         .expYield = 187,
