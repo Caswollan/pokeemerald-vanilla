@@ -666,9 +666,7 @@ Score_Plus10:
 AI_CheckViability:
 	if_target_is_ally AI_Ret
 	if_effect EFFECT_SLEEP, AI_CV_SleepRnB
-	if_effect EFFECT_ABSORB, AI_CV_Absorb
 	if_effect EFFECT_EXPLOSION, AI_CV_ExplosionRnB
-	if_effect EFFECT_DREAM_EATER, AI_CV_DreamEater
 	if_effect EFFECT_MIRROR_MOVE, AI_CV_MirrorMove
 	if_effect EFFECT_ATTACK_UP, AI_CV_OffensiveSetup
 	if_effect EFFECT_DEFENSE_UP, AI_CV_DefensiveSetup
@@ -685,7 +683,6 @@ AI_CheckViability:
 	if_effect EFFECT_REST, AI_CV_RestSetup
 	if_effect EFFECT_OHKO, AI_CV_OneHitKO
 	if_effect EFFECT_RAZOR_WIND, AI_CV_ChargeUpMove
-	if_effect EFFECT_SUPER_FANG, AI_CV_SuperFang
 	if_effect EFFECT_HIGH_CRITICAL, AI_CV_HighCrit
 	if_effect EFFECT_ATTACK_UP_2, AI_CV_OffensiveSetup
 	if_effect EFFECT_DEFENSE_UP_2, AI_CV_DefensiveSetup
@@ -704,7 +701,6 @@ AI_CheckViability:
 	if_effect EFFECT_SNORE, AI_CV_Snore
 	if_effect EFFECT_SLEEP_TALK, AI_CV_SleepTalk
 	if_effect EFFECT_DESTINY_BOND, AI_CV_DestinyBondRnB
-	if_effect EFFECT_FLAIL, AI_CV_Flail
 	if_effect EFFECT_HEAL_BELL, AI_CV_HealBell
 	if_effect EFFECT_THIEF, AI_CV_Thief
 	if_effect EFFECT_CURSE, AI_CV_CurseSetup
@@ -721,34 +717,26 @@ AI_CheckViability:
 	if_effect EFFECT_PSYCH_UP, AI_CV_PsychUp
 	if_effect EFFECT_MIRROR_COAT, AI_CV_MirrorCoatSetup
 	if_effect EFFECT_SKULL_BASH, AI_CV_ChargeUpMove
-	if_effect EFFECT_SOLAR_BEAM, AI_CV_ChargeUpMove
+	if_effect EFFECT_SOLAR_BEAM, AI_CV_SolarBeam
 	if_effect EFFECT_SEMI_INVULNERABLE, AI_CV_SemiInvulnerable
 	if_effect EFFECT_SOFTBOILED, AI_CV_Recover
 	if_effect EFFECT_FAKE_OUT, AI_CV_FakeOutRnB
-	if_effect EFFECT_SPIT_UP, AI_CV_SpitUp
 	if_effect EFFECT_SWALLOW, AI_CV_Heal
 	if_effect EFFECT_HAIL, AI_CV_Hail
 	if_effect EFFECT_MEMENTO, AI_CV_MementoRnB
-	if_effect EFFECT_FACADE, AI_CV_Facade
 	if_effect EFFECT_FOCUS_PUNCH, AI_CV_FocusPunch
-	if_effect EFFECT_SMELLINGSALT, AI_CV_SmellingSalt
 	if_effect EFFECT_TRICK, AI_CV_Trick
 	if_effect EFFECT_ROLE_PLAY, AI_CV_ChangeSelfAbility
-	if_effect EFFECT_SUPERPOWER, AI_CV_Superpower
 	if_effect EFFECT_MAGIC_COAT, AI_CV_MagicCoat
 	if_effect EFFECT_RECYCLE, AI_CV_Recycle
 	if_effect EFFECT_REVENGE, AI_CV_Revenge
-	if_effect EFFECT_BRICK_BREAK, AI_CV_BrickBreak
 	if_effect EFFECT_KNOCK_OFF, AI_CV_KnockOff
-	if_effect EFFECT_ENDEAVOR, AI_CV_Endeavor
-	if_effect EFFECT_ERUPTION, AI_CV_Eruption
 	if_effect EFFECT_SKILL_SWAP, AI_CV_ChangeSelfAbility
 	if_effect EFFECT_IMPRISON, AI_CV_ImprisonRnB
 	if_effect EFFECT_REFRESH, AI_CV_Refresh
 	if_effect EFFECT_SNATCH, AI_CV_Snatch
 	if_effect EFFECT_BLAZE_KICK, AI_CV_HighCrit
 	if_effect EFFECT_MUD_SPORT, AI_CV_MudSport
-	if_effect EFFECT_OVERHEAT, AI_CV_Overheat
 	if_effect EFFECT_COSMIC_POWER, AI_CV_DefensiveSetup
 	if_effect EFFECT_BULK_UP, AI_CV_BulkUp
 	if_effect EFFECT_POISON_TAIL, AI_CV_HighCrit
@@ -762,28 +750,6 @@ AI_CheckViability:
 	if_effect EFFECT_TAUNT, Score_Minus1
 	end
 
-
-AI_CV_Absorb:
-	if_type_effectiveness AI_EFFECTIVENESS_x0_5, AI_CV_AbsorbEncourageMaybe
-	if_type_effectiveness AI_EFFECTIVENESS_x0_25, AI_CV_AbsorbEncourageMaybe
-	goto AI_CV_Absorb_End
-
-AI_CV_AbsorbEncourageMaybe:
-	if_random_less_than 50, AI_CV_Absorb_End
-	score -3
-AI_CV_Absorb_End:
-	end
-
-
-AI_CV_DreamEater:
-	if_type_effectiveness AI_EFFECTIVENESS_x0_25, AI_CV_DreamEater_ScoreDown1
-	if_type_effectiveness AI_EFFECTIVENESS_x0_5, AI_CV_DreamEater_ScoreDown1
-	goto AI_CV_DreamEater_End
-
-AI_CV_DreamEater_ScoreDown1:
-	score -1
-AI_CV_DreamEater_End:
-	end
 
 AI_CV_MirrorMove:
 	if_target_faster AI_CV_MirrorMove2
@@ -976,13 +942,6 @@ AI_CV_Heal_End:
 AI_CV_OneHitKO:
 	end
 
-AI_CV_SuperFang:
-	if_hp_more_than AI_TARGET, 50, AI_CV_SuperFang_End
-	score -1
-AI_CV_SuperFang_End:
-	end
-
-
 AI_CV_HighCrit:
 	if_type_effectiveness AI_EFFECTIVENESS_x0_25, AI_CV_HighCrit_End
 	if_type_effectiveness AI_EFFECTIVENESS_x0_5, AI_CV_HighCrit_End
@@ -1148,30 +1107,6 @@ AI_CV_SleepTalk:
 	score -5
 	end
 
-
-AI_CV_Flail:
-	if_target_faster AI_CV_Flail2
-	if_hp_more_than AI_USER, 33, AI_CV_Flail_ScoreDown1
-	if_hp_more_than AI_USER, 20, AI_CV_Flail_End
-	if_hp_less_than AI_USER, 8, AI_CV_Flail_ScoreUp1
-	goto AI_CV_Flail3
-
-AI_CV_Flail2:
-	if_hp_more_than AI_USER, 60, AI_CV_Flail_ScoreDown1
-	if_hp_more_than AI_USER, 40, AI_CV_Flail_End
-	goto AI_CV_Flail3
-
-AI_CV_Flail_ScoreUp1:
-	score +1
-AI_CV_Flail3:
-	if_random_less_than 100, AI_CV_Flail_End
-	score +1
-	goto AI_CV_Flail_End
-
-AI_CV_Flail_ScoreDown1:
-	score -1
-AI_CV_Flail_End:
-	end
 
 AI_CV_HealBell:
 	if_status AI_TARGET, STATUS1_ANY, AI_CV_HealBell_End
@@ -1381,14 +1316,6 @@ AI_CV_SandstormResistantTypes:
 	.byte -1
 
 
-AI_CV_SpitUp:
-	get_stockpile_count AI_USER
-	if_less_than 2, AI_CV_SpitUp_End
-	if_random_less_than 80, AI_CV_SpitUp_End
-	score +2
-AI_CV_SpitUp_End:
-	end
-
 AI_CV_Hail:
 	if_hp_less_than AI_USER, 40, AI_CV_Hail_ScoreDown1
 	get_weather
@@ -1407,12 +1334,6 @@ AI_CV_Hail_End:
 	end
 
 @ Facade is boosted when the user is statused (vanilla bug fixed); Frostbite counts too
-AI_CV_Facade:
-	if_not_status AI_USER, STATUS1_POISON | STATUS1_BURN | STATUS1_FREEZE | STATUS1_PARALYSIS | STATUS1_TOXIC_POISON, AI_CV_Facade_End
-	score +1
-AI_CV_Facade_End:
-	end
-
 AI_CV_FocusPunch:
 	if_type_effectiveness AI_EFFECTIVENESS_x0_25, AI_CV_FocusPunch2
 	if_type_effectiveness AI_EFFECTIVENESS_x0_5, AI_CV_FocusPunch2
@@ -1435,15 +1356,6 @@ AI_CV_FocusPunch3:
 AI_CV_FocusPunch_ScoreUp1:
 	score +1
 AI_CV_FocusPunch_End:
-	end
-
-AI_CV_SmellingSalt:
-	if_status AI_TARGET, STATUS1_PARALYSIS, AI_CV_SmellingSalt_ScoreUp1
-	goto AI_CV_SmellingSalt_End
-
-AI_CV_SmellingSalt_ScoreUp1:
-	score +1
-AI_CV_SmellingSalt_End:
 	end
 
 AI_CV_Trick:
@@ -1516,21 +1428,6 @@ AI_CV_ChangeSelfAbility_AbilitiesToEncourage:
 	.byte ABILITY_SHIELD_DUST
 	.byte -1
 
-AI_CV_Superpower:
-	if_type_effectiveness AI_EFFECTIVENESS_x0_25, AI_CV_Superpower_ScoreDown1
-	if_type_effectiveness AI_EFFECTIVENESS_x0_5, AI_CV_Superpower_ScoreDown1
-	if_stat_level_less_than AI_USER, STAT_ATK, DEFAULT_STAT_STAGE, AI_CV_Superpower_ScoreDown1
-	if_target_faster AI_CV_Superpower2
-	if_hp_more_than AI_USER, 40, AI_CV_Superpower_ScoreDown1
-	goto AI_CV_Superpower_End
-
-AI_CV_Superpower2:
-	if_hp_less_than AI_USER, 60, AI_CV_Superpower_End
-AI_CV_Superpower_ScoreDown1:
-	score -1
-AI_CV_Superpower_End:
-	end
-
 AI_CV_MagicCoat:
 	if_hp_more_than AI_TARGET, 30, AI_CV_MagicCoat2
 	if_random_less_than 100, AI_CV_MagicCoat2
@@ -1581,15 +1478,6 @@ AI_CV_Revenge_ScoreDown2:
 AI_CV_Revenge_End:
 	end
 
-AI_CV_BrickBreak:
-	if_side_affecting AI_TARGET, SIDE_STATUS_REFLECT, AI_CV_BrickBreak_ScoreUp1
-	goto AI_CV_BrickBreak_End
-
-AI_CV_BrickBreak_ScoreUp1:
-	score +1
-AI_CV_BrickBreak_End:
-	end
-
 AI_CV_KnockOff:
 	if_hp_less_than AI_TARGET, 30, AI_CV_KnockOff_End
 	is_first_turn_for AI_USER
@@ -1598,38 +1486,6 @@ AI_CV_KnockOff:
 	score +1
 AI_CV_KnockOff_End:
 	end
-
-AI_CV_Endeavor:
-	if_hp_less_than AI_TARGET, 70, AI_CV_Endeavor_ScoreDown1
-	if_target_faster AI_CV_Endeavor2
-	if_hp_more_than AI_USER, 40, AI_CV_Endeavor_ScoreDown1
-	score +1
-	goto AI_CV_Endeavor_End
-
-AI_CV_Endeavor2:
-	if_hp_more_than AI_USER, 50, AI_CV_Endeavor_ScoreDown1
-	score +1
-	goto AI_CV_Endeavor_End
-
-AI_CV_Endeavor_ScoreDown1:
-	score -1
-AI_CV_Endeavor_End:
-	end
-
-AI_CV_Eruption:
-	if_type_effectiveness AI_EFFECTIVENESS_x0_25, AI_CV_Eruption_ScoreDown1
-	if_type_effectiveness AI_EFFECTIVENESS_x0_5, AI_CV_Eruption_ScoreDown1
-	if_target_faster AI_CV_Eruption2
-	if_hp_more_than AI_TARGET, 50, AI_CV_Eruption_End
-	goto AI_CV_Eruption_ScoreDown1
-
-AI_CV_Eruption2:
-	if_hp_more_than AI_TARGET, 70, AI_CV_Eruption_End
-AI_CV_Eruption_ScoreDown1:
-	score -1
-AI_CV_Eruption_End:
-	end
-
 
 AI_CV_Refresh:
 	if_hp_less_than AI_TARGET, 50, AI_CV_Refresh_ScoreDown1
@@ -1689,20 +1545,6 @@ AI_CV_MudSport_ScoreDown1:
 AI_CV_MudSport_End:
 	end
 
-AI_CV_Overheat:
-	if_type_effectiveness AI_EFFECTIVENESS_x0_25, AI_CV_Overheat_ScoreDown1
-	if_type_effectiveness AI_EFFECTIVENESS_x0_5, AI_CV_Overheat_ScoreDown1
-	if_target_faster AI_CV_Overheat2
-	if_hp_more_than AI_USER, 60, AI_CV_Overheat_End
-	goto AI_CV_Overheat_ScoreDown1
-
-AI_CV_Overheat2:
-	if_hp_more_than AI_USER, 80, AI_CV_Overheat_End
-AI_CV_Overheat_ScoreDown1:
-	score -1
-AI_CV_Overheat_End:
-	end
-
 AI_CV_WaterSport:
 	if_hp_less_than AI_USER, 50, AI_CV_WaterSport_ScoreDown1
 	get_target_type1
@@ -1726,6 +1568,11 @@ AI_CV_WaterSport_End:
 
 AI_CV_RnB_End:
 	end
+
+@ Solar Beam hits right away in the sun: no charge turn penalty
+AI_CV_SolarBeam:
+	if_sun_active AI_CV_RnB_End
+	goto AI_CV_ChargeUpMove
 
 @ Fake Out: +3 on the first turn, never afterwards; Inner Focus / Shield Dust make it a plain weak attack
 AI_CV_FakeOutRnB:
@@ -1782,6 +1629,7 @@ AI_CV_SubstituteRnB_Random:
 	end
 
 AI_CV_ProtectRnB:
+	if_user_dies_to_residual Score_Minus20
 	get_protect_count AI_USER
 	if_more_than 1, Score_Minus20
 	if_equal 0, AI_CV_ProtectRnB_UserStatus

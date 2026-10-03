@@ -6,6 +6,7 @@
 #include "battle_script_commands.h"
 #include "battle_factory.h"
 #include "battle_setup.h"
+#include "battle_util.h"
 #include "data.h"
 #include "item.h"
 #include "pokemon.h"
@@ -157,6 +158,8 @@ static void Cmd_if_holds_item(void);
 static void Cmd_get_move_split_from_result(void);
 static void Cmd_if_target_physical_attacker(void);
 static void Cmd_if_target_special_attacker(void);
+static void Cmd_if_user_dies_to_residual(void);
+static void Cmd_if_sun_active(void);
 
 // ewram
 EWRAM_DATA const u8 *gAIScriptPtr = NULL;
@@ -269,6 +272,8 @@ static const BattleAICmdFunc sBattleAICmdTable[] =
     Cmd_get_move_split_from_result,                 // 0x63
     Cmd_if_target_physical_attacker,                // 0x64
     Cmd_if_target_special_attacker,                 // 0x65
+    Cmd_if_user_dies_to_residual,                   // 0x66
+    Cmd_if_sun_active,                              // 0x67
 };
 
 // For the purposes of determining the most powerful move in a moveset, these
@@ -1205,19 +1210,36 @@ static void Cmd_get_considered_move_power(void)
     gAIScriptPtr += 1;
 }
 
-static void Cmd_get_how_powerful_move_is(void)
+// Same check as the Solar Beam battle script: sun, and no Cloud Nine / Air Lock on the field
+static bool32 IsSunActive(void)
 {
-    s32 i, checkedMove;
-    s32 moveDmgs[MAX_MON_MOVES];
+    return WEATHER_HAS_EFFECT && (gBattleWeather & B_WEATHER_SUN);
+}
+
+// Moves left out of the "most powerful move" comparison. Solar Beam is a normal attack in the sun.
+static bool32 IsIgnoredPowerfulMove(u16 move)
+{
+    s32 i;
+    u16 effect = gBattleMoves[move].effect;
+
+    if (effect == EFFECT_SOLAR_BEAM && IsSunActive())
+        return FALSE;
 
     for (i = 0; sIgnoredPowerfulMoveEffects[i] != IGNORED_MOVES_END; i++)
     {
-        if (gBattleMoves[AI_THINKING_STRUCT->moveConsidered].effect == sIgnoredPowerfulMoveEffects[i])
-            break;
+        if (effect == sIgnoredPowerfulMoveEffects[i])
+            return TRUE;
     }
+    return FALSE;
+}
+
+static void Cmd_get_how_powerful_move_is(void)
+{
+    s32 checkedMove;
+    s32 moveDmgs[MAX_MON_MOVES];
 
     if (AI_IsDamagingMove(AI_THINKING_STRUCT->moveConsidered)
-        && sIgnoredPowerfulMoveEffects[i] == IGNORED_MOVES_END)
+        && !IsIgnoredPowerfulMove(AI_THINKING_STRUCT->moveConsidered))
     {
         // Moves that can't be used (no PP, Disable, Taunt, Imprison, Encore, Choice Band) aren't compared
         u8 unusableMoves = CheckMoveLimitations(sBattler_AI, 0, MOVE_LIMITATIONS_ALL);
@@ -1226,15 +1248,9 @@ static void Cmd_get_how_powerful_move_is(void)
         // Check all other moves and calculate their power
         for (checkedMove = 0; checkedMove < MAX_MON_MOVES; checkedMove++)
         {
-            for (i = 0; sIgnoredPowerfulMoveEffects[i] != IGNORED_MOVES_END; i++)
-            {
-                if (gBattleMoves[gBattleMons[sBattler_AI].moves[checkedMove]].effect == sIgnoredPowerfulMoveEffects[i])
-                    break;
-            }
-
             if (gBattleMons[sBattler_AI].moves[checkedMove] != MOVE_NONE
                 && !(unusableMoves & gBitTable[checkedMove])
-                && sIgnoredPowerfulMoveEffects[i] == IGNORED_MOVES_END
+                && !IsIgnoredPowerfulMove(gBattleMons[sBattler_AI].moves[checkedMove])
                 && AI_IsDamagingMove(gBattleMons[sBattler_AI].moves[checkedMove]))
             {
                 moveDmgs[checkedMove] = AI_CalcMoveDamage(gBattleMons[sBattler_AI].moves[checkedMove], sBattler_AI, gBattlerTarget,
@@ -2497,4 +2513,88 @@ static bool8 AIStackPop(void)
     {
         return FALSE;
     }
+}
+
+// TRUE if the battler faints from this turn's end-of-turn damage: weather, Leech Seed, poison, burn,
+// Frostbite, Nightmare, Curse, Wrap and Perish Song, after Ingrain / Rain Dish / Leftovers healing.
+static bool32 DiesToResidualDamage(u8 battler)
+{
+    struct BattlePokemon *mon = &gBattleMons[battler];
+    s32 hp = mon->hp;
+    s32 tick = max(mon->maxHP / 16, 1);
+    s32 damage = 0;
+    u32 toxicTurns;
+    u8 holdEffect;
+
+    if ((gStatuses3[battler] & STATUS3_PERISH_SONG) && gDisableStructs[battler].perishSongTimer == 0)
+        return TRUE;
+
+    // Weather damage comes first
+    if (WEATHER_HAS_EFFECT && !(gStatuses3[battler] & (STATUS3_UNDERGROUND | STATUS3_UNDERWATER)))
+    {
+        if ((gBattleWeather & B_WEATHER_SANDSTORM)
+            && !IS_BATTLER_OF_TYPE(battler, TYPE_ROCK)
+            && !IS_BATTLER_OF_TYPE(battler, TYPE_STEEL)
+            && !IS_BATTLER_OF_TYPE(battler, TYPE_GROUND)
+            && mon->ability != ABILITY_SAND_VEIL)
+            hp -= tick;
+        else if ((gBattleWeather & B_WEATHER_HAIL) && !IS_BATTLER_OF_TYPE(battler, TYPE_ICE))
+            hp -= tick;
+    }
+    if (hp <= 0)
+        return TRUE;
+
+    // Then healing
+    if (gStatuses3[battler] & STATUS3_ROOTED)
+        hp += tick;
+    if (mon->ability == ABILITY_RAIN_DISH && WEATHER_HAS_EFFECT && (gBattleWeather & B_WEATHER_RAIN))
+        hp += tick;
+    if (mon->item == ITEM_ENIGMA_BERRY)
+        holdEffect = gEnigmaBerries[battler].holdEffect;
+    else
+        holdEffect = GetItemHoldEffect(mon->item);
+    if (holdEffect == HOLD_EFFECT_LEFTOVERS)
+        hp += tick;
+    hp = min(hp, mon->maxHP);
+
+    // Then status damage
+    if (gStatuses3[battler] & STATUS3_LEECHSEED)
+        damage += max(mon->maxHP / 8, 1);
+    if (mon->status1 & STATUS1_POISON)
+        damage += max(mon->maxHP / 8, 1);
+    if (mon->status1 & STATUS1_TOXIC_POISON)
+    {
+        toxicTurns = (mon->status1 & STATUS1_TOXIC_COUNTER) >> 8;
+        if (toxicTurns < 15)
+            toxicTurns++;
+        damage += tick * toxicTurns;
+    }
+    if (mon->status1 & STATUS1_BURN)
+        damage += tick;
+    if (mon->status1 & STATUS1_FREEZE) // Frostbite
+        damage += tick;
+    if ((mon->status2 & STATUS2_NIGHTMARE) && (mon->status1 & STATUS1_SLEEP))
+        damage += max(mon->maxHP / 4, 1);
+    if (mon->status2 & STATUS2_CURSED)
+        damage += max(mon->maxHP / 4, 1);
+    if ((mon->status2 & STATUS2_WRAPPED) > STATUS2_WRAPPED_TURN(1))
+        damage += tick;
+
+    return damage >= hp;
+}
+
+static void Cmd_if_user_dies_to_residual(void)
+{
+    if (DiesToResidualDamage(sBattler_AI))
+        gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 1);
+    else
+        gAIScriptPtr += 5;
+}
+
+static void Cmd_if_sun_active(void)
+{
+    if (IsSunActive())
+        gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 1);
+    else
+        gAIScriptPtr += 5;
 }

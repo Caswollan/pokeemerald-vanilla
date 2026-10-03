@@ -587,6 +587,18 @@
 	.4byte \ptr
 	.endm
 
+	@ Jumps if the AI faints from this turn's end-of-turn damage (weather, status, Leech Seed, Curse...)
+	.macro if_user_dies_to_residual ptr:req
+	.byte 0x66
+	.4byte \ptr
+	.endm
+
+	@ Jumps if the sun is active (and not cancelled by Cloud Nine / Air Lock)
+	.macro if_sun_active ptr:req
+	.byte 0x67
+	.4byte \ptr
+	.endm
+
 @ useful script macros
 	.macro get_curr_move_type
 	get_type AI_TYPE_MOVE
