@@ -12521,3 +12521,63 @@ static const struct TrainerMonItemCustomMoves sParty_WallyPetalburg[] = {
     .moves = {MOVE_PSYCHIC, MOVE_THUNDERBOLT, MOVE_SHADOW_BALL, MOVE_CALM_MIND}
     }
 };
+
+static const struct TrainerMonItemCustomMoves sParty_ArchieMtPyre[] = {
+    {
+    .iv = 255,
+    .lvl = 64,
+    .species = SPECIES_MIGHTYENA,
+    .nature = NATURE_ADAMANT,
+    .abilityNum = TRAINER_MON_ABILITY_1,
+    .heldItem = ITEM_SITRUS_BERRY,
+    .moves = {MOVE_CRUNCH, MOVE_SUPER_FANG, MOVE_TAUNT, MOVE_PROTECT}
+    },
+    {
+    .iv = 255,
+    .lvl = 65,
+    .species = SPECIES_CROBAT,
+    .nature = NATURE_JOLLY,
+    .abilityNum = TRAINER_MON_ABILITY_1,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_SKY_ATTACK, MOVE_POISON_FANG, MOVE_CRUNCH, MOVE_CONFUSE_RAY}
+    },
+    {
+    .iv = 255,
+    .lvl = 66,
+    .species = SPECIES_SHARPEDO,
+    .nature = NATURE_ADAMANT,
+    .abilityNum = TRAINER_MON_ABILITY_1,
+    .heldItem = ITEM_MYSTIC_WATER,
+    .moves = {MOVE_WATERFALL, MOVE_CRUNCH, MOVE_TAUNT, MOVE_PROTECT}
+    }
+};
+
+static const struct TrainerMonItemCustomMoves sParty_MattMtPyre[] = {
+    {
+    .iv = 255,
+    .lvl = 64,
+    .species = SPECIES_LANTURN,
+    .nature = NATURE_MODEST,
+    .abilityNum = TRAINER_MON_ABILITY_2,
+    .heldItem = ITEM_SITRUS_BERRY,
+    .moves = {MOVE_THUNDERBOLT, MOVE_ICE_BEAM, MOVE_THUNDER_WAVE, MOVE_CONFUSE_RAY}
+    },
+    {
+    .iv = 255,
+    .lvl = 64,
+    .species = SPECIES_MUK,
+    .nature = NATURE_ADAMANT,
+    .abilityNum = TRAINER_MON_ABILITY_2,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_KNOCK_OFF, MOVE_ROCK_SLIDE, MOVE_FIRE_PUNCH, MOVE_POISON_FANG}
+    },
+    {
+    .iv = 255,
+    .lvl = 65,
+    .species = SPECIES_WAILORD,
+    .nature = NATURE_MODEST,
+    .abilityNum = TRAINER_MON_ABILITY_2,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_WATER_SPOUT, MOVE_SURF, MOVE_ICE_BEAM, MOVE_PROTECT}
+    }
+};

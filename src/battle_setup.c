@@ -1887,3 +1887,16 @@ u16 CountBattledRematchTeams(u16 trainerId)
 
     return i;
 }
+
+// Double battle against Archie and Matt at the Mt. Pyre summit, started from the map script
+// like when two trainers spot the player at the same time.
+extern const u8 MtPyre_Summit_EventScript_ArchieTrainer[];
+extern const u8 MtPyre_Summit_EventScript_MattTrainer[];
+
+void StartMtPyreAquaBattle(void)
+{
+    BattleSetup_ConfigureTrainerBattle(MtPyre_Summit_EventScript_ArchieTrainer + 1);
+    BattleSetup_ConfigureTrainerBattle(MtPyre_Summit_EventScript_MattTrainer + 1);
+    gNoOfApproachingTrainers = 2;
+    BattleSetup_StartTrainerBattle();
+}

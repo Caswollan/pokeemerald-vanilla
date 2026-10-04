@@ -37,10 +37,19 @@ MtPyre_Summit_EventScript_TeamAquaExits::
 	call_if_eq VAR_0x8008, 0, MtPyre_Summit_EventScript_ArchieFacePlayer0
 	call_if_eq VAR_0x8008, 1, MtPyre_Summit_EventScript_ArchieFacePlayer1
 	call_if_eq VAR_0x8008, 2, MtPyre_Summit_EventScript_ArchieFacePlayer2
+	msgbox MtPyre_Summit_Text_ArchieBattleIntro, MSGBOX_DEFAULT
+	closemessage
+	applywaitmovement LOCALID_MT_PYRE_SUMMIT_MATT, Common_Movement_WalkInPlaceFasterDown
+	msgbox MtPyre_Summit_Text_MattBattleIntro, MSGBOX_DEFAULT
+	closemessage
+	special HasEnoughMonsForDoubleBattle
+	goto_if_ne VAR_RESULT, PLAYER_HAS_TWO_USABLE_MONS, MtPyre_Summit_EventScript_AquaNeedTwoMons
+	special StartMtPyreAquaBattle
 	msgbox MtPyre_Summit_Text_ArchieWeGotTheOrbLetsGo, MSGBOX_DEFAULT
 	closemessage
 	fadescreen FADE_TO_BLACK
 	removeobject LOCALID_MT_PYRE_SUMMIT_ARCHIE
+	removeobject LOCALID_MT_PYRE_SUMMIT_MATT
 	removeobject LOCALID_MT_PYRE_SUMMIT_GRUNT_1
 	removeobject LOCALID_MT_PYRE_SUMMIT_GRUNT_2
 	removeobject LOCALID_MT_PYRE_SUMMIT_GRUNT_3
@@ -59,6 +68,28 @@ MtPyre_Summit_EventScript_TeamAquaExits::
 	setflag FLAG_RECEIVED_RED_OR_BLUE_ORB
 	setflag FLAG_HIDE_JAGGED_PASS_MAGMA_GUARD
 	releaseall
+	end
+
+@ Archie and Matt only battle a player with at least two Pokemon able to fight
+MtPyre_Summit_EventScript_AquaNeedTwoMons::
+	msgbox MtPyre_Summit_Text_ArchieNeedTwoMons, MSGBOX_DEFAULT
+	closemessage
+	applywaitmovement LOCALID_PLAYER, MtPyre_Summit_Movement_PlayerStepBack
+	fadedefaultbgm
+	releaseall
+	end
+
+MtPyre_Summit_Movement_PlayerStepBack:
+	walk_down
+	step_end
+
+@ Loaded by StartMtPyreAquaBattle (src/battle_setup.c)
+MtPyre_Summit_EventScript_ArchieTrainer::
+	trainerbattle TRAINER_BATTLE_SET_TRAINER_A, TRAINER_ARCHIE_MT_PYRE, LOCALID_NONE, MtPyre_Summit_Text_ArchieDefeat, MtPyre_Summit_Text_ArchieDefeat
+	end
+
+MtPyre_Summit_EventScript_MattTrainer::
+	trainerbattle TRAINER_BATTLE_SET_TRAINER_B, TRAINER_MATT_MT_PYRE, LOCALID_NONE, MtPyre_Summit_Text_MattDefeat, MtPyre_Summit_Text_MattDefeat
 	end
 
 MtPyre_Summit_EventScript_ArchieFacePlayer0::
@@ -600,3 +631,29 @@ MtPyre_Summit_Text_HoennTrioTale:
 	.string "Then, its duty done, the green POKéMON\n"
 	.string "flew off into the wild blue yonder…$"
 
+MtPyre_Summit_Text_ArchieBattleIntro:
+	.string "ARCHIE: Well, well…\n"
+	.string "If it isn't the meddling kid again!\p"
+	.string "You've followed us all the way up\n"
+	.string "here, have you?\p"
+	.string "I won't let a child stand in the way\n"
+	.string "of TEAM AQUA's dream!\p"
+	.string "MATT! Let's show this kid what\n"
+	.string "happens to those who cross us!$"
+
+MtPyre_Summit_Text_MattBattleIntro:
+	.string "MATT: Hehehe! Leave it to us, BOSS!\n"
+	.string "We'll wash this kid right off\l"
+	.string "the mountain!$"
+
+MtPyre_Summit_Text_ArchieDefeat:
+	.string "Hmph… Not bad at all, kid.$"
+
+MtPyre_Summit_Text_MattDefeat:
+	.string "Whoa! Sorry, BOSS!$"
+
+MtPyre_Summit_Text_ArchieNeedTwoMons:
+	.string "ARCHIE: Hah! You can't even face\n"
+	.string "the two of us with what you've got!\p"
+	.string "Come back when you have at least\n"
+	.string "two POKéMON ready to fight!$"

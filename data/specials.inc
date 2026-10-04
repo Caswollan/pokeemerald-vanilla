@@ -253,6 +253,7 @@ gSpecials::
 	def_special CallBattlePalaceFunction
 	def_special CopyEReaderTrainerGreeting
 	def_special DoSpecialTrainerBattle, waitstate=1
+	def_special StartMtPyreAquaBattle
 	def_special CallBattleArenaFunction
 	def_special CallBattleFactoryFunction
 	def_special CallBattlePikeFunction
