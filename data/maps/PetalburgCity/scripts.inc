@@ -9,7 +9,16 @@ PetalburgCity_OnTransition:
 	call_if_eq VAR_PETALBURG_CITY_STATE, 2, PetalburgCity_EventScript_DisableMapNameAndMusic
 	call_if_eq VAR_PETALBURG_CITY_STATE, 4, PetalburgCity_EventScript_DisableMapNameAndMusic
 	call_if_eq VAR_PETALBURG_GYM_STATE, 8, PetalburgCity_EventScript_SetGymDoorsUnlocked
+	call PetalburgCity_EventScript_TryEnableWallyBattle
 	end
+
+@ After the 4th badge, Wally waits in front of the Gym until the player beats him
+PetalburgCity_EventScript_TryEnableWallyBattle::
+	goto_if_unset FLAG_BADGE04_GET, PetalburgCity_EventScript_TryEnableWallyBattleEnd
+	goto_if_defeated TRAINER_WALLY_PETALBURG, PetalburgCity_EventScript_TryEnableWallyBattleEnd
+	setvar VAR_TEMP_1, 1
+PetalburgCity_EventScript_TryEnableWallyBattleEnd:
+	return
 
 PetalburgCity_EventScript_MoveGymBoyToWestEntrance::
 	setobjectxyperm LOCALID_GYM_BOY, 5, 11
@@ -739,3 +748,67 @@ PetalburgCity_Text_ImLookingForTalentedTrainers:
 	.string "I'm roaming the land in search of\n"
 	.string "talented TRAINERS.\p"
 	.string "I'm sorry to have taken your time.$"
+
+PetalburgCity_EventScript_WallyBattle::
+	lockall
+	msgbox PetalburgCity_Text_WallyWait, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	setobjectxyperm LOCALID_PETALBURG_WALLY, 15, 15
+	addobject LOCALID_PETALBURG_WALLY
+	applymovement LOCALID_PETALBURG_WALLY, PetalburgCity_Movement_WallyApproachGym
+	waitmovement 0
+	msgbox PetalburgCity_Text_WallyIntro, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_WALLY_PETALBURG, PetalburgCity_Text_WallyDefeat
+	msgbox PetalburgCity_Text_WallyPostBattle, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_PETALBURG_WALLY, PetalburgCity_Movement_WallyLeave
+	waitmovement 0
+	removeobject LOCALID_PETALBURG_WALLY
+	setvar VAR_TEMP_1, 0
+	releaseall
+	end
+
+PetalburgCity_Movement_WallyApproachGym:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+PetalburgCity_Movement_WallyLeave:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+PetalburgCity_Text_WallyWait:
+	.string "{PLAYER}!\n"
+	.string "Wait!$"
+
+PetalburgCity_Text_WallyIntro:
+	.string "WALLY: Phew… I made it in time!\p"
+	.string "You're about to challenge your dad,\n"
+	.string "aren't you?\p"
+	.string "I've been training really hard in\n"
+	.string "VERDANTURF since our battle in\l"
+	.string "MAUVILLE.\p"
+	.string "Before you go in, I want you to see\n"
+	.string "how strong my POKéMON have become!\p"
+	.string "{PLAYER}, please… battle me!$"
+
+PetalburgCity_Text_WallyDefeat:
+	.string "I lost again…\n"
+	.string "But it was so close this time!$"
+
+PetalburgCity_Text_WallyPostBattle:
+	.string "WALLY: You really are amazing,\n"
+	.string "{PLAYER}.\p"
+	.string "I'm going to keep training, so one\n"
+	.string "day I'll be able to beat you!\p"
+	.string "Good luck against your dad!$"

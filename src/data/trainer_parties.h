@@ -12473,3 +12473,51 @@ static const struct TrainerMonNoItemDefaultMoves sParty_MayLinkPlaceholder[] = {
     .species = SPECIES_KYOGRE,
     }
 };
+
+static const struct TrainerMonItemCustomMoves sParty_WallyPetalburg[] = {
+    {
+    .iv = 255,
+    .lvl = 47,
+    .species = SPECIES_DELCATTY,
+    .nature = NATURE_JOLLY,
+    .abilityNum = TRAINER_MON_ABILITY_1,
+    .heldItem = ITEM_SILK_SCARF,
+    .moves = {MOVE_FAKE_OUT, MOVE_DOUBLE_EDGE, MOVE_FAINT_ATTACK, MOVE_THUNDER_WAVE}
+    },
+    {
+    .iv = 255,
+    .lvl = 47,
+    .species = SPECIES_MAGNETON,
+    .nature = NATURE_MODEST,
+    .abilityNum = TRAINER_MON_ABILITY_2,
+    .heldItem = ITEM_MAGNET,
+    .moves = {MOVE_THUNDERBOLT, MOVE_DOOM_DESIRE, MOVE_SIGNAL_BEAM, MOVE_THUNDER_WAVE}
+    },
+    {
+    .iv = 255,
+    .lvl = 47,
+    .species = SPECIES_ROSELIA,
+    .nature = NATURE_TIMID,
+    .abilityNum = TRAINER_MON_ABILITY_1,
+    .heldItem = ITEM_MIRACLE_SEED,
+    .moves = {MOVE_GIGA_DRAIN, MOVE_SLUDGE_BOMB, MOVE_SLEEP_POWDER, MOVE_LEECH_SEED}
+    },
+    {
+    .iv = 255,
+    .lvl = 47,
+    .species = SPECIES_ALTARIA,
+    .nature = NATURE_ADAMANT,
+    .abilityNum = TRAINER_MON_ABILITY_1,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_DRAGON_DANCE, MOVE_DRAGON_CLAW, MOVE_EARTHQUAKE, MOVE_AERIAL_ACE}
+    },
+    {
+    .iv = 255,
+    .lvl = 48,
+    .species = SPECIES_GARDEVOIR,
+    .nature = NATURE_MODEST,
+    .abilityNum = TRAINER_MON_ABILITY_2,
+    .heldItem = ITEM_SITRUS_BERRY,
+    .moves = {MOVE_PSYCHIC, MOVE_THUNDERBOLT, MOVE_SHADOW_BALL, MOVE_CALM_MIND}
+    }
+};
