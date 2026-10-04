@@ -1261,11 +1261,17 @@ SootopolisCity_EventScript_GiveWaterfall::
 	setflag FLAG_RECEIVED_HM_WATERFALL
 	msgbox SootopolisCity_Text_ExplainWaterfallGoToGym, MSGBOX_DEFAULT
 	closemessage
-	call_if_eq VAR_FACING, DIR_NORTH, SootopolisCity_EventScript_WallaceMoveFromGym
-	call_if_eq VAR_FACING, DIR_EAST, SootopolisCity_EventScript_WallaceMoveFromGym
-	call_if_eq VAR_FACING, DIR_WEST, SootopolisCity_EventScript_WallaceMoveFromGymWest
+	applywaitmovement LOCALID_SOOTOPOLIS_WALLACE, SootopolisCity_Movement_WallaceEnterGym
+	removeobject LOCALID_SOOTOPOLIS_WALLACE
+	setflag FLAG_HIDE_SOOTOPOLIS_CITY_WALLACE
 	release
 	end
+
+SootopolisCity_Movement_WallaceEnterGym:
+	face_up
+	delay_8
+	walk_up
+	step_end
 
 SootopolisCity_EventScript_WallaceMoveFromGym::
 	applywaitmovement LOCALID_SOOTOPOLIS_WALLACE, SootopolisCity_Movement_WallaceMoveFromGym
@@ -1353,7 +1359,7 @@ SootopolisCity_Movement_DestroyTask::
 
 SootopolisCity_Text_GymSign:
 	.string "SOOTOPOLIS CITY POKéMON GYM\n"
-	.string "LEADER: JUAN\p"
+	.string "LEADER: WALLACE\p"
 	.string "“The GYM LEADER with the beauty\n"
 	.string "of pure water!”$"
 
@@ -1605,8 +1611,8 @@ SootopolisCity_Text_DoesThisMakeYourFearPokemon:
 
 SootopolisCity_Text_HereWereAreHelpWallace:
 	.string "STEVEN: Okay, here we are!\p"
-	.string "Inside here you'll find someone named\n"
-	.string "WALLACE.\p"
+	.string "Inside here you'll find WALLACE,\n"
+	.string "the GYM LEADER of this city.\p"
 	.string "I think you have what's needed to\n"
 	.string "help him…$"
 
@@ -1663,11 +1669,10 @@ SootopolisCity_Text_ExplainWaterfallGoToGym:
 	.string "And where does one get the RAIN BADGE?\n"
 	.string "You know, don't you?\p"
 	.string "That's right! You have to beat\n"
-	.string "the SOOTOPOLIS GYM LEADER.\p"
-	.string "When you're all set to go, step through\n"
-	.string "that door.$"
+	.string "me, the SOOTOPOLIS GYM LEADER.\p"
+	.string "I shall be waiting for you inside\n"
+	.string "the GYM.$"
 
 SootopolisCity_Text_DazzledByMentor:
-	.string "WALLACE: I'm sure that you will be\n"
-	.string "dazzled by my mentor's breathtakingly\l"
-	.string "elegant battle style.$"
+	.string "WALLACE: I shall be waiting for you\n"
+	.string "inside the GYM.$"
