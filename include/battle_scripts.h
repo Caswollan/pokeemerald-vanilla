@@ -3,6 +3,7 @@
 
 extern const u8 BattleScript_HitFromCritCalc[];
 extern const u8 BattleScript_MoveEnd[];
+extern const u8 BattleScript_NotAffected[];
 extern const u8 BattleScript_MakeMoveMissed[];
 extern const u8 BattleScript_PrintMoveMissed[];
 extern const u8 BattleScript_MoveMissedPause[];

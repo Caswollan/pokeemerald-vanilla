@@ -603,7 +603,8 @@ static const struct StatFractions sAccuracyStageRatios[] =
 };
 
 // The chance is 1/N for each stage.
-static const u16 sCriticalHitChance[] = {16, 8, 4, 3, 2};
+// Critical hit chance per stage, as in Gen 7+: 1/24, 1/8, 1/2, always
+static const u16 sCriticalHitChance[] = {24, 8, 2, 1};
 
 static const u32 sStatusFlagsForMoveEffects[NUM_MOVE_EFFECTS] =
 {
@@ -716,7 +717,8 @@ static const struct SpriteTemplate sSpriteTemplate_MonIconOnLvlUpBanner =
     .callback = SpriteCB_MonIconOnLvlUpBanner
 };
 
-static const u16 sProtectSuccessRates[] = {USHRT_MAX, USHRT_MAX / 2, USHRT_MAX / 4, USHRT_MAX / 8};
+// Each consecutive use is 1/3 as likely to succeed, as in Gen 6+
+static const u16 sProtectSuccessRates[] = {USHRT_MAX, USHRT_MAX / 3, USHRT_MAX / 9, USHRT_MAX / 27, USHRT_MAX / 81, USHRT_MAX / 243};
 
 #define MIMIC_FORBIDDEN_END             0xFFFE
 #define METRONOME_FORBIDDEN_END         0xFFFF
@@ -1097,6 +1099,21 @@ static bool8 AccuracyCalcHelper(u16 move)
     return FALSE;
 }
 
+static bool8 IsPowderMove(u16 move)
+{
+    switch (move)
+    {
+    case MOVE_SLEEP_POWDER:
+    case MOVE_STUN_SPORE:
+    case MOVE_POISON_POWDER:
+    case MOVE_SPORE:
+    case MOVE_COTTON_SPORE:
+        return TRUE;
+    default:
+        return FALSE;
+    }
+}
+
 static void Cmd_accuracycheck(void)
 {
     u16 move = T2_READ_16(gBattlescriptCurrInstr + 5);
@@ -1123,6 +1140,22 @@ static void Cmd_accuracycheck(void)
 
         if (JumpIfMoveAffectedByProtect(move))
             return;
+        // Grass types are immune to powder and spore moves, as in Gen 6+
+        if (IsPowderMove(move) && IS_BATTLER_OF_TYPE(gBattlerTarget, TYPE_GRASS))
+        {
+            gMoveResultFlags |= MOVE_RESULT_DOESNT_AFFECT_FOE;
+            if (gHitMarker & HITMARKER_ATTACKSTRING_PRINTED)
+            {
+                gBattlescriptCurrInstr = BattleScript_NotAffected;
+            }
+            else
+            {
+                gMoveResultFlags |= MOVE_RESULT_MISSED;
+                gBattleCommunication[MISS_TYPE] = B_MSG_MISSED;
+                JumpIfMoveFailed(7, move);
+            }
+            return;
+        }
         if (AccuracyCalcHelper(move))
             return;
 
@@ -1134,7 +1167,11 @@ static void Cmd_accuracycheck(void)
         else
         {
             u8 acc = gBattleMons[gBattlerAttacker].statStages[STAT_ACC];
-            buff = acc + DEFAULT_STAT_STAGE - gBattleMons[gBattlerTarget].statStages[STAT_EVASION];
+            s8 evasion = gBattleMons[gBattlerTarget].statStages[STAT_EVASION];
+            // Keen Eye ignores the target's evasion boosts, as in Gen 6+
+            if (gBattleMons[gBattlerAttacker].ability == ABILITY_KEEN_EYE && evasion > DEFAULT_STAT_STAGE)
+                evasion = DEFAULT_STAT_STAGE;
+            buff = acc + DEFAULT_STAT_STAGE - evasion;
         }
 
         if (buff < MIN_STAT_STAGE)
@@ -1294,7 +1331,9 @@ static void Cmd_damagecalc(void)
     gBattleMoveDamage = CalculateBaseDamage(&gBattleMons[gBattlerAttacker], &gBattleMons[gBattlerTarget], gCurrentMove,
                                             sideStatus, gDynamicBasePower,
                                             gBattleStruct->dynamicMoveType, gBattlerAttacker, gBattlerTarget);
-    gBattleMoveDamage = gBattleMoveDamage * gCritMultiplier * gBattleScripting.dmgMultiplier;
+    gBattleMoveDamage = gBattleMoveDamage * gBattleScripting.dmgMultiplier;
+    if (gCritMultiplier == 2) // critical hits deal 1.5x damage, as in Gen 6+
+        gBattleMoveDamage = gBattleMoveDamage * 15 / 10;
 
     if (gStatuses3[gBattlerAttacker] & STATUS3_CHARGED_UP && gBattleMoves[gCurrentMove].type == TYPE_ELECTRIC)
         gBattleMoveDamage *= 2;
@@ -1315,7 +1354,9 @@ void AI_CalcDmg(u8 attacker, u8 defender)
                                             sideStatus, gDynamicBasePower,
                                             gBattleStruct->dynamicMoveType, attacker, defender);
     gDynamicBasePower = 0;
-    gBattleMoveDamage = gBattleMoveDamage * gCritMultiplier * gBattleScripting.dmgMultiplier;
+    gBattleMoveDamage = gBattleMoveDamage * gBattleScripting.dmgMultiplier;
+    if (gCritMultiplier == 2) // critical hits deal 1.5x damage, as in Gen 6+
+        gBattleMoveDamage = gBattleMoveDamage * 15 / 10;
 
     if (gStatuses3[attacker] & STATUS3_CHARGED_UP && gBattleMoves[gCurrentMove].type == TYPE_ELECTRIC)
         gBattleMoveDamage *= 2;
@@ -2697,6 +2738,9 @@ void SetMoveEffect(bool8 primary, u8 certain)
             statusChanged = TRUE;
             break;
         case STATUS1_PARALYSIS:
+            // Electric types can't be paralyzed, as in Gen 6+
+            if (IS_BATTLER_OF_TYPE(gEffectBattler, TYPE_ELECTRIC))
+                break;
             if (gBattleMons[gEffectBattler].ability == ABILITY_LIMBER)
             {
                 if (primary == TRUE || certain == MOVE_EFFECT_CERTAIN)
@@ -2782,7 +2826,7 @@ void SetMoveEffect(bool8 primary, u8 certain)
             BattleScriptPush(gBattlescriptCurrInstr + 1);
 
             if (sStatusFlagsForMoveEffects[gBattleCommunication[MOVE_EFFECT_BYTE]] == STATUS1_SLEEP)
-                gBattleMons[gEffectBattler].status1 |= STATUS1_SLEEP_TURN((Random() & 3) + 2); // 2-5 turns
+                gBattleMons[gEffectBattler].status1 |= STATUS1_SLEEP_TURN((Random() % 3) + 2); // 1-3 turns asleep, as in Gen 5+
             else
                 gBattleMons[gEffectBattler].status1 |= sStatusFlagsForMoveEffects[gBattleCommunication[MOVE_EFFECT_BYTE]];
 
@@ -2919,7 +2963,7 @@ void SetMoveEffect(bool8 primary, u8 certain)
                 }
                 else
                 {
-                    gBattleMons[gEffectBattler].status2 |= STATUS2_WRAPPED_TURN((Random() & 3) + 3); // 3-6 turns
+                    gBattleMons[gEffectBattler].status2 |= STATUS2_WRAPPED_TURN((Random() & 1) + 5); // 4-5 turns of damage, as in Gen 5+
 
                     *(gBattleStruct->wrappedMove + gEffectBattler * 2 + 0) = gCurrentMove;
                     *(gBattleStruct->wrappedMove + gEffectBattler * 2 + 1) = gCurrentMove >> 8;
@@ -2938,7 +2982,10 @@ void SetMoveEffect(bool8 primary, u8 certain)
                 }
                 break;
             case MOVE_EFFECT_RECOIL_25: // 25% recoil
-                gBattleMoveDamage = (gHpDealt) / 4;
+                if (gCurrentMove == MOVE_STRUGGLE) // 1/4 of the user's max HP, as in Gen 4+
+                    gBattleMoveDamage = gBattleMons[gEffectBattler].maxHP / 4;
+                else
+                    gBattleMoveDamage = (gHpDealt) / 4;
                 if (gBattleMoveDamage == 0)
                     gBattleMoveDamage = 1;
 
@@ -5010,7 +5057,7 @@ static void Cmd_jumpifcantswitch(void)
     gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1] & ~SWITCH_IGNORE_ESCAPE_PREVENTION);
 
     if (!(gBattlescriptCurrInstr[1] & SWITCH_IGNORE_ESCAPE_PREVENTION)
-        && ((gBattleMons[gActiveBattler].status2 & (STATUS2_WRAPPED | STATUS2_ESCAPE_PREVENTION))
+        && (((gBattleMons[gActiveBattler].status2 & (STATUS2_WRAPPED | STATUS2_ESCAPE_PREVENTION)) && !IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_GHOST))
             || (gStatuses3[gActiveBattler] & STATUS3_ROOTED)))
     {
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 2);
@@ -6834,7 +6881,8 @@ static void Cmd_setprotectlike(void)
             gProtectStructs[gBattlerAttacker].endured = 1;
             gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_BRACED_ITSELF;
         }
-        gDisableStructs[gBattlerAttacker].protectUses++;
+        if (gDisableStructs[gBattlerAttacker].protectUses < ARRAY_COUNT(sProtectSuccessRates) - 1)
+            gDisableStructs[gBattlerAttacker].protectUses++;
     }
     else
     {
@@ -7455,11 +7503,16 @@ static void Cmd_setmultihitcounter(void)
     }
     else
     {
-        gMultiHitCounter = Random() & 3;
-        if (gMultiHitCounter > 1)
-            gMultiHitCounter = (Random() & 3) + 2;
+        // 2 or 3 hits 35% each, 4 or 5 hits 15% each, as in Gen 5+
+        gMultiHitCounter = Random() % 20;
+        if (gMultiHitCounter < 7)
+            gMultiHitCounter = 2;
+        else if (gMultiHitCounter < 14)
+            gMultiHitCounter = 3;
+        else if (gMultiHitCounter < 17)
+            gMultiHitCounter = 4;
         else
-            gMultiHitCounter += 2;
+            gMultiHitCounter = 5;
     }
 
     gBattlescriptCurrInstr += 2;

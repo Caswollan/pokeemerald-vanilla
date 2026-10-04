@@ -44,17 +44,17 @@ static bool8 ShouldSwitch(void)
     s32 i;
     s32 availableToSwitch;
 
-    if (gBattleMons[*(activeBattlerPtr = &gActiveBattler)].status2 & (STATUS2_WRAPPED | STATUS2_ESCAPE_PREVENTION))
+    if (gStatuses3[*(activeBattlerPtr = &gActiveBattler)] & STATUS3_ROOTED)
         return FALSE;
-    if (gStatuses3[gActiveBattler] & STATUS3_ROOTED)
-        return FALSE;
-    if (ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_SHADOW_TAG))
-        return FALSE;
-    if (ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_ARENA_TRAP)) // Misses the flying type and Levitate check.
-        return FALSE;
-    if (ABILITY_ON_FIELD2(ABILITY_MAGNET_PULL))
+    if (!IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_GHOST)) // Ghost types can always switch, as in Gen 6+
     {
-        if (IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_STEEL))
+        if (gBattleMons[gActiveBattler].status2 & (STATUS2_WRAPPED | STATUS2_ESCAPE_PREVENTION))
+            return FALSE;
+        if (ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_SHADOW_TAG))
+            return FALSE;
+        if (ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_ARENA_TRAP)) // Misses the flying type and Levitate check.
+            return FALSE;
+        if (ABILITY_ON_FIELD2(ABILITY_MAGNET_PULL) && IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_STEEL))
             return FALSE;
     }
     if (gBattleTypeFlags & BATTLE_TYPE_ARENA)

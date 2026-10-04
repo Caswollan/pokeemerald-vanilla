@@ -4073,6 +4073,9 @@ u8 IsRunningFromBattleImpossible(void)
         return BATTLE_RUN_SUCCESS;
     if (gBattleMons[gActiveBattler].ability == ABILITY_RUN_AWAY)
         return BATTLE_RUN_SUCCESS;
+    // Ghost types can always escape, as in Gen 6+
+    if (IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_GHOST) && !(gBattleTypeFlags & BATTLE_TYPE_FIRST_BATTLE))
+        return BATTLE_RUN_SUCCESS;
 
     side = GetBattlerSide(gActiveBattler);
 
@@ -4275,18 +4278,19 @@ static void HandleTurnActionSelectionState(void)
                     break;
                 case B_ACTION_SWITCH:
                     *(gBattleStruct->battlerPartyIndexes + gActiveBattler) = gBattlerPartyIndexes[gActiveBattler];
-                    if (gBattleMons[gActiveBattler].status2 & (STATUS2_WRAPPED | STATUS2_ESCAPE_PREVENTION)
+                    if ((gBattleMons[gActiveBattler].status2 & (STATUS2_WRAPPED | STATUS2_ESCAPE_PREVENTION) && !IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_GHOST))
                         || gBattleTypeFlags & BATTLE_TYPE_ARENA
                         || gStatuses3[gActiveBattler] & STATUS3_ROOTED)
                     {
                         BtlController_EmitChoosePokemon(B_COMM_TO_CONTROLLER, PARTY_ACTION_CANT_SWITCH, PARTY_SIZE, ABILITY_NONE, gBattleStruct->battlerPartyOrders[gActiveBattler]);
                     }
-                    else if ((i = ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_SHADOW_TAG))
+                    else if (!IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_GHOST) // Ghost types can always switch, as in Gen 6+
+                          && ((i = ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_SHADOW_TAG))
                              || ((i = ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_ARENA_TRAP))
                                  && !IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_FLYING)
                                  && gBattleMons[gActiveBattler].ability != ABILITY_LEVITATE)
                              || ((i = AbilityBattleEffects(ABILITYEFFECT_CHECK_FIELD_EXCEPT_BATTLER, gActiveBattler, ABILITY_MAGNET_PULL, 0, 0))
-                                 && IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_STEEL)))
+                                 && IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_STEEL))))
                     {
                         BtlController_EmitChoosePokemon(B_COMM_TO_CONTROLLER, ((i - 1) << 4) | PARTY_ACTION_ABILITY_PREVENTS, PARTY_SIZE, gLastUsedAbility, gBattleStruct->battlerPartyOrders[gActiveBattler]);
                     }
@@ -4662,8 +4666,9 @@ u32 GetBattlerTurnOrderSpeed(u8 battler)
     if (holdEffect == HOLD_EFFECT_MACHO_BRACE)
         speed /= 2;
 
+    // Paralysis halves Speed, as in Gen 7+
     if (gBattleMons[battler].status1 & STATUS1_PARALYSIS)
-        speed /= 4;
+        speed /= 2;
 
     return speed;
 }

@@ -130,7 +130,7 @@
     "name": "Static",
     "gameName": "STATIC",
     "description": "Paralyzes on contact.",
-    "effect": "1/3 chance to paralyze a Pokemon that makes contact with it.",
+    "effect": "30% chance to paralyze a Pokemon that makes contact with it.",
     "pokemon": [
       "PIKACHU",
       "RAICHU",
@@ -188,7 +188,7 @@
     "name": "Oblivious",
     "gameName": "OBLIVIOUS",
     "description": "Prevents attraction.",
-    "effect": "The Pokemon can't be infatuated.",
+    "effect": "The Pokemon can't be infatuated or taunted and is immune to Intimidate.",
     "pokemon": [
       "SLOWPOKE",
       "SLOWBRO",
@@ -310,7 +310,7 @@
     "name": "Own Tempo",
     "gameName": "OWN TEMPO",
     "description": "Prevents confusion.",
-    "effect": "The Pokemon can't be confused.",
+    "effect": "The Pokemon can't be confused and is immune to Intimidate.",
     "pokemon": [
       "SLOWPOKE",
       "SLOWBRO",
@@ -431,7 +431,7 @@
     "name": "Effect Spore",
     "gameName": "EFFECT SPORE",
     "description": "Leaves spores on contact.",
-    "effect": "10% chance to poison, paralyze or put to sleep a Pokemon that makes contact with it.",
+    "effect": "30% chance to poison, paralyze or put to sleep a Pokemon that makes contact with it. Grass types are immune.",
     "pokemon": [
       "PARAS",
       "PARASECT",
@@ -638,7 +638,7 @@
     "name": "Poison Point",
     "gameName": "POISON POINT",
     "description": "Poisons foe on contact.",
-    "effect": "1/3 chance to poison a Pokemon that makes contact with it.",
+    "effect": "30% chance to poison a Pokemon that makes contact with it.",
     "pokemon": [
       "NIDORAN_F",
       "NIDORINA",
@@ -656,7 +656,7 @@
     "name": "Inner Focus",
     "gameName": "INNER FOCUS",
     "description": "Prevents flinching.",
-    "effect": "The Pokemon can't flinch.",
+    "effect": "The Pokemon can't flinch and is immune to Intimidate.",
     "pokemon": [
       "ZUBAT",
       "GOLBAT",
@@ -834,7 +834,7 @@
     "name": "Flame Body",
     "gameName": "FLAME BODY",
     "description": "Burns the foe on contact.",
-    "effect": "1/3 chance to burn a Pokemon that makes contact with it.",
+    "effect": "30% chance to burn a Pokemon that makes contact with it.",
     "pokemon": [
       "MAGMAR",
       "SLUGMA",
@@ -863,7 +863,7 @@
     "name": "Keen Eye",
     "gameName": "KEEN EYE",
     "description": "Prevents loss of accuracy.",
-    "effect": "Opponents can't lower the Pokemon's accuracy.",
+    "effect": "Opponents can't lower the Pokemon's accuracy, and it ignores the target's evasion boosts.",
     "pokemon": [
       "PIDGEY",
       "PIDGEOTTO",
@@ -948,7 +948,7 @@
     "name": "Cute Charm",
     "gameName": "CUTE CHARM",
     "description": "Infatuates on contact.",
-    "effect": "1/3 chance to infatuate a Pokemon of the opposite gender that makes contact with it.",
+    "effect": "30% chance to infatuate a Pokemon of the opposite gender that makes contact with it.",
     "pokemon": [
       "CLEFAIRY",
       "CLEFABLE",

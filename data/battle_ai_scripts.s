@@ -215,6 +215,7 @@ AI_CheckBadMove_CheckEffect:
 	end
 
 AI_CBM_Sleep:
+	call AI_CBM_PowderVsGrass
 	get_ability AI_TARGET
 	if_equal ABILITY_INSOMNIA, Score_Minus10
 	if_equal ABILITY_VITAL_SPIRIT, Score_Minus10
@@ -286,6 +287,7 @@ AI_CBM_DefenseDown:
 	goto CheckIfAbilityBlocksStatChange
 
 AI_CBM_SpeedDown:
+	call AI_CBM_PowderVsGrass
 	if_stat_level_equal AI_TARGET, STAT_SPEED, MIN_STAT_STAGE, Score_Minus10
 	if_ability AI_TARGET, ABILITY_SPEED_BOOST, Score_Minus10
 	goto CheckIfAbilityBlocksStatChange
@@ -340,6 +342,7 @@ AI_CBM_Roar:
 	end
 
 AI_CBM_Toxic:
+	call AI_CBM_PowderVsGrass
 	get_target_type1
 	if_equal TYPE_STEEL, Score_Minus10
 	if_equal TYPE_POISON, Score_Minus10
@@ -397,6 +400,11 @@ AI_CBM_Reflect:
 
 AI_CBM_Paralyze:
 	if_type_effectiveness AI_EFFECTIVENESS_x0, Score_Minus10
+	call AI_CBM_PowderVsGrass
+	get_target_type1
+	if_equal TYPE_ELECTRIC, Score_Minus10
+	get_target_type2
+	if_equal TYPE_ELECTRIC, Score_Minus10
 	get_ability AI_TARGET
 	if_equal ABILITY_LIMBER, Score_Minus10
 	if_equal ABILITY_VOLT_ABSORB, AI_CBM_Paralyze_CheckElectric
@@ -404,6 +412,21 @@ AI_CBM_Paralyze:
 AI_CBM_Paralyze_CheckStatus:
 	if_status AI_TARGET, STATUS1_ANY, Score_Minus10
 	if_side_affecting AI_TARGET, SIDE_STATUS_SAFEGUARD, Score_Minus10
+	end
+
+@ Grass types are immune to powder and spore moves
+AI_CBM_PowderVsGrass:
+	get_target_type1
+	if_equal TYPE_GRASS, AI_CBM_PowderVsGrass_Grass
+	get_target_type2
+	if_equal TYPE_GRASS, AI_CBM_PowderVsGrass_Grass
+	end
+AI_CBM_PowderVsGrass_Grass:
+	if_move MOVE_SLEEP_POWDER, Score_Minus10
+	if_move MOVE_STUN_SPORE, Score_Minus10
+	if_move MOVE_POISON_POWDER, Score_Minus10
+	if_move MOVE_SPORE, Score_Minus10
+	if_move MOVE_COTTON_SPORE, Score_Minus10
 	end
 
 AI_CBM_Paralyze_CheckElectric:

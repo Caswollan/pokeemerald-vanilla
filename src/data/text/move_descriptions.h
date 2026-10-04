@@ -914,8 +914,8 @@ static const u8 sPursuitDescription[] = _(
     "on a foe switching out.");
 
 static const u8 sRapidSpinDescription[] = _(
-    "Spins the body at high\n"
-    "speed to strike the foe.");
+    "Spins to free the user\n"
+    "and raise its SPEED.");
 
 static const u8 sSweetScentDescription[] = _(
     "Allures the foe to reduce\n"

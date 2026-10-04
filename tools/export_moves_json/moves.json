@@ -3658,10 +3658,10 @@
     "accuracy": 100,
     "pp": 40,
     "priority": 0,
-    "description": "Spins the body at high speed to strike the foe.",
+    "description": "Spins to free the user and raise its SPEED.",
     "effect": "RAPID_SPIN",
     "effectChance": 0,
-    "secondaryEffect": "Frees the user from Wrap, Leech Seed and Spikes"
+    "secondaryEffect": "Frees the user from Wrap, Leech Seed and Spikes, raises the user's Speed"
   },
   {
     "id": 230,

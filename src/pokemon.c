@@ -3114,6 +3114,25 @@ void DeleteFirstMoveAndGiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move)
     (var) /= (gStatStageRatios)[(mon)->statStages[(statIndex)]][1];                 \
 }
 
+// TRUE if a move that hits several Pokémon has more than one target on the field.
+static bool8 IsSpreadMoveWithMultipleTargets(u32 move, u8 battlerAtk, u8 battlerDef)
+{
+    s32 i, targets = 0;
+
+    if (!(gBattleTypeFlags & BATTLE_TYPE_DOUBLE))
+        return FALSE;
+    for (i = 0; i < gBattlersCount; i++)
+    {
+        if (i == battlerAtk || (gAbsentBattlerFlags & gBitTable[i]))
+            continue;
+        if (gBattleMoves[move].target == MOVE_TARGET_BOTH && GetBattlerSide(i) == GetBattlerSide(battlerDef))
+            targets++;
+        else if (gBattleMoves[move].target == MOVE_TARGET_FOES_AND_ALLY)
+            targets++;
+    }
+    return targets > 1;
+}
+
 s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *defender, u32 move, u16 sideStatus, u16 powerOverride, u8 typeOverride, u8 battlerIdAtk, u8 battlerIdDef)
 {
     u32 i;
@@ -3290,8 +3309,9 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
         damage = damage / damageHelper;
         damage /= 50;
 
-        // Burn cuts attack in half
-        if ((attacker->status1 & STATUS1_BURN) && attacker->ability != ABILITY_GUTS)
+        // Burn cuts attack in half (Facade ignores it, as in Gen 6+)
+        if ((attacker->status1 & STATUS1_BURN) && attacker->ability != ABILITY_GUTS
+         && gBattleMoves[move].effect != EFFECT_FACADE)
             damage /= 2;
 
         // Apply Reflect
@@ -3303,9 +3323,9 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
                 damage /= 2;
         }
 
-        // Moves hitting both targets do half damage in double battles
-        if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE) && gBattleMoves[move].target == MOVE_TARGET_BOTH && CountAliveMonsInBattle(BATTLE_ALIVE_DEF_SIDE) == 2)
-            damage /= 2;
+        // Spread moves do 0.75x damage when they hit more than one target, as in Gen 6+
+        if (IsSpreadMoveWithMultipleTargets(move, battlerIdAtk, battlerIdDef))
+            damage = damage * 3 / 4;
 
         // Moves always do at least 1 damage.
         if (damage == 0)
@@ -3358,9 +3378,9 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
                 damage /= 2;
         }
 
-        // Moves hitting both targets do half damage in double battles
-        if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE) && gBattleMoves[move].target == MOVE_TARGET_BOTH && CountAliveMonsInBattle(BATTLE_ALIVE_DEF_SIDE) == 2)
-            damage /= 2;
+        // Spread moves do 0.75x damage when they hit more than one target, as in Gen 6+
+        if (IsSpreadMoveWithMultipleTargets(move, battlerIdAtk, battlerIdDef))
+            damage = damage * 3 / 4;
     }
 
     // Weather and Flash Fire depend on the move's type, not on its category:

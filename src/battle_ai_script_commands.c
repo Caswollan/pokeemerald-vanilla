@@ -2403,13 +2403,13 @@ static void Cmd_if_target_shares_move(void)
     gAIScriptPtr += 5;
 }
 
-// Jumps if the target is faster than the AI now, but not anymore once paralyzed (1/4 speed)
+// Jumps if the target is faster than the AI now, but not anymore once paralyzed (1/2 speed)
 static void Cmd_if_paralysis_makes_user_faster(void)
 {
     u32 aiSpeed = GetBattlerTurnOrderSpeed(sBattler_AI);
     u32 targetSpeed = GetBattlerTurnOrderSpeed(gBattlerTarget);
 
-    if (targetSpeed > aiSpeed && targetSpeed / 4 <= aiSpeed)
+    if (targetSpeed > aiSpeed && targetSpeed / 2 <= aiSpeed)
         gAIScriptPtr = T1_READ_PTR(gAIScriptPtr + 1);
     else
         gAIScriptPtr += 5;
@@ -2578,7 +2578,7 @@ static bool32 DiesToResidualDamage(u8 battler)
     if (mon->status2 & STATUS2_CURSED)
         damage += max(mon->maxHP / 4, 1);
     if ((mon->status2 & STATUS2_WRAPPED) > STATUS2_WRAPPED_TURN(1))
-        damage += tick;
+        damage += max(mon->maxHP / 8, 1);
 
     return damage >= hp;
 }

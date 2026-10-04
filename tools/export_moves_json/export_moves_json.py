@@ -82,7 +82,7 @@ EFFECT_TEXT = {
     'FOCUS_PUNCH': 'Moves last, fails if the user is hit first',
     'FUTURE_SIGHT': 'Hits two turns later',
     'PURSUIT': 'Double power against a switching target',
-    'RAPID_SPIN': 'Frees the user from Wrap, Leech Seed and Spikes',
+    'RAPID_SPIN': 'Frees the user from Wrap, Leech Seed and Spikes, raises the user\'s Speed',
     'KNOCK_OFF': 'Removes the target\'s item; 30% more damage if it holds one (not against Sticky Hold)',
     'THIEF': 'Steals the target\'s item',
     'PAY_DAY': 'Scatters coins picked up after battle',
