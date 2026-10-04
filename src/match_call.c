@@ -1155,6 +1155,11 @@ static u32 GetActiveMatchCallTrainerId(u32 activeMatchCallId)
 */
 bool32 TryStartMatchCall(void)
 {
+    // Disabled in the hack: regular trainers never call the player on their own.
+    // Calls started by scripts (Mom, rival, story events) still work.
+    if (TRUE)
+        return FALSE;
+
     if (FlagGet(FLAG_HAS_MATCH_CALL)
         && UpdateMatchCallStepCounter()
         && UpdateMatchCallMinutesCounter()
