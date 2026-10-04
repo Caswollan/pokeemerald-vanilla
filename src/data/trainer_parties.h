@@ -12581,3 +12581,90 @@ static const struct TrainerMonItemCustomMoves sParty_MattMtPyre[] = {
     .moves = {MOVE_WATER_SPOUT, MOVE_SURF, MOVE_ICE_BEAM, MOVE_PROTECT}
     }
 };
+
+static const struct TrainerMonItemCustomMoves sParty_CourtneyMagmaHideout[] = {
+    {
+    .iv = 255,
+    .lvl = 67,
+    .species = SPECIES_MIGHTYENA,
+    .nature = NATURE_ADAMANT,
+    .abilityNum = TRAINER_MON_ABILITY_1,
+    .heldItem = ITEM_SITRUS_BERRY,
+    .moves = {MOVE_CRUNCH, MOVE_SUPER_FANG, MOVE_POISON_FANG, MOVE_TAUNT}
+    },
+    {
+    .iv = 255,
+    .lvl = 67,
+    .species = SPECIES_SWALOT,
+    .nature = NATURE_MODEST,
+    .abilityNum = TRAINER_MON_ABILITY_2,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_SLUDGE_BOMB, MOVE_SHADOW_BALL, MOVE_ICE_BEAM, MOVE_YAWN}
+    },
+    {
+    .iv = 255,
+    .lvl = 67,
+    .species = SPECIES_WEEZING,
+    .nature = NATURE_BOLD,
+    .abilityNum = TRAINER_MON_ABILITY_1,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_SLUDGE_BOMB, MOVE_FLAMETHROWER, MOVE_WILL_O_WISP, MOVE_PAIN_SPLIT}
+    },
+    {
+    .iv = 255,
+    .lvl = 68,
+    .species = SPECIES_CAMERUPT,
+    .nature = NATURE_QUIET,
+    .abilityNum = TRAINER_MON_ABILITY_1,
+    .heldItem = ITEM_CHARCOAL,
+    .moves = {MOVE_ERUPTION, MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_SLACK_OFF}
+    }
+};
+
+static const struct TrainerMonItemCustomMoves sParty_CourtneySpaceCenter[] = {
+    {
+    .iv = 255,
+    .lvl = 74,
+    .species = SPECIES_MIGHTYENA,
+    .nature = NATURE_ADAMANT,
+    .abilityNum = TRAINER_MON_ABILITY_1,
+    .heldItem = ITEM_SITRUS_BERRY,
+    .moves = {MOVE_CRUNCH, MOVE_SUPER_FANG, MOVE_POISON_FANG, MOVE_TAUNT}
+    },
+    {
+    .iv = 255,
+    .lvl = 74,
+    .species = SPECIES_WEEZING,
+    .nature = NATURE_BOLD,
+    .abilityNum = TRAINER_MON_ABILITY_1,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_SLUDGE_BOMB, MOVE_FLAMETHROWER, MOVE_WILL_O_WISP, MOVE_PAIN_SPLIT}
+    },
+    {
+    .iv = 255,
+    .lvl = 75,
+    .species = SPECIES_SWALOT,
+    .nature = NATURE_MODEST,
+    .abilityNum = TRAINER_MON_ABILITY_2,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_SLUDGE_BOMB, MOVE_SHADOW_BALL, MOVE_ICE_BEAM, MOVE_YAWN}
+    },
+    {
+    .iv = 255,
+    .lvl = 75,
+    .species = SPECIES_HOUNDOOM,
+    .nature = NATURE_TIMID,
+    .abilityNum = TRAINER_MON_ABILITY_2,
+    .heldItem = ITEM_BLACK_GLASSES,
+    .moves = {MOVE_FLAMETHROWER, MOVE_CRUNCH, MOVE_SHADOW_BALL, MOVE_WILL_O_WISP}
+    },
+    {
+    .iv = 255,
+    .lvl = 76,
+    .species = SPECIES_CAMERUPT,
+    .nature = NATURE_QUIET,
+    .abilityNum = TRAINER_MON_ABILITY_1,
+    .heldItem = ITEM_CHARCOAL,
+    .moves = {MOVE_ERUPTION, MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_SLACK_OFF}
+    }
+};

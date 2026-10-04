@@ -8,7 +8,17 @@ MossdeepCity_OnTransition:
 	clearflag FLAG_MOSSDEEP_GYM_SWITCH_3
 	clearflag FLAG_MOSSDEEP_GYM_SWITCH_4
 	call_if_set FLAG_SYS_WEATHER_CTRL, Common_EventScript_SetAbnormalWeather
+	call MossdeepCity_EventScript_SetCourtneyVisibility
 	end
+
+@ Courtney guards the Space Center door while Team Magma is inside, until the player beats her
+MossdeepCity_EventScript_SetCourtneyVisibility::
+	setflag FLAG_HIDE_MOSSDEEP_CITY_COURTNEY
+	goto_if_ne VAR_MOSSDEEP_CITY_STATE, 2, MossdeepCity_EventScript_SetCourtneyVisibilityEnd
+	goto_if_defeated TRAINER_COURTNEY_SPACE_CENTER, MossdeepCity_EventScript_SetCourtneyVisibilityEnd
+	clearflag FLAG_HIDE_MOSSDEEP_CITY_COURTNEY
+MossdeepCity_EventScript_SetCourtneyVisibilityEnd:
+	return
 
 MossdeepCity_EventScript_PokefanF::
 	lock
@@ -95,6 +105,8 @@ MossdeepCity_EventScript_TeamMagmaEnterSpaceCenter::
 	delay 30
 	setvar VAR_MOSSDEEP_CITY_STATE, 2
 	setflag FLAG_HIDE_MOSSDEEP_CITY_TEAM_MAGMA
+	clearflag FLAG_HIDE_MOSSDEEP_CITY_COURTNEY
+	addobject LOCALID_MOSSDEEP_COURTNEY
 	releaseall
 	end
 
@@ -424,3 +436,37 @@ MossdeepCity_Text_SootopolisNewGymLeader:
 	.string "People say his battles are as\n"
 	.string "beautiful as the sea itself.$"
 
+MossdeepCity_EventScript_Courtney::
+	trainerbattle_single TRAINER_COURTNEY_SPACE_CENTER, MossdeepCity_Text_CourtneyIntro, MossdeepCity_Text_CourtneyDefeat, MossdeepCity_EventScript_CourtneyDefeated
+	end
+
+MossdeepCity_EventScript_CourtneyDefeated::
+	msgbox MossdeepCity_Text_CourtneyPostBattle, MSGBOX_DEFAULT
+	closemessage
+	applywaitmovement LOCALID_MOSSDEEP_COURTNEY, MossdeepCity_Movement_CourtneyEnterSpaceCenter
+	removeobject LOCALID_MOSSDEEP_COURTNEY
+	setflag FLAG_HIDE_MOSSDEEP_CITY_COURTNEY
+	release
+	end
+
+MossdeepCity_Movement_CourtneyEnterSpaceCenter:
+	face_up
+	delay_8
+	walk_up
+	step_end
+
+MossdeepCity_Text_CourtneyIntro:
+	.string "COURTNEY: …You again.\p"
+	.string "LEADER MAXIE is inside.\n"
+	.string "The ROCKET… will be ours.\p"
+	.string "This time… I have recalculated\n"
+	.string "everything.\p"
+	.string "…You will not get through.$"
+
+MossdeepCity_Text_CourtneyDefeat:
+	.string "…Impossible.\n"
+	.string "Again…$"
+
+MossdeepCity_Text_CourtneyPostBattle:
+	.string "COURTNEY: …I must warn\n"
+	.string "LEADER MAXIE.$"
