@@ -1892,6 +1892,10 @@ static bool32 ShouldTrainerRequestBattle(int matchCallId)
     int numRematchTrainersFought;
     int max, rand, n;
 
+    // Regular trainers never ask for a rematch in the hack
+    if (matchCallId < REMATCH_SPECIAL_TRAINER_START)
+        return FALSE;
+
     if (GetNumOwnedBadges() < 5)
         return FALSE;
 
