@@ -98,6 +98,7 @@ enum {
     WIN_TMHM_INFO_ICONS,
     WIN_TMHM_INFO,
     WIN_MESSAGE, // Identical to ITEMWIN_MESSAGE. Unused?
+    WIN_TMHM_CATEGORY, // Physical/Special/Status icon next to the TM/HM type icon
 };
 
 // Item list ID for toSwapPos to indicate an item is not currently being swapped
@@ -446,8 +447,21 @@ static const struct WindowTemplate sDefaultBagWindows[] =
         .paletteNum = 15,
         .baseBlock = 0x1B1,
     },
+    [WIN_TMHM_CATEGORY] = {
+        .bg = 0,
+        .tilemapLeft = 11,
+        .tilemapTop = 12,
+        .width = 2,
+        .height = 3,
+        .paletteNum = 11,
+        .baseBlock = 0x280,
+    },
     DUMMY_WIN_TEMPLATE,
 };
+
+// Same Physical/Special/Status icons as the battle move menu (each 16x16 icon is 0x80 bytes)
+static const u16 sTMHMCategoryIcons_Pal[] = INCGFX_U16("graphics/battle_interface/category_icons_menu.png", ".gbapal");
+static const u8 sTMHMCategoryIcons_Gfx[] = INCGFX_U8("graphics/battle_interface/category_icons_menu.png", ".4bpp");
 
 static const struct WindowTemplate sContextMenuWindowTemplates[] =
 {
@@ -1276,6 +1290,7 @@ static void ReturnToItemList(u8 taskId)
     CreatePocketSwitchArrowPair();
     ClearWindowTilemap(WIN_TMHM_INFO_ICONS);
     ClearWindowTilemap(WIN_TMHM_INFO);
+    ClearWindowTilemap(WIN_TMHM_CATEGORY);
     PutWindowTilemap(WIN_DESCRIPTION);
     ScheduleBgCopyTilemapToVram(0);
     gTasks[taskId].func = Task_BagMenu_HandleInput;
@@ -1645,6 +1660,7 @@ static void OpenContextMenu(u8 taskId)
         PrintTMHMMoveData(gSpecialVar_ItemId);
         PutWindowTilemap(WIN_TMHM_INFO_ICONS);
         PutWindowTilemap(WIN_TMHM_INFO);
+        PutWindowTilemap(WIN_TMHM_CATEGORY);
         ScheduleBgCopyTilemapToVram(0);
     }
     else
@@ -2451,6 +2467,7 @@ static void LoadBagMenuTextWindows(void)
     LoadMessageBoxGfx(0, 10, BG_PLTT_ID(13));
     ListMenuLoadStdPalAt(BG_PLTT_ID(12), 1);
     LoadPalette(&gStandardMenuPalette, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
+    LoadPalette(sTMHMCategoryIcons_Pal, BG_PLTT_ID(11), PLTT_SIZE_4BPP);
     for (i = 0; i <= WIN_POCKET_NAME; i++)
     {
         FillWindowPixelBuffer(i, PIXEL_FILL(0));
@@ -2552,16 +2569,19 @@ static void PrintTMHMMoveData(u16 itemId)
     const u8 *text;
 
     FillWindowPixelBuffer(WIN_TMHM_INFO, PIXEL_FILL(0));
+    FillWindowPixelBuffer(WIN_TMHM_CATEGORY, PIXEL_FILL(0));
     if (itemId == ITEM_NONE)
     {
         for (i = 0; i < 4; i++)
             BagMenu_Print(WIN_TMHM_INFO, FONT_NORMAL, gText_ThreeDashes, 7, i * 12, 0, 0, TEXT_SKIP_DRAW, COLORID_TMHM_INFO);
         CopyWindowToVram(WIN_TMHM_INFO, COPYWIN_GFX);
+        CopyWindowToVram(WIN_TMHM_CATEGORY, COPYWIN_GFX);
     }
     else
     {
         move = ItemIdToBattleMoveId(itemId);
         BlitMenuInfoIcon(WIN_TMHM_INFO, gBattleMoves[move].type + 1, 0, 0);
+        BlitBitmapToWindow(WIN_TMHM_CATEGORY, &sTMHMCategoryIcons_Gfx[gBattleMoves[move].split * 0x80], 0, 5, 16, 16); // 5 px down: centred on the type icon
 
         // Print TMHM power
         if (gBattleMoves[move].power <= 1)
@@ -2592,5 +2612,6 @@ static void PrintTMHMMoveData(u16 itemId)
         BagMenu_Print(WIN_TMHM_INFO, FONT_NORMAL, gStringVar1, 7, 36, 0, 0, TEXT_SKIP_DRAW, COLORID_TMHM_INFO);
 
         CopyWindowToVram(WIN_TMHM_INFO, COPYWIN_GFX);
+        CopyWindowToVram(WIN_TMHM_CATEGORY, COPYWIN_GFX);
     }
 }
