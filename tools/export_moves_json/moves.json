@@ -5688,7 +5688,7 @@
     "category": "SPECIAL",
     "power": 90,
     "accuracy": 100,
-    "pp": 10,
+    "pp": 15,
     "priority": 0,
     "description": "Fires a ball of nature's power. May lower SP. DEF.",
     "effect": "SPECIAL_DEFENSE_DOWN_HIT",
@@ -5704,7 +5704,7 @@
     "category": "SPECIAL",
     "power": 90,
     "accuracy": 100,
-    "pp": 10,
+    "pp": 15,
     "priority": 0,
     "description": "The ground erupts with power. May lower SP. DEF.",
     "effect": "SPECIAL_DEFENSE_DOWN_HIT",
@@ -5768,7 +5768,7 @@
     "category": "SPECIAL",
     "power": 70,
     "accuracy": 100,
-    "pp": 15,
+    "pp": 20,
     "priority": 0,
     "description": "A bursting flame that may hit the foe's partner.",
     "effect": "FLAME_BURST",
@@ -5799,12 +5799,12 @@
     "type": "ICE",
     "category": "PHYSICAL",
     "power": 85,
-    "accuracy": 90,
+    "accuracy": 100,
     "pp": 10,
     "priority": 0,
     "description": "Drops large icicles on the foe. May cause flinching.",
     "effect": "FLINCH_HIT",
-    "effectChance": 30,
-    "secondaryEffect": "30% Flinch"
+    "effectChance": 10,
+    "secondaryEffect": "10% Flinch"
   }
 ]
