@@ -1298,6 +1298,10 @@ const struct CompressedSpriteSheet gBattleAnimPicTable[] =
     {gBattleAnimSpriteGfx_Slash, 0x0800, ANIM_TAG_SLASH_2},
     {gBattleAnimSpriteGfx_SlamHit, 0x1000, ANIM_TAG_WHIP_HIT},
     {gBattleAnimSpriteGfx_GoldRing, 0x0100, ANIM_TAG_BLUE_RING_2},
+    {gBattleAnimSpriteGfx_EnergyBall, 0x0200, ANIM_TAG_ENERGY_BALL},
+    {gBattleAnimSpriteGfx_GoldRing, 0x0100, ANIM_TAG_DARK_PULSE_RING},
+    {gBattleAnimSpriteGfx_GoldRing, 0x0100, ANIM_TAG_DRAGON_PULSE_RING},
+    {gBattleAnimSpriteGfx_RedBall, 0x0200, ANIM_TAG_DRAGON_PULSE_ORB},
 };
 
 const struct CompressedSpritePalette gBattleAnimPaletteTable[] =
@@ -1591,6 +1595,10 @@ const struct CompressedSpritePalette gBattleAnimPaletteTable[] =
     {gBattleAnimSpritePal_Slash2, ANIM_TAG_SLASH_2},
     {gBattleAnimSpritePal_WhipHit, ANIM_TAG_WHIP_HIT},
     {gBattleAnimSpritePal_BlueRing2, ANIM_TAG_BLUE_RING_2},
+    {gBattleAnimSpritePal_EnergyBall, ANIM_TAG_ENERGY_BALL},
+    {gBattleAnimSpritePal_DarkPulseRing, ANIM_TAG_DARK_PULSE_RING},
+    {gBattleAnimSpritePal_DragonPulseRing, ANIM_TAG_DRAGON_PULSE_RING},
+    {gBattleAnimSpritePal_DragonPulseOrb, ANIM_TAG_DRAGON_PULSE_ORB},
 };
 
 const struct BattleAnimBackground gBattleAnimBackgroundTable[] =

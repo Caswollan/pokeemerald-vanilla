@@ -6852,6 +6852,23 @@ static void Cmd_various(void)
         BtlController_EmitPlayFanfareOrBGM(B_COMM_TO_CONTROLLER, MUS_VICTORY_TRAINER, TRUE);
         MarkBattlerForControllerExec(gActiveBattler);
         break;
+    case VARIOUS_TRY_FLAME_BURST_SPLASH:
+        // Flame Burst: in double battles the target's partner loses 1/16 of its max HP.
+        // MULTISTRING_CHOOSER is set to TRUE if there is a partner to hit.
+        gBattleCommunication[MULTISTRING_CHOOSER] = FALSE;
+        if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
+        {
+            u8 partner = BATTLE_PARTNER(gActiveBattler);
+            if (gBattleMons[partner].hp != 0 && !(gAbsentBattlerFlags & gBitTable[partner]))
+            {
+                gBattleScripting.battler = partner;
+                gBattleMoveDamage = gBattleMons[partner].maxHP / 16;
+                if (gBattleMoveDamage == 0)
+                    gBattleMoveDamage = 1;
+                gBattleCommunication[MULTISTRING_CHOOSER] = TRUE;
+            }
+        }
+        break;
     }
 
     gBattlescriptCurrInstr += 3;

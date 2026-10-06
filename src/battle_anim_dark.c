@@ -999,3 +999,119 @@ void GetIsDoomDesireHitTurn(u8 taskId)
 
     DestroyAnimVisualTask(taskId);
 }
+
+// Dark Pulse (Gen 4+ style): a stream of purple rings flying from the attacker to the target.
+// All the rings follow the same wavy path, spinning while they fly and growing a little.
+// arg 0: frames to reach the target
+// arg 1: starting angle of the spin (different for every ring)
+// arg 2: amplitude of the wave, in pixels
+static void AnimDarkPulseRing(struct Sprite *);
+static void AnimDarkPulseRing_Step(struct Sprite *);
+
+const struct SpriteTemplate gDarkPulseRingSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_DARK_PULSE_RING,
+    .paletteTag = ANIM_TAG_DARK_PULSE_RING,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimDarkPulseRing,
+};
+
+// Dragon Pulse: a beam of big silver spheres, each one inside a blue ring.
+// Spheres and rings fly straight from the attacker to the target.
+// arg 0: frames to reach the target
+// arg 1: scale of the ring (0x100 = normal size, smaller = bigger); not used by the spheres
+// arg 2: rotation of the ring; not used by the spheres
+static void AnimDragonPulseParticle(struct Sprite *);
+
+const struct SpriteTemplate gDragonPulseRingSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_DRAGON_PULSE_RING,
+    .paletteTag = ANIM_TAG_DRAGON_PULSE_RING,
+    .oam = &gOamData_AffineDouble_ObjNormal_16x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimDragonPulseParticle,
+};
+
+const struct SpriteTemplate gDragonPulseOrbSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_DRAGON_PULSE_ORB,
+    .paletteTag = ANIM_TAG_DRAGON_PULSE_ORB,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimDragonPulseParticle,
+};
+
+#define sTimer    data[0]
+#define sDuration data[1]
+#define sStartX   data[2]
+#define sStartY   data[3]
+#define sEndX     data[4]
+#define sEndY     data[5]
+#define sPhase    data[6]
+#define sWave     data[7]
+
+static void AnimDarkPulseRing(struct Sprite *sprite)
+{
+    sprite->sTimer = 0;
+    sprite->sDuration = gBattleAnimArgs[0];
+    sprite->sStartX = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->sStartY = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
+    sprite->sEndX = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+    sprite->sEndY = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
+    sprite->sPhase = gBattleAnimArgs[1];
+    sprite->sWave = gBattleAnimArgs[2];
+    sprite->callback = AnimDarkPulseRing_Step;
+    AnimDarkPulseRing_Step(sprite);
+}
+
+static void AnimDarkPulseRing_Step(struct Sprite *sprite)
+{
+    s16 progress, scale;
+
+    if (sprite->sTimer > sprite->sDuration)
+    {
+        DestroyAnimSprite(sprite);
+        return;
+    }
+
+    progress = (sprite->sTimer * 256) / sprite->sDuration; // 0 at the attacker, 256 at the target
+    sprite->x = sprite->sStartX + ((sprite->sEndX - sprite->sStartX) * progress) / 256;
+    sprite->y = sprite->sStartY + ((sprite->sEndY - sprite->sStartY) * progress) / 256
+              + Sin(((progress * 3) / 2) & 0xFF, sprite->sWave); // same wavy path for every ring
+
+    scale = 0x100 - progress / 4; // from normal size to about 1.3x
+    TrySetSpriteRotScale(sprite, FALSE, scale, scale, (sprite->sPhase << 8) + sprite->sTimer * 0x900);
+    sprite->sTimer++;
+}
+
+#undef sTimer
+#undef sDuration
+#undef sStartX
+#undef sStartY
+#undef sEndX
+#undef sEndY
+#undef sPhase
+#undef sWave
+
+static void AnimDragonPulseParticle(struct Sprite *sprite)
+{
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
+    sprite->data[0] = gBattleAnimArgs[0];
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
+
+    // Only the rings use rotation and scaling (the spheres have no affine matrix)
+    TrySetSpriteRotScale(sprite, FALSE, gBattleAnimArgs[1], gBattleAnimArgs[1], gBattleAnimArgs[2]);
+
+    sprite->callback = StartAnimLinearTranslation;
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+}
+

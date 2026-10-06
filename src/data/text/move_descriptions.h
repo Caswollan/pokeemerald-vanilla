@@ -1417,6 +1417,42 @@ static const u8 sPsychoBoostDescription[] = _(
     "Allows a full-power attack,\n"
     "but sharply lowers SP. ATK.");
 
+static const u8 sDarkPulseDescription[] = _(
+    "Releases a horrible dark\n"
+    "aura. May cause flinching.");
+
+static const u8 sEnergyBallDescription[] = _(
+    "Fires a ball of nature's\n"
+    "power. May lower SP. DEF.");
+
+static const u8 sEarthPowerDescription[] = _(
+    "The ground erupts with\n"
+    "power. May lower SP. DEF.");
+
+static const u8 sPowerGemDescription[] = _(
+    "Attacks with rays of light\n"
+    "that sparkle like diamonds.");
+
+static const u8 sFlashCannonDescription[] = _(
+    "Gathers light energy to\n"
+    "blast. May lower SP. DEF.");
+
+static const u8 sDragonPulseDescription[] = _(
+    "Generates a shock wave\n"
+    "from its gaping mouth.");
+
+static const u8 sFlameBurstDescription[] = _(
+    "A bursting flame that may\n"
+    "hit the foe's partner.");
+
+static const u8 sLiquidationDescription[] = _(
+    "Slams into the foe using\n"
+    "water. May lower DEFENSE.");
+
+static const u8 sIcicleCrashDescription[] = _(
+    "Drops large icicles on the\n"
+    "foe. May cause flinching.");
+
 // MOVE_NONE is ignored in this table. Make sure to always subtract 1 before getting the right pointer.
 const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
 {
@@ -1774,4 +1810,13 @@ const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
     [MOVE_WATER_PULSE - 1] = sWaterPulseDescription,
     [MOVE_DOOM_DESIRE - 1] = sDoomDesireDescription,
     [MOVE_PSYCHO_BOOST - 1] = sPsychoBoostDescription,
+    [MOVE_DARK_PULSE - 1] = sDarkPulseDescription,
+    [MOVE_ENERGY_BALL - 1] = sEnergyBallDescription,
+    [MOVE_EARTH_POWER - 1] = sEarthPowerDescription,
+    [MOVE_POWER_GEM - 1] = sPowerGemDescription,
+    [MOVE_FLASH_CANNON - 1] = sFlashCannonDescription,
+    [MOVE_DRAGON_PULSE - 1] = sDragonPulseDescription,
+    [MOVE_FLAME_BURST - 1] = sFlameBurstDescription,
+    [MOVE_LIQUIDATION - 1] = sLiquidationDescription,
+    [MOVE_ICICLE_CRASH - 1] = sIcicleCrashDescription,
 };

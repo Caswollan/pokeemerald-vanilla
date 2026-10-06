@@ -1613,3 +1613,33 @@ void AnimTask_GetIceBallCounter(u8 taskId)
     gBattleAnimArgs[arg] = gAnimDisableStructPtr->rolloutTimerStartValue - gAnimDisableStructPtr->rolloutTimer - 1;
     DestroyAnimVisualTask(taskId);
 }
+
+// Icicle Crash: an icicle (the Icicle Spear sprite upside down, point first) falling straight on the target.
+// arg 0: x offset from the target
+// arg 1: y offset from the target where the icicle stops
+// arg 2: frames to fall
+static void AnimIcicleCrashIcicle(struct Sprite *);
+
+const struct SpriteTemplate gIcicleCrashSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_ICICLE_SPEAR,
+    .paletteTag = ANIM_TAG_ICICLE_SPEAR,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimIcicleCrashIcicle,
+};
+
+static void AnimIcicleCrashIcicle(struct Sprite *sprite)
+{
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + gBattleAnimArgs[0];
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[1] - 96;
+    sprite->oam.matrixNum |= ST_OAM_VFLIP; // point downwards
+
+    sprite->data[0] = gBattleAnimArgs[2];
+    sprite->data[2] = sprite->x;
+    sprite->data[4] = sprite->y + 96;
+    sprite->callback = StartAnimLinearTranslation;
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+}

@@ -371,7 +371,16 @@ gBattleAnims_Moves::
 	.4byte Move_WATER_PULSE
 	.4byte Move_DOOM_DESIRE
 	.4byte Move_PSYCHO_BOOST
-	.4byte Move_COUNT @ cannot be reached, because last move is Psycho Boost
+	.4byte Move_DARK_PULSE
+	.4byte Move_ENERGY_BALL
+	.4byte Move_EARTH_POWER
+	.4byte Move_POWER_GEM
+	.4byte Move_FLASH_CANNON
+	.4byte Move_DRAGON_PULSE
+	.4byte Move_FLAME_BURST
+	.4byte Move_LIQUIDATION
+	.4byte Move_ICICLE_CRASH
+	.4byte Move_COUNT @ cannot be reached, because last move is Icicle Crash
 
 	.align 2
 gBattleAnims_StatusConditions::
@@ -9546,6 +9555,331 @@ Move_WATER_PULSE:
 	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=7, target_blend_y=0, color=RGB(0, 25, 28)
 	waitforvisualfinish
 	clearmonbg ANIM_DEF_PARTNER
+	end
+
+@ Dark Pulse: the background darkens and a stream of spinning purple rings
+@ flies from the user to the target in a wave
+Move_DARK_PULSE:
+	loadspritegfx ANIM_TAG_DARK_PULSE_RING
+	monbg ANIM_TARGET
+	splitbgprio ANIM_TARGET
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=11, color=RGB_BLACK
+	waitforvisualfinish
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
+	createsprite gDarkPulseRingSpriteTemplate, ANIM_ATTACKER, 2, 18, 0, 8
+	delay 2
+	createsprite gDarkPulseRingSpriteTemplate, ANIM_ATTACKER, 2, 18, 32, 8
+	delay 2
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
+	createsprite gDarkPulseRingSpriteTemplate, ANIM_ATTACKER, 2, 18, 64, 8
+	delay 2
+	createsprite gDarkPulseRingSpriteTemplate, ANIM_ATTACKER, 2, 18, 96, 8
+	delay 2
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
+	createsprite gDarkPulseRingSpriteTemplate, ANIM_ATTACKER, 2, 18, 128, 8
+	delay 2
+	createsprite gDarkPulseRingSpriteTemplate, ANIM_ATTACKER, 2, 18, 160, 8
+	delay 2
+	playsewithpan SE_M_PSYBEAM, SOUND_PAN_ATTACKER
+	createsprite gDarkPulseRingSpriteTemplate, ANIM_ATTACKER, 2, 18, 192, 8
+	delay 2
+	createsprite gDarkPulseRingSpriteTemplate, ANIM_ATTACKER, 2, 18, 224, 8
+	delay 16
+	playsewithpan SE_M_FAINT_ATTACK, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 8, 18, 1
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=0, num_blends=2, initial_blend_y=0, target_blend_y=12, color=RGB_BLACK
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=11, target_blend_y=0, color=RGB_BLACK
+	waitforvisualfinish
+	clearmonbg ANIM_TARGET
+	end
+
+@ Energy Ball: a green ball of energy flies to the target
+Move_ENERGY_BALL:
+	loadspritegfx ANIM_TAG_ENERGY_BALL
+	simple_palette_blend selector=F_PAL_BG, delay=0, initial_blend_y=0, target_blend_y=6, color=RGB(8, 24, 4)
+	delay 10
+	createsoundtask SoundTask_LoopSEAdjustPanning, SE_M_MIST, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 5, 5, 0, 5
+	createsprite gEnergyBallSpriteTemplate, ANIM_TARGET, 2, 16, 16, 8
+	waitforvisualfinish
+	playsewithpan SE_M_GIGA_DRAIN, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 4, 0, 8, 1
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=0, num_blends=2, initial_blend_y=0, target_blend_y=10, color=RGB(8, 28, 4)
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=6, target_blend_y=0, color=RGB(8, 24, 4)
+	waitforvisualfinish
+	end
+
+@ Earth Power: the ground cracks open under the target (Fissure) and fire erupts from it (Dragon Rage)
+Move_EARTH_POWER:
+	loadspritegfx ANIM_TAG_SMALL_EMBER
+	loadspritegfx ANIM_TAG_FIRE_PLUME
+	fadetobg BG_FISSURE
+	waitbgfadeout
+	createvisualtask AnimTask_PositionFissureBgOnBattler, 5, ANIM_TARGET, 5, -1
+	waitbgfadein
+	loopsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_TARGET, 11, 3
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 3, 25, 1
+	create_dragon_rage_fire_plume_sprite ANIM_TARGET, 66, relative_to=ANIM_TARGET, x=5, y=0
+	delay 2
+	create_dragon_rage_fire_plume_sprite ANIM_TARGET, 66, relative_to=ANIM_TARGET, x=-10, y=-15
+	delay 2
+	create_dragon_rage_fire_plume_sprite ANIM_TARGET, 2, relative_to=ANIM_TARGET, x=0, y=25
+	delay 2
+	create_dragon_rage_fire_plume_sprite ANIM_TARGET, 66, relative_to=ANIM_TARGET, x=15, y=5
+	delay 2
+	create_dragon_rage_fire_plume_sprite ANIM_TARGET, 66, relative_to=ANIM_TARGET, x=-25, y=0
+	delay 2
+	create_dragon_rage_fire_plume_sprite ANIM_TARGET, 2, relative_to=ANIM_TARGET, x=30, y=30
+	delay 2
+	create_dragon_rage_fire_plume_sprite ANIM_TARGET, 2, relative_to=ANIM_TARGET, x=-27, y=25
+	delay 2
+	create_dragon_rage_fire_plume_sprite ANIM_TARGET, 66, relative_to=ANIM_TARGET, x=0, y=8
+	delay 2
+	waitforvisualfinish
+	delay 10
+	restorebg
+	waitbgfadeout
+	setarg 7, -1
+	waitbgfadein
+	end
+
+@ Power Gem: the user shines, then sparkling red gems fly at the target
+Move_POWER_GEM:
+	loadspritegfx ANIM_TAG_SPARKLE_4
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=8, color=RGB_BLACK
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendParticle, 5, ANIM_TAG_SPARKLE_4, 0, 9, 9, RGB(31, 6, 14)
+	playsewithpan SE_SHINY, SOUND_PAN_ATTACKER
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=0, num_blends=2, initial_blend_y=0, target_blend_y=12, color=RGB_WHITE
+	delay 12
+	playsewithpan SE_M_MORNING_SUN, SOUND_PAN_ATTACKER
+	createsprite gPowerGemSpriteTemplate, ANIM_ATTACKER, 2, 0, -8, 0, -8, 14, 0
+	delay 2
+	createsprite gPowerGemSpriteTemplate, ANIM_ATTACKER, 2, -6, 6, -6, 6, 14, 0
+	delay 2
+	createsprite gPowerGemSpriteTemplate, ANIM_ATTACKER, 2, 6, -2, 6, -2, 14, 0
+	delay 2
+	playsewithpan SE_M_MORNING_SUN, SOUND_PAN_ATTACKER
+	createsprite gPowerGemSpriteTemplate, ANIM_ATTACKER, 2, -4, -10, -4, -10, 14, 0
+	delay 2
+	createsprite gPowerGemSpriteTemplate, ANIM_ATTACKER, 2, 4, 8, 4, 8, 14, 0
+	delay 2
+	createsprite gPowerGemSpriteTemplate, ANIM_ATTACKER, 2, 0, 0, 0, 0, 14, 0
+	delay 2
+	playsewithpan SE_M_MORNING_SUN, SOUND_PAN_ATTACKER
+	createsprite gPowerGemSpriteTemplate, ANIM_ATTACKER, 2, -8, 2, -8, 2, 14, 0
+	delay 2
+	createsprite gPowerGemSpriteTemplate, ANIM_ATTACKER, 2, 8, -6, 8, -6, 14, 0
+	delay 2
+	delay 10
+	playsewithpan SE_M_ROCK_THROW, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 10, 1
+	blend_color_cycle priority=2, selector=F_PAL_TARGET, delay=0, num_blends=2, initial_blend_y=0, target_blend_y=12, color=RGB_WHITE
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=8, target_blend_y=0, color=RGB_BLACK
+	waitforvisualfinish
+	end
+
+@ Flash Cannon: the user gathers light, then fires a beam of silver light (Solar Beam's beam, recoloured)
+Move_FLASH_CANNON:
+	loadspritegfx ANIM_TAG_ORBS
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=10, color=RGB_BLACK
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendParticle, 5, ANIM_TAG_ORBS, 0, 12, 12, RGB(28, 29, 31)
+	playsewithpan SE_M_MEGA_KICK, SOUND_PAN_ATTACKER
+	blend_color_cycle priority=2, selector=F_PAL_ATTACKER, delay=1, num_blends=2, initial_blend_y=0, target_blend_y=12, color=RGB_WHITE
+	waitforvisualfinish
+	panse SE_M_SOLAR_BEAM, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, +2, 0
+	createvisualtask AnimTask_CreateSmallSolarBeamOrbs, 5
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=0
+	delay 3
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=1
+	delay 3
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=2
+	delay 3
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=3
+	delay 3
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=4
+	delay 3
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=5
+	delay 3
+	create_solar_beam_big_orb_sprite ANIM_TARGET, 3, x=15, y=0, duration=20, animation=6
+	delay 3
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 1, 0, 12, RGB_WHITE
+	createvisualtask AnimTask_ShakeMon2, 5, ANIM_TARGET, 2, 0, 30, 1
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 1, 12, 0, RGB_WHITE
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=10, target_blend_y=0, color=RGB_BLACK
+	waitforvisualfinish
+	end
+
+@ Dragon Pulse: a beam of big silver spheres, each one inside a blue ring, fired at the target
+Move_DRAGON_PULSE:
+	loadspritegfx ANIM_TAG_DRAGON_PULSE_ORB
+	loadspritegfx ANIM_TAG_DRAGON_PULSE_RING
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=6, color=RGB(2, 2, 12)
+	playsewithpan SE_M_DRAGON_RAGE, SOUND_PAN_ATTACKER
+	waitforvisualfinish
+	createsoundtask SoundTask_LoopSEAdjustPanning, SE_M_HYPER_BEAM2, SOUND_PAN_ATTACKER, SOUND_PAN_TARGET, 1, 15, 0, 5
+	createsprite gDragonPulseOrbSpriteTemplate, ANIM_ATTACKER, 3, 16, 0, 0
+	createsprite gDragonPulseRingSpriteTemplate, ANIM_ATTACKER, 2, 16, 0xB0, 0
+	delay 4
+	createsprite gDragonPulseOrbSpriteTemplate, ANIM_ATTACKER, 3, 16, 0, 0
+	createsprite gDragonPulseRingSpriteTemplate, ANIM_ATTACKER, 2, 16, 0xB0, 0
+	delay 4
+	createsprite gDragonPulseOrbSpriteTemplate, ANIM_ATTACKER, 3, 16, 0, 0
+	createsprite gDragonPulseRingSpriteTemplate, ANIM_ATTACKER, 2, 16, 0xB0, 0
+	delay 4
+	createsprite gDragonPulseOrbSpriteTemplate, ANIM_ATTACKER, 3, 16, 0, 0
+	createsprite gDragonPulseRingSpriteTemplate, ANIM_ATTACKER, 2, 16, 0xB0, 0
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 3, 0, 24, 1
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 0, 10, RGB(10, 8, 31)
+	delay 4
+	createsprite gDragonPulseOrbSpriteTemplate, ANIM_ATTACKER, 3, 16, 0, 0
+	createsprite gDragonPulseRingSpriteTemplate, ANIM_ATTACKER, 2, 16, 0xB0, 0
+	delay 4
+	createsprite gDragonPulseOrbSpriteTemplate, ANIM_ATTACKER, 3, 16, 0, 0
+	createsprite gDragonPulseRingSpriteTemplate, ANIM_ATTACKER, 2, 16, 0xB0, 0
+	delay 4
+	createsprite gDragonPulseOrbSpriteTemplate, ANIM_ATTACKER, 3, 16, 0, 0
+	createsprite gDragonPulseRingSpriteTemplate, ANIM_ATTACKER, 2, 16, 0xB0, 0
+	delay 4
+	createsprite gDragonPulseOrbSpriteTemplate, ANIM_ATTACKER, 3, 16, 0, 0
+	createsprite gDragonPulseRingSpriteTemplate, ANIM_ATTACKER, 2, 16, 0xB0, 0
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_TARGET, 2, 10, 0, RGB(10, 8, 31)
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=6, target_blend_y=0, color=RGB(2, 2, 12)
+	waitforvisualfinish
+	end
+
+@ Flame Burst: a fireball flies to the target and bursts into flames spreading in every direction (Fire Blast's burst)
+Move_FLAME_BURST:
+	loadspritegfx ANIM_TAG_SMALL_EMBER
+	playsewithpan SE_M_EMBER, SOUND_PAN_ATTACKER
+	createsprite gEmberSpriteTemplate, ANIM_TARGET, 2, 20, 0, 0, 0, 16, 0
+	waitforvisualfinish
+	playsewithpan SE_M_FLAME_WHEEL2, SOUND_PAN_TARGET
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG, 2, 0, 6, RGB(31, 12, 0)
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 5, 0, 16, 1
+	call FireBlastCross
+	delay 3
+	call FireBlastCross
+	delay 3
+	playsewithpan SE_M_FLAME_WHEEL, SOUND_PAN_TARGET
+	call FireBlastCross
+	waitforvisualfinish
+	createvisualtask AnimTask_BlendBattleAnimPal, 10, F_PAL_BG, 2, 6, 0, RGB(31, 12, 0)
+	waitforvisualfinish
+	end
+
+@ Liquidation: the user is wrapped in water bubbles, lunges at the target and hits it with a splash of water
+Move_LIQUIDATION:
+	loadspritegfx ANIM_TAG_WATER_IMPACT
+	loadspritegfx ANIM_TAG_SMALL_BUBBLES
+	loadspritegfx ANIM_TAG_ICE_CRYSTALS
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_ATTACKER, 0, 2, 14, 1
+	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_ATTACKER
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_ATTACKER, 2, 10, 10, 20, ANIM_ATTACKER
+	delay 3
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_ATTACKER, 2, -15, 0, 20, ANIM_ATTACKER
+	delay 3
+	playsewithpan SE_M_CRABHAMMER, SOUND_PAN_ATTACKER
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_ATTACKER, 2, 20, -10, 20, ANIM_ATTACKER
+	delay 3
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_ATTACKER, 2, -10, 15, 20, ANIM_ATTACKER
+	waitforvisualfinish
+	createsprite gHorizontalLungeSpriteTemplate, ANIM_ATTACKER, 2, 6, 5
+	delay 6
+	createsprite gWaterHitSplatSpriteTemplate, ANIM_ATTACKER, 4, 0, 0, ANIM_TARGET, 0
+	playsewithpan SE_M_WATERFALL, SOUND_PAN_TARGET
+	complex_palette_blend unused_anim_battler=ANIM_ATTACKER, unused_subpriority_offset=2, selector=F_PAL_BG | F_PAL_BATTLERS, delay=3, num_blends=1, color1=RGB(13, 21, 31), blend_y1=10, color2=RGB_BLACK, blend_y2=0
+	createvisualtask AnimTask_ShakeMon, 5, ANIM_TARGET, 0, 4, 10, 1
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_ATTACKER, 2, 10, 10, 20, ANIM_TARGET
+	delay 3
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_ATTACKER, 2, -15, 15, 20, ANIM_TARGET
+	delay 3
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_ATTACKER, 2, 16, -8, 20, ANIM_TARGET
+	delay 3
+	createsprite gSmallBubblePairSpriteTemplate, ANIM_ATTACKER, 2, -10, -20, 20, ANIM_TARGET
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
+	end
+
+@ Icicle Crash: three waves of big icicles fall from above on the target and shatter into ice shards
+Move_ICICLE_CRASH:
+	loadspritegfx ANIM_TAG_ICICLE_SPEAR
+	loadspritegfx ANIM_TAG_ICE_CRYSTALS
+	monbg ANIM_DEF_PARTNER
+	setalpha 12, 8
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=0, target_blend_y=6, color=RGB(20, 28, 31)
+	playsewithpan SE_M_ICY_WIND, SOUND_PAN_TARGET
+	waitforvisualfinish
+	createsprite gIcicleCrashSpriteTemplate, ANIM_TARGET, 2, -18, -8, 12
+	delay 3
+	createsprite gIcicleCrashSpriteTemplate, ANIM_TARGET, 2, 12, -16, 12
+	delay 3
+	createsprite gIcicleCrashSpriteTemplate, ANIM_TARGET, 2, 0, -2, 12
+	delay 3
+	delay 6
+	playsewithpan SE_M_BRICK_BREAK, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon, 2, ANIM_TARGET, 0, 4, 30, 1
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	delay 2
+	createsprite gIcicleCrashSpriteTemplate, ANIM_TARGET, 2, -6, -14, 12
+	delay 3
+	createsprite gIcicleCrashSpriteTemplate, ANIM_TARGET, 2, 20, -4, 12
+	delay 3
+	createsprite gIcicleCrashSpriteTemplate, ANIM_TARGET, 2, -24, 0, 12
+	delay 3
+	delay 6
+	playsewithpan SE_M_BRICK_BREAK, SOUND_PAN_TARGET
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	delay 2
+	createsprite gIcicleCrashSpriteTemplate, ANIM_TARGET, 2, 6, -10, 12
+	delay 3
+	createsprite gIcicleCrashSpriteTemplate, ANIM_TARGET, 2, -12, -18, 12
+	delay 3
+	createsprite gIcicleCrashSpriteTemplate, ANIM_TARGET, 2, 16, 2, 12
+	delay 3
+	delay 6
+	playsewithpan SE_M_BRICK_BREAK, SOUND_PAN_TARGET
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	call IceBallImpactShard
+	waitforvisualfinish
+	simple_palette_blend selector=F_PAL_BG, delay=1, initial_blend_y=6, target_blend_y=0, color=RGB(20, 28, 31)
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	blendoff
 	end
 
 Move_PSYCHO_BOOST:

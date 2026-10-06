@@ -885,3 +885,28 @@ void AnimTask_SeismicTossBgAccelerateDownAtEnd(u8 taskId)
         DestroyAnimVisualTask(taskId);
     }
 }
+
+// Power Gem: a big four-pointed sparkle (the second frame of the sparkle sheet) flying to the target.
+// Same arguments as TranslateAnimSpriteToTargetMonLocation:
+// arg 0-1: start offset from the attacker, arg 2-3: end offset from the target, arg 4: duration
+static const union AnimCmd sAnim_PowerGem[] =
+{
+    ANIMCMD_FRAME(16, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_PowerGem[] =
+{
+    sAnim_PowerGem,
+};
+
+const struct SpriteTemplate gPowerGemSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_SPARKLE_4,
+    .paletteTag = ANIM_TAG_SPARKLE_4,
+    .oam = &gOamData_AffineOff_ObjNormal_32x32,
+    .anims = sAnims_PowerGem,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = TranslateAnimSpriteToTargetMonLocation,
+};

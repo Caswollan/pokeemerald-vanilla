@@ -233,6 +233,7 @@ gBattleScriptsForMoveEffects::
 	.4byte BattleScript_EffectDragonDance            @ EFFECT_DRAGON_DANCE
 	.4byte BattleScript_EffectCamouflage             @ EFFECT_CAMOUFLAGE
 	.4byte BattleScript_EffectVoltTackle             @ EFFECT_VOLT_TACKLE
+	.4byte BattleScript_EffectFlameBurst             @ EFFECT_FLAME_BURST
 
 BattleScript_EffectHit::
 	jumpifnotmove MOVE_SURF, BattleScript_HitFromAtkCanceler
@@ -2596,6 +2597,40 @@ BattleScript_EffectDoubleEdge::
 	goto BattleScript_EffectHit
 
 @ Recoil 1/3 like Double-Edge, plus a chance to paralyze the target
+@ Flame Burst: after hitting, in double battles the bursting flame also hits the target's partner (1/16 of its max HP)
+BattleScript_EffectFlameBurst::
+	attackcanceler
+	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE
+	attackstring
+	ppreduce
+	critcalc
+	damagecalc
+	typecalc
+	adjustnormaldamage
+	attackanimation
+	waitanimation
+	effectivenesssound
+	hitanimation BS_TARGET
+	waitstate
+	healthbarupdate BS_TARGET
+	datahpupdate BS_TARGET
+	critmessage
+	waitmessage B_WAIT_TIME_LONG
+	resultmessage
+	waitmessage B_WAIT_TIME_LONG
+	jumpifmovehadnoeffect BattleScript_FlameBurstFaintTarget
+	various BS_TARGET, VARIOUS_TRY_FLAME_BURST_SPLASH
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, 0, BattleScript_FlameBurstFaintTarget
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_PASSIVE_HP_UPDATE
+	healthbarupdate BS_SCRIPTING
+	datahpupdate BS_SCRIPTING
+	printstring STRINGID_BURSTINGFLAMEHIT
+	waitmessage B_WAIT_TIME_LONG
+	tryfaintmon BS_SCRIPTING
+BattleScript_FlameBurstFaintTarget::
+	tryfaintmon BS_TARGET
+	goto BattleScript_MoveEnd
+
 BattleScript_EffectVoltTackle::
 	attackcanceler
 	accuracycheck BattleScript_PrintMoveMissed, ACC_CURR_MOVE

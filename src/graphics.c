@@ -546,6 +546,9 @@ const u32 gBattleAnimSpriteGfx_GoldRing[] = INCGFX_U32("graphics/battle_anims/sp
 const u32 gBattleAnimSpritePal_GoldRing[] = INCGFX_U32("graphics/battle_anims/sprites/gold_ring.png", ".gbapal.lz");
 
 const u32 gBattleAnimSpritePal_BlueRing2[] = INCGFX_U32("graphics/battle_anims/sprites/blue_ring_2.pal", ".gbapal.lz");
+const u32 gBattleAnimSpritePal_DarkPulseRing[] = INCGFX_U32("graphics/battle_anims/sprites/dark_pulse_ring.pal", ".gbapal.lz");
+const u32 gBattleAnimSpritePal_DragonPulseRing[] = INCGFX_U32("graphics/battle_anims/sprites/dragon_pulse_ring.pal", ".gbapal.lz");
+const u32 gBattleAnimSpritePal_DragonPulseOrb[] = INCGFX_U32("graphics/battle_anims/sprites/dragon_pulse_orb.pal", ".gbapal.lz");
 const u32 gBattleAnimSpritePal_PurpleRing[] = INCGFX_U32("graphics/battle_anims/sprites/purple_ring.pal", ".gbapal.lz");
 const u32 gBattleAnimSpritePal_BlueRing[] = INCGFX_U32("graphics/battle_anims/sprites/blue_ring.pal", ".gbapal.lz");
 
@@ -916,6 +919,8 @@ const u32 gBattleAnimSpritePal_PurpleFlame[] = INCGFX_U32("graphics/battle_anims
 
 const u32 gBattleAnimSpriteGfx_RedBall[] = INCGFX_U32("graphics/battle_anims/sprites/red_ball.png", ".4bpp.lz");
 const u32 gBattleAnimSpritePal_RedBall[] = INCGFX_U32("graphics/battle_anims/sprites/red_ball.png", ".gbapal.lz");
+const u32 gBattleAnimSpriteGfx_EnergyBall[] = INCGFX_U32("graphics/battle_anims/sprites/energy_ball.png", ".4bpp.lz");
+const u32 gBattleAnimSpritePal_EnergyBall[] = INCGFX_U32("graphics/battle_anims/sprites/energy_ball.png", ".gbapal.lz");
 
 const u32 gBattleAnimSpriteGfx_SmellingsaltEffect[] = INCGFX_U32("graphics/battle_anims/sprites/smellingsalt_effect.png", ".4bpp.lz");
 const u32 gBattleAnimSpritePal_SmellingsaltEffect[] = INCGFX_U32("graphics/battle_anims/sprites/smellingsalt_effect.png", ".gbapal.lz");

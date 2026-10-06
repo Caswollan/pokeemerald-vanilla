@@ -300,7 +300,8 @@ static const u16 sPoints_MoveEffect[NUM_BATTLE_MOVE_EFFECTS] =
     [EFFECT_CALM_MIND] = 1,
     [EFFECT_DRAGON_DANCE] = 1,
     [EFFECT_CAMOUFLAGE] = 3,
-    [EFFECT_VOLT_TACKLE] = 2
+    [EFFECT_VOLT_TACKLE] = 2,
+    [EFFECT_FLAME_BURST] = 2
 };
 
 static const u16 sPoints_Effectiveness[] =
