@@ -83,6 +83,10 @@
       },
       {
         "level": 53,
+        "move": "SOLAR_BEAM"
+      },
+      {
+        "level": 64,
         "move": "FRENZY_PLANT"
       }
     ],
@@ -198,6 +202,10 @@
       },
       {
         "level": 53,
+        "move": "SOLAR_BEAM"
+      },
+      {
+        "level": 64,
         "move": "FRENZY_PLANT"
       }
     ],
@@ -305,6 +313,10 @@
       },
       {
         "level": 53,
+        "move": "SOLAR_BEAM"
+      },
+      {
+        "level": 64,
         "move": "FRENZY_PLANT"
       }
     ],
@@ -395,7 +407,7 @@
       },
       {
         "level": 22,
-        "move": "FIRE_PUNCH"
+        "move": "FLAME_BURST"
       },
       {
         "level": 27,
@@ -415,10 +427,14 @@
       },
       {
         "level": 45,
-        "move": "AEROBLAST"
+        "move": "HEAT_WAVE"
       },
       {
         "level": 53,
+        "move": "AEROBLAST"
+      },
+      {
+        "level": 64,
         "move": "BLAST_BURN"
       }
     ],
@@ -513,7 +529,7 @@
       },
       {
         "level": 22,
-        "move": "FIRE_PUNCH"
+        "move": "FLAME_BURST"
       },
       {
         "level": 27,
@@ -533,10 +549,14 @@
       },
       {
         "level": 45,
-        "move": "AEROBLAST"
+        "move": "HEAT_WAVE"
       },
       {
         "level": 53,
+        "move": "AEROBLAST"
+      },
+      {
+        "level": 64,
         "move": "BLAST_BURN"
       }
     ],
@@ -624,7 +644,7 @@
       },
       {
         "level": 22,
-        "move": "FIRE_PUNCH"
+        "move": "FLAME_BURST"
       },
       {
         "level": 27,
@@ -644,10 +664,14 @@
       },
       {
         "level": 45,
-        "move": "AEROBLAST"
+        "move": "HEAT_WAVE"
       },
       {
         "level": 53,
+        "move": "AEROBLAST"
+      },
+      {
+        "level": 64,
         "move": "BLAST_BURN"
       }
     ],
@@ -761,11 +785,11 @@
       },
       {
         "level": 36,
-        "move": "WATERFALL"
+        "move": "LIQUIDATION"
       },
       {
         "level": 41,
-        "move": "ICE_BEAM"
+        "move": "FLASH_CANNON"
       },
       {
         "level": 45,
@@ -773,6 +797,10 @@
       },
       {
         "level": 53,
+        "move": "ICE_BEAM"
+      },
+      {
+        "level": 64,
         "move": "HYDRO_CANNON"
       }
     ],
@@ -875,11 +903,11 @@
       },
       {
         "level": 36,
-        "move": "WATERFALL"
+        "move": "LIQUIDATION"
       },
       {
         "level": 41,
-        "move": "ICE_BEAM"
+        "move": "FLASH_CANNON"
       },
       {
         "level": 45,
@@ -887,6 +915,10 @@
       },
       {
         "level": 53,
+        "move": "ICE_BEAM"
+      },
+      {
+        "level": 64,
         "move": "HYDRO_CANNON"
       }
     ],
@@ -981,11 +1013,11 @@
       },
       {
         "level": 36,
-        "move": "WATERFALL"
+        "move": "LIQUIDATION"
       },
       {
         "level": 41,
-        "move": "ICE_BEAM"
+        "move": "FLASH_CANNON"
       },
       {
         "level": 45,
@@ -993,6 +1025,10 @@
       },
       {
         "level": 53,
+        "move": "ICE_BEAM"
+      },
+      {
+        "level": 64,
         "move": "HYDRO_CANNON"
       }
     ],
@@ -1483,11 +1519,15 @@
       },
       {
         "level": 45,
-        "move": "AEROBLAST"
+        "move": "MIRROR_MOVE"
       },
       {
-        "level": 49,
-        "move": "MIRROR_MOVE"
+        "level": 50,
+        "move": "HEAT_WAVE"
+      },
+      {
+        "level": 57,
+        "move": "AEROBLAST"
       }
     ],
     "_dexNum": 16,
@@ -1585,11 +1625,15 @@
       },
       {
         "level": 45,
-        "move": "AEROBLAST"
+        "move": "MIRROR_MOVE"
       },
       {
-        "level": 49,
-        "move": "MIRROR_MOVE"
+        "level": 50,
+        "move": "HEAT_WAVE"
+      },
+      {
+        "level": 57,
+        "move": "AEROBLAST"
       }
     ],
     "_dexNum": 17,
@@ -1679,11 +1723,15 @@
       },
       {
         "level": 45,
-        "move": "AEROBLAST"
+        "move": "MIRROR_MOVE"
       },
       {
-        "level": 49,
-        "move": "MIRROR_MOVE"
+        "level": 50,
+        "move": "HEAT_WAVE"
+      },
+      {
+        "level": 57,
+        "move": "AEROBLAST"
       }
     ],
     "_dexNum": 18,
@@ -2802,19 +2850,19 @@
         "move": "POISON_FANG"
       },
       {
-        "level": 35,
+        "level": 36,
         "move": "CRUNCH"
       },
       {
-        "level": 38,
+        "level": 42,
         "move": "EARTHQUAKE"
       },
       {
-        "level": 43,
+        "level": 49,
         "move": "FLATTER"
       },
       {
-        "level": 48,
+        "level": 55,
         "move": "SUPERPOWER"
       }
     ],
@@ -2913,19 +2961,19 @@
         "move": "POISON_FANG"
       },
       {
-        "level": 35,
+        "level": 36,
         "move": "CRUNCH"
       },
       {
-        "level": 38,
+        "level": 42,
         "move": "EARTHQUAKE"
       },
       {
-        "level": 43,
+        "level": 49,
         "move": "FLATTER"
       },
       {
-        "level": 48,
+        "level": 55,
         "move": "SUPERPOWER"
       }
     ],
@@ -3019,19 +3067,19 @@
         "move": "POISON_FANG"
       },
       {
-        "level": 35,
+        "level": 36,
         "move": "CRUNCH"
       },
       {
-        "level": 38,
+        "level": 42,
         "move": "EARTHQUAKE"
       },
       {
-        "level": 43,
+        "level": 49,
         "move": "FLATTER"
       },
       {
-        "level": 48,
+        "level": 55,
         "move": "SUPERPOWER"
       }
     ],
@@ -3151,19 +3199,19 @@
         "move": "POISON_FANG"
       },
       {
-        "level": 35,
+        "level": 36,
         "move": "CRUNCH"
       },
       {
-        "level": 38,
+        "level": 42,
         "move": "EARTHQUAKE"
       },
       {
-        "level": 43,
+        "level": 49,
         "move": "FLATTER"
       },
       {
-        "level": 48,
+        "level": 55,
         "move": "MEGAHORN"
       }
     ],
@@ -3261,19 +3309,19 @@
         "move": "POISON_FANG"
       },
       {
-        "level": 35,
+        "level": 36,
         "move": "CRUNCH"
       },
       {
-        "level": 38,
+        "level": 42,
         "move": "EARTHQUAKE"
       },
       {
-        "level": 43,
+        "level": 49,
         "move": "FLATTER"
       },
       {
-        "level": 48,
+        "level": 55,
         "move": "MEGAHORN"
       }
     ],
@@ -3365,19 +3413,19 @@
         "move": "POISON_FANG"
       },
       {
-        "level": 35,
+        "level": 36,
         "move": "CRUNCH"
       },
       {
-        "level": 38,
+        "level": 42,
         "move": "EARTHQUAKE"
       },
       {
-        "level": 43,
+        "level": 49,
         "move": "FLATTER"
       },
       {
-        "level": 48,
+        "level": 55,
         "move": "MEGAHORN"
       }
     ],
@@ -3504,12 +3552,16 @@
         "move": "MOONLIGHT"
       },
       {
-        "level": 41,
+        "level": 42,
+        "move": "FLASH_CANNON"
+      },
+      {
+        "level": 48,
         "move": "LIGHT_SCREEN"
       },
       {
-        "level": 45,
-        "move": "METEOR_MASH"
+        "level": 52,
+        "move": "DOOM_DESIRE"
       }
     ],
     "_dexNum": 35,
@@ -3620,12 +3672,16 @@
         "move": "MOONLIGHT"
       },
       {
-        "level": 41,
+        "level": 42,
+        "move": "FLASH_CANNON"
+      },
+      {
+        "level": 48,
         "move": "LIGHT_SCREEN"
       },
       {
-        "level": 45,
-        "move": "METEOR_MASH"
+        "level": 52,
+        "move": "DOOM_DESIRE"
       }
     ],
     "_dexNum": 36,
@@ -3726,7 +3782,7 @@
       },
       {
         "level": 19,
-        "move": "FLAME_WHEEL"
+        "move": "FLAME_BURST"
       },
       {
         "level": 22,
@@ -3755,6 +3811,10 @@
       {
         "level": 47,
         "move": "GRUDGE"
+      },
+      {
+        "level": 54,
+        "move": "PSYCHO_BOOST"
       }
     ],
     "_dexNum": 37,
@@ -3795,11 +3855,11 @@
     },
     "stats": {
       "hp": 73,
-      "attack": 66,
+      "attack": 67,
       "defense": 75,
-      "spAttack": 91,
+      "spAttack": 81,
       "spDefense": 100,
-      "speed": 100
+      "speed": 109
     },
     "evolutions": [],
     "levelUpLearnset": [
@@ -3829,7 +3889,7 @@
       },
       {
         "level": 19,
-        "move": "FLAME_WHEEL"
+        "move": "FLAME_BURST"
       },
       {
         "level": 22,
@@ -3858,6 +3918,10 @@
       {
         "level": 47,
         "move": "GRUDGE"
+      },
+      {
+        "level": 54,
+        "move": "PSYCHO_BOOST"
       }
     ],
     "_dexNum": 38,
@@ -4447,11 +4511,15 @@
       },
       {
         "level": 40,
-        "move": "PETAL_DANCE"
+        "move": "ENERGY_BALL"
       },
       {
         "level": 44,
         "move": "SOLAR_BEAM"
+      },
+      {
+        "level": 55,
+        "move": "PETAL_DANCE"
       }
     ],
     "_dexNum": 43,
@@ -4560,11 +4628,15 @@
       },
       {
         "level": 40,
-        "move": "PETAL_DANCE"
+        "move": "ENERGY_BALL"
       },
       {
         "level": 44,
         "move": "SOLAR_BEAM"
+      },
+      {
+        "level": 55,
+        "move": "PETAL_DANCE"
       }
     ],
     "_dexNum": 44,
@@ -4658,11 +4730,15 @@
       },
       {
         "level": 40,
-        "move": "PETAL_DANCE"
+        "move": "ENERGY_BALL"
       },
       {
         "level": 44,
         "move": "SOLAR_BEAM"
+      },
+      {
+        "level": 55,
+        "move": "PETAL_DANCE"
       }
     ],
     "_dexNum": 45,
@@ -4767,6 +4843,10 @@
       {
         "level": 43,
         "move": "SWORDS_DANCE"
+      },
+      {
+        "level": 46,
+        "move": "CRABHAMMER"
       }
     ],
     "_dexNum": 46,
@@ -4866,6 +4946,10 @@
       },
       {
         "level": 43,
+        "move": "CRABHAMMER"
+      },
+      {
+        "level": 46,
         "move": "SWORDS_DANCE"
       }
     ],
@@ -5842,6 +5926,10 @@
       {
         "level": 43,
         "move": "THRASH"
+      },
+      {
+        "level": 51,
+        "move": "SUPERPOWER"
       }
     ],
     "_dexNum": 56,
@@ -5950,6 +6038,10 @@
       {
         "level": 43,
         "move": "THRASH"
+      },
+      {
+        "level": 51,
+        "move": "SUPERPOWER"
       }
     ],
     "_dexNum": 57,
@@ -6456,7 +6548,11 @@
       },
       {
         "level": 45,
-        "move": "WATERFALL"
+        "move": "LIQUIDATION"
+      },
+      {
+        "level": 51,
+        "move": "SUPERPOWER"
       }
     ],
     "_dexNum": 62,
@@ -6571,15 +6667,19 @@
         "move": "ROLE_PLAY"
       },
       {
-        "level": 36,
-        "move": "PSYCHIC"
+        "level": 37,
+        "move": "ENERGY_BALL"
       },
       {
         "level": 40,
+        "move": "PSYCHIC"
+      },
+      {
+        "level": 44,
         "move": "CALM_MIND"
       },
       {
-        "level": 43,
+        "level": 49,
         "move": "TRICK"
       }
     ],
@@ -6637,10 +6737,10 @@
     "evolutions": [
       {
         "method": "LEVEL",
-        "param": "36",
+        "param": "40",
         "into": "ALAKAZAM",
         "conditions": "",
-        "display": "at Level 36"
+        "display": "at Level 40"
       }
     ],
     "levelUpLearnset": [
@@ -6685,15 +6785,19 @@
         "move": "ROLE_PLAY"
       },
       {
-        "level": 36,
-        "move": "PSYCHIC"
+        "level": 37,
+        "move": "ENERGY_BALL"
       },
       {
         "level": 40,
+        "move": "PSYCHIC"
+      },
+      {
+        "level": 44,
         "move": "CALM_MIND"
       },
       {
-        "level": 43,
+        "level": 49,
         "move": "TRICK"
       }
     ],
@@ -6791,15 +6895,19 @@
         "move": "ROLE_PLAY"
       },
       {
-        "level": 36,
-        "move": "PSYCHIC"
+        "level": 37,
+        "move": "ENERGY_BALL"
       },
       {
         "level": 40,
+        "move": "PSYCHIC"
+      },
+      {
+        "level": 44,
         "move": "CALM_MIND"
       },
       {
-        "level": 43,
+        "level": 49,
         "move": "TRICK"
       }
     ],
@@ -6916,6 +7024,10 @@
       {
         "level": 48,
         "move": "DYNAMIC_PUNCH"
+      },
+      {
+        "level": 54,
+        "move": "SUPERPOWER"
       }
     ],
     "_dexNum": 66,
@@ -7032,6 +7144,10 @@
       {
         "level": 48,
         "move": "DYNAMIC_PUNCH"
+      },
+      {
+        "level": 54,
+        "move": "SUPERPOWER"
       }
     ],
     "_dexNum": 67,
@@ -7140,6 +7256,10 @@
       {
         "level": 48,
         "move": "DYNAMIC_PUNCH"
+      },
+      {
+        "level": 54,
+        "move": "SUPERPOWER"
       }
     ],
     "_dexNum": 68,
@@ -7266,7 +7386,7 @@
       },
       {
         "level": 45,
-        "move": "BODY_SLAM"
+        "move": "LEECH_LIFE"
       }
     ],
     "_dexNum": 69,
@@ -7384,7 +7504,7 @@
       },
       {
         "level": 45,
-        "move": "BODY_SLAM"
+        "move": "LEECH_LIFE"
       }
     ],
     "_dexNum": 70,
@@ -7494,7 +7614,7 @@
       },
       {
         "level": 45,
-        "move": "BODY_SLAM"
+        "move": "LEECH_LIFE"
       }
     ],
     "_dexNum": 71,
@@ -7592,19 +7712,19 @@
         "move": "BARRIER"
       },
       {
-        "level": 34,
+        "level": 36,
         "move": "SLUDGE_BOMB"
       },
       {
-        "level": 38,
+        "level": 41,
         "move": "SCREECH"
       },
       {
-        "level": 43,
+        "level": 45,
         "move": "MUDDY_WATER"
       },
       {
-        "level": 48,
+        "level": 52,
         "move": "HYDRO_PUMP"
       }
     ],
@@ -7695,19 +7815,19 @@
         "move": "BARRIER"
       },
       {
-        "level": 34,
+        "level": 36,
         "move": "SLUDGE_BOMB"
       },
       {
-        "level": 38,
+        "level": 41,
         "move": "SCREECH"
       },
       {
-        "level": 43,
+        "level": 45,
         "move": "MUDDY_WATER"
       },
       {
-        "level": 48,
+        "level": 52,
         "move": "HYDRO_PUMP"
       }
     ],
@@ -8146,15 +8266,15 @@
         "move": "JUMP_KICK"
       },
       {
-        "level": 42,
+        "level": 44,
         "move": "MEGAHORN"
       },
       {
-        "level": 45,
+        "level": 49,
         "move": "DOUBLE_EDGE"
       },
       {
-        "level": 50,
+        "level": 55,
         "move": "HI_JUMP_KICK"
       }
     ],
@@ -8252,15 +8372,15 @@
         "move": "JUMP_KICK"
       },
       {
-        "level": 42,
+        "level": 44,
         "move": "MEGAHORN"
       },
       {
-        "level": 45,
+        "level": 49,
         "move": "DOUBLE_EDGE"
       },
       {
-        "level": 50,
+        "level": 55,
         "move": "HI_JUMP_KICK"
       }
     ],
@@ -8466,11 +8586,11 @@
       },
       {
         "level": 40,
-        "move": "AMNESIA"
+        "move": "PSYCHIC"
       },
       {
         "level": 45,
-        "move": "PSYCHIC"
+        "move": "AMNESIA"
       },
       {
         "level": 51,
@@ -8577,7 +8697,7 @@
       },
       {
         "level": 26,
-        "move": "SPARK"
+        "move": "SHOCK_WAVE"
       },
       {
         "level": 30,
@@ -8593,11 +8713,11 @@
       },
       {
         "level": 40,
-        "move": "SIGNAL_BEAM"
+        "move": "FLASH_CANNON"
       },
       {
         "level": 44,
-        "move": "DOOM_DESIRE"
+        "move": "SIGNAL_BEAM"
       },
       {
         "level": 49,
@@ -8606,6 +8726,10 @@
       {
         "level": 49,
         "move": "LOCK_ON"
+      },
+      {
+        "level": 56,
+        "move": "DOOM_DESIRE"
       }
     ],
     "_dexNum": 81,
@@ -8680,7 +8804,7 @@
       },
       {
         "level": 26,
-        "move": "SPARK"
+        "move": "SHOCK_WAVE"
       },
       {
         "level": 30,
@@ -8696,11 +8820,11 @@
       },
       {
         "level": 40,
-        "move": "SIGNAL_BEAM"
+        "move": "FLASH_CANNON"
       },
       {
         "level": 44,
-        "move": "DOOM_DESIRE"
+        "move": "SIGNAL_BEAM"
       },
       {
         "level": 49,
@@ -8709,6 +8833,10 @@
       {
         "level": 49,
         "move": "LOCK_ON"
+      },
+      {
+        "level": 56,
+        "move": "DOOM_DESIRE"
       }
     ],
     "_dexNum": 82,
@@ -8904,20 +9032,20 @@
         "move": "DRILL_PECK"
       },
       {
-        "level": 40,
+        "level": 42,
         "move": "SKY_UPPERCUT"
       },
       {
-        "level": 44,
+        "level": 47,
         "move": "DOUBLE_EDGE"
-      },
-      {
-        "level": 48,
-        "move": "SKY_ATTACK"
       },
       {
         "level": 52,
         "move": "HI_JUMP_KICK"
+      },
+      {
+        "level": 56,
+        "move": "SKY_ATTACK"
       }
     ],
     "_dexNum": 84,
@@ -9005,20 +9133,20 @@
         "move": "DRILL_PECK"
       },
       {
-        "level": 40,
+        "level": 42,
         "move": "SKY_UPPERCUT"
       },
       {
-        "level": 44,
+        "level": 47,
         "move": "DOUBLE_EDGE"
-      },
-      {
-        "level": 48,
-        "move": "SKY_ATTACK"
       },
       {
         "level": 52,
         "move": "HI_JUMP_KICK"
+      },
+      {
+        "level": 56,
+        "move": "SKY_ATTACK"
       }
     ],
     "_dexNum": 85,
@@ -9570,7 +9698,15 @@
         "move": "SPIKES"
       },
       {
-        "level": 48,
+        "level": 42,
+        "move": "LIQUIDATION"
+      },
+      {
+        "level": 47,
+        "move": "ICICLE_CRASH"
+      },
+      {
+        "level": 54,
         "move": "HYDRO_PUMP"
       }
     ],
@@ -9666,7 +9802,15 @@
         "move": "SPIKES"
       },
       {
-        "level": 48,
+        "level": 42,
+        "move": "LIQUIDATION"
+      },
+      {
+        "level": 47,
+        "move": "ICICLE_CRASH"
+      },
+      {
+        "level": 54,
         "move": "HYDRO_PUMP"
       }
     ],
@@ -9791,6 +9935,10 @@
       },
       {
         "level": 51,
+        "move": "DARK_PULSE"
+      },
+      {
+        "level": 55,
         "move": "DESTINY_BOND"
       }
     ],
@@ -9913,6 +10061,10 @@
       },
       {
         "level": 51,
+        "move": "DARK_PULSE"
+      },
+      {
+        "level": 55,
         "move": "DESTINY_BOND"
       }
     ],
@@ -10028,6 +10180,10 @@
       },
       {
         "level": 51,
+        "move": "DARK_PULSE"
+      },
+      {
+        "level": 55,
         "move": "DESTINY_BOND"
       }
     ],
@@ -10268,6 +10424,10 @@
       {
         "level": 49,
         "move": "FUTURE_SIGHT"
+      },
+      {
+        "level": 55,
+        "move": "PSYCHO_BOOST"
       }
     ],
     "_dexNum": 96,
@@ -10377,6 +10537,10 @@
       {
         "level": 49,
         "move": "FUTURE_SIGHT"
+      },
+      {
+        "level": 55,
+        "move": "PSYCHO_BOOST"
       }
     ],
     "_dexNum": 97,
@@ -10474,19 +10638,23 @@
       },
       {
         "level": 32,
-        "move": "SLAM"
+        "move": "ICE_PUNCH"
       },
       {
-        "level": 36,
+        "level": 37,
+        "move": "LIQUIDATION"
+      },
+      {
+        "level": 42,
+        "move": "FLAIL"
+      },
+      {
+        "level": 48,
         "move": "CRABHAMMER"
       },
       {
-        "level": 41,
-        "move": "REVENGE"
-      },
-      {
-        "level": 46,
-        "move": "FLAIL"
+        "level": 52,
+        "move": "METEOR_MASH"
       }
     ],
     "_dexNum": 98,
@@ -10575,19 +10743,23 @@
       },
       {
         "level": 32,
-        "move": "SLAM"
+        "move": "ICE_PUNCH"
       },
       {
-        "level": 36,
+        "level": 37,
+        "move": "LIQUIDATION"
+      },
+      {
+        "level": 42,
+        "move": "FLAIL"
+      },
+      {
+        "level": 48,
         "move": "CRABHAMMER"
       },
       {
-        "level": 41,
-        "move": "REVENGE"
-      },
-      {
-        "level": 46,
-        "move": "FLAIL"
+        "level": 52,
+        "move": "METEOR_MASH"
       }
     ],
     "_dexNum": 99,
@@ -10682,7 +10854,7 @@
       },
       {
         "level": 21,
-        "move": "SPARK"
+        "move": "SHOCK_WAVE"
       },
       {
         "level": 26,
@@ -10698,7 +10870,7 @@
       },
       {
         "level": 40,
-        "move": "MIRROR_COAT"
+        "move": "FLASH_CANNON"
       },
       {
         "level": 44,
@@ -10707,6 +10879,10 @@
       {
         "level": 48,
         "move": "EXPLOSION"
+      },
+      {
+        "level": 53,
+        "move": "MIRROR_COAT"
       }
     ],
     "_dexNum": 100,
@@ -10783,7 +10959,7 @@
       },
       {
         "level": 21,
-        "move": "SPARK"
+        "move": "SHOCK_WAVE"
       },
       {
         "level": 26,
@@ -10799,7 +10975,7 @@
       },
       {
         "level": 40,
-        "move": "MIRROR_COAT"
+        "move": "FLASH_CANNON"
       },
       {
         "level": 44,
@@ -10808,6 +10984,10 @@
       {
         "level": 48,
         "move": "EXPLOSION"
+      },
+      {
+        "level": 53,
+        "move": "MIRROR_COAT"
       }
     ],
     "_dexNum": 101,
@@ -10909,8 +11089,12 @@
         "move": "PSYCHIC"
       },
       {
-        "level": 43,
-        "move": "SOLAR_BEAM"
+        "level": 42,
+        "move": "ENERGY_BALL"
+      },
+      {
+        "level": 50,
+        "move": "PETAL_DANCE"
       }
     ],
     "_dexNum": 102,
@@ -11005,8 +11189,12 @@
         "move": "PSYCHIC"
       },
       {
-        "level": 43,
-        "move": "SOLAR_BEAM"
+        "level": 42,
+        "move": "ENERGY_BALL"
+      },
+      {
+        "level": 50,
+        "move": "PETAL_DANCE"
       }
     ],
     "_dexNum": 103,
@@ -11312,7 +11500,7 @@
       },
       {
         "level": 31,
-        "move": "REVENGE"
+        "move": "LOW_KICK"
       },
       {
         "level": 34,
@@ -11333,6 +11521,10 @@
       {
         "level": 48,
         "move": "HI_JUMP_KICK"
+      },
+      {
+        "level": 53,
+        "move": "SUPERPOWER"
       }
     ],
     "_dexNum": 106,
@@ -11440,6 +11632,10 @@
       {
         "level": 48,
         "move": "DYNAMIC_PUNCH"
+      },
+      {
+        "level": 53,
+        "move": "SUPERPOWER"
       }
     ],
     "_dexNum": 107,
@@ -11889,6 +12085,10 @@
       {
         "level": 48,
         "move": "ROCK_SLIDE"
+      },
+      {
+        "level": 54,
+        "move": "SUPERPOWER"
       }
     ],
     "_dexNum": 111,
@@ -11995,6 +12195,10 @@
       {
         "level": 48,
         "move": "ROCK_SLIDE"
+      },
+      {
+        "level": 54,
+        "move": "SUPERPOWER"
       }
     ],
     "_dexNum": 112,
@@ -12230,7 +12434,7 @@
       },
       {
         "level": 37,
-        "move": "STUN_SPORE"
+        "move": "ENERGY_BALL"
       },
       {
         "level": 40,
@@ -12444,15 +12648,15 @@
       },
       {
         "level": 43,
-        "move": "HYDRO_PUMP"
+        "move": "DRAGON_DANCE"
       },
       {
         "level": 47,
-        "move": "BODY_SLAM"
+        "move": "DRAGON_PULSE"
       },
       {
-        "level": 51,
-        "move": "DRAGON_DANCE"
+        "level": 54,
+        "move": "HYDRO_PUMP"
       }
     ],
     "_dexNum": 116,
@@ -12550,15 +12754,15 @@
       },
       {
         "level": 43,
-        "move": "HYDRO_PUMP"
+        "move": "DRAGON_DANCE"
       },
       {
         "level": 47,
-        "move": "BODY_SLAM"
+        "move": "DRAGON_PULSE"
       },
       {
-        "level": 51,
-        "move": "DRAGON_DANCE"
+        "level": 54,
+        "move": "HYDRO_PUMP"
       }
     ],
     "_dexNum": 117,
@@ -12662,7 +12866,7 @@
       },
       {
         "level": 30,
-        "move": "WATERFALL"
+        "move": "LIQUIDATION"
       },
       {
         "level": 36,
@@ -12767,7 +12971,7 @@
       },
       {
         "level": 30,
-        "move": "WATERFALL"
+        "move": "LIQUIDATION"
       },
       {
         "level": 36,
@@ -12888,14 +13092,18 @@
       },
       {
         "level": 37,
-        "move": "MINIMIZE"
+        "move": "POWER_GEM"
       },
       {
-        "level": 41,
+        "level": 42,
         "move": "PSYCHIC"
       },
       {
-        "level": 46,
+        "level": 47,
+        "move": "MINIMIZE"
+      },
+      {
+        "level": 54,
         "move": "HYDRO_PUMP"
       }
     ],
@@ -13002,14 +13210,18 @@
       },
       {
         "level": 37,
-        "move": "MINIMIZE"
+        "move": "POWER_GEM"
       },
       {
-        "level": 41,
+        "level": 42,
         "move": "PSYCHIC"
       },
       {
-        "level": 46,
+        "level": 47,
+        "move": "MINIMIZE"
+      },
+      {
+        "level": 54,
         "move": "HYDRO_PUMP"
       }
     ],
@@ -13226,7 +13438,7 @@
       },
       {
         "level": 25,
-        "move": "TWINEEDLE"
+        "move": "FURY_CUTTER"
       },
       {
         "level": 29,
@@ -13241,12 +13453,16 @@
         "move": "STEEL_WING"
       },
       {
-        "level": 42,
-        "move": "SWORDS_DANCE"
+        "level": 41,
+        "move": "TWINEEDLE"
       },
       {
         "level": 46,
         "move": "DOUBLE_TEAM"
+      },
+      {
+        "level": 50,
+        "move": "SWORDS_DANCE"
       }
     ],
     "_dexNum": 123,
@@ -13443,15 +13659,15 @@
         "move": "THUNDER_PUNCH"
       },
       {
-        "level": 34,
+        "level": 36,
         "move": "SCREECH"
       },
       {
-        "level": 39,
+        "level": 42,
         "move": "THUNDERBOLT"
       },
       {
-        "level": 44,
+        "level": 55,
         "move": "THUNDER"
       }
     ],
@@ -13540,18 +13756,18 @@
       },
       {
         "level": 30,
-        "move": "FIRE_PUNCH"
+        "move": "FLAME_BURST"
       },
       {
         "level": 34,
         "move": "METAL_SOUND"
       },
       {
-        "level": 39,
+        "level": 42,
         "move": "FLAMETHROWER"
       },
       {
-        "level": 44,
+        "level": 55,
         "move": "FIRE_BLAST"
       }
     ],
@@ -13654,6 +13870,10 @@
       {
         "level": 48,
         "move": "MEGAHORN"
+      },
+      {
+        "level": 54,
+        "move": "SUPERPOWER"
       }
     ],
     "_dexNum": 127,
@@ -13836,19 +14056,19 @@
         "move": "SLAM"
       },
       {
-        "level": 38,
+        "level": 40,
         "move": "CRUNCH"
       },
       {
-        "level": 42,
-        "move": "WATERFALL"
+        "level": 46,
+        "move": "LIQUIDATION"
       },
       {
-        "level": 46,
+        "level": 54,
         "move": "BOUNCE"
       },
       {
-        "level": 50,
+        "level": 61,
         "move": "DRAGON_DANCE"
       }
     ],
@@ -13901,19 +14121,19 @@
         "move": "SLAM"
       },
       {
-        "level": 38,
+        "level": 40,
         "move": "CRUNCH"
       },
       {
-        "level": 42,
-        "move": "WATERFALL"
+        "level": 46,
+        "move": "LIQUIDATION"
       },
       {
-        "level": 46,
+        "level": 54,
         "move": "BOUNCE"
       },
       {
-        "level": 50,
+        "level": 61,
         "move": "DRAGON_DANCE"
       }
     ],
@@ -14027,7 +14247,11 @@
         "move": "SAFEGUARD"
       },
       {
-        "level": 50,
+        "level": 51,
+        "move": "DRAGON_PULSE"
+      },
+      {
+        "level": 56,
         "move": "HYDRO_PUMP"
       }
     ],
@@ -14711,11 +14935,11 @@
       },
       {
         "level": 37,
-        "move": "PROTECT"
+        "move": "RECOVER"
       },
       {
         "level": 42,
-        "move": "RECOVER"
+        "move": "POWER_GEM"
       },
       {
         "level": 46,
@@ -14814,11 +15038,11 @@
       },
       {
         "level": 37,
-        "move": "PROTECT"
+        "move": "RECOVER"
       },
       {
         "level": 42,
-        "move": "RECOVER"
+        "move": "POWER_GEM"
       },
       {
         "level": 46,
@@ -14925,7 +15149,7 @@
       },
       {
         "level": 31,
-        "move": "ANCIENT_POWER"
+        "move": "LIQUIDATION"
       },
       {
         "level": 37,
@@ -15032,7 +15256,7 @@
       },
       {
         "level": 31,
-        "move": "ANCIENT_POWER"
+        "move": "LIQUIDATION"
       },
       {
         "level": 37,
@@ -16606,7 +16830,7 @@
       },
       {
         "level": 25,
-        "move": "FLAME_WHEEL"
+        "move": "FLAME_BURST"
       },
       {
         "level": 32,
@@ -16615,6 +16839,10 @@
       {
         "level": 36,
         "move": "FLAMETHROWER"
+      },
+      {
+        "level": 39,
+        "move": "EARTH_POWER"
       },
       {
         "level": 41,
@@ -16713,7 +16941,7 @@
       },
       {
         "level": 25,
-        "move": "FLAME_WHEEL"
+        "move": "FLAME_BURST"
       },
       {
         "level": 32,
@@ -16722,6 +16950,10 @@
       {
         "level": 36,
         "move": "FLAMETHROWER"
+      },
+      {
+        "level": 39,
+        "move": "EARTH_POWER"
       },
       {
         "level": 41,
@@ -16815,7 +17047,7 @@
       },
       {
         "level": 25,
-        "move": "FLAME_WHEEL"
+        "move": "FLAME_BURST"
       },
       {
         "level": 32,
@@ -16824,6 +17056,10 @@
       {
         "level": 36,
         "move": "FLAMETHROWER"
+      },
+      {
+        "level": 39,
+        "move": "EARTH_POWER"
       },
       {
         "level": 41,
@@ -16940,7 +17176,7 @@
       },
       {
         "level": 36,
-        "move": "WATERFALL"
+        "move": "LIQUIDATION"
       },
       {
         "level": 41,
@@ -17059,7 +17295,7 @@
       },
       {
         "level": 36,
-        "move": "WATERFALL"
+        "move": "LIQUIDATION"
       },
       {
         "level": 41,
@@ -17172,7 +17408,7 @@
       },
       {
         "level": 36,
-        "move": "WATERFALL"
+        "move": "LIQUIDATION"
       },
       {
         "level": 41,
@@ -17749,7 +17985,7 @@
       },
       {
         "level": 35,
-        "move": "DOUBLE_EDGE"
+        "move": "RAZOR_WIND"
       }
     ],
     "_dexNum": 165,
@@ -17846,7 +18082,7 @@
       },
       {
         "level": 35,
-        "move": "DOUBLE_EDGE"
+        "move": "RAZOR_WIND"
       }
     ],
     "_dexNum": 166,
@@ -18596,12 +18832,16 @@
         "move": "MOONLIGHT"
       },
       {
-        "level": 41,
+        "level": 42,
+        "move": "FLASH_CANNON"
+      },
+      {
+        "level": 48,
         "move": "LIGHT_SCREEN"
       },
       {
-        "level": 45,
-        "move": "METEOR_MASH"
+        "level": 52,
+        "move": "DOOM_DESIRE"
       }
     ],
     "_dexNum": 173,
@@ -19267,6 +19507,10 @@
       },
       {
         "level": 49,
+        "move": "DRAGON_PULSE"
+      },
+      {
+        "level": 54,
         "move": "THUNDER"
       }
     ],
@@ -19379,6 +19623,10 @@
       },
       {
         "level": 49,
+        "move": "DRAGON_PULSE"
+      },
+      {
+        "level": 54,
         "move": "THUNDER"
       }
     ],
@@ -19491,6 +19739,10 @@
       },
       {
         "level": 49,
+        "move": "DRAGON_PULSE"
+      },
+      {
+        "level": 54,
         "move": "THUNDER"
       }
     ],
@@ -19597,11 +19849,15 @@
       },
       {
         "level": 40,
-        "move": "PETAL_DANCE"
+        "move": "ENERGY_BALL"
       },
       {
         "level": 44,
         "move": "SOLAR_BEAM"
+      },
+      {
+        "level": 55,
+        "move": "PETAL_DANCE"
       }
     ],
     "_dexNum": 182,
@@ -19695,15 +19951,19 @@
         "move": "REVENGE"
       },
       {
-        "level": 35,
+        "level": 36,
+        "move": "LIQUIDATION"
+      },
+      {
+        "level": 42,
         "move": "DOUBLE_EDGE"
       },
       {
-        "level": 41,
+        "level": 49,
         "move": "BELLY_DRUM"
       },
       {
-        "level": 44,
+        "level": 54,
         "move": "SUPERPOWER"
       }
     ],
@@ -19798,15 +20058,19 @@
         "move": "REVENGE"
       },
       {
-        "level": 35,
+        "level": 36,
+        "move": "LIQUIDATION"
+      },
+      {
+        "level": 42,
         "move": "DOUBLE_EDGE"
       },
       {
-        "level": 41,
+        "level": 49,
         "move": "BELLY_DRUM"
       },
       {
-        "level": 44,
+        "level": 54,
         "move": "SUPERPOWER"
       }
     ],
@@ -20137,6 +20401,10 @@
       },
       {
         "level": 39,
+        "move": "RAZOR_WIND"
+      },
+      {
+        "level": 44,
         "move": "ENCORE"
       }
     ],
@@ -20252,6 +20520,10 @@
       },
       {
         "level": 39,
+        "move": "RAZOR_WIND"
+      },
+      {
+        "level": 44,
         "move": "ENCORE"
       }
     ],
@@ -20359,6 +20631,10 @@
       },
       {
         "level": 39,
+        "move": "RAZOR_WIND"
+      },
+      {
+        "level": 44,
         "move": "ENCORE"
       }
     ],
@@ -20553,23 +20829,31 @@
         "move": "SYNTHESIS"
       },
       {
-        "level": 26,
-        "move": "GRASS_WHISTLE"
-      },
-      {
-        "level": 29,
-        "move": "GIGA_DRAIN"
+        "level": 38,
+        "move": "FLAME_BURST"
       },
       {
         "level": 32,
+        "move": "GIGA_DRAIN"
+      },
+      {
+        "level": 36,
         "move": "MORNING_SUN"
       },
       {
-        "level": 35,
+        "level": 40,
         "move": "FLAMETHROWER"
       },
       {
-        "level": 39,
+        "level": 43,
+        "move": "ENERGY_BALL"
+      },
+      {
+        "level": 49,
+        "move": "PETAL_DANCE"
+      },
+      {
+        "level": 54,
         "move": "SOLAR_BEAM"
       }
     ],
@@ -20655,23 +20939,31 @@
         "move": "SYNTHESIS"
       },
       {
-        "level": 26,
-        "move": "GRASS_WHISTLE"
-      },
-      {
-        "level": 29,
-        "move": "GIGA_DRAIN"
+        "level": 38,
+        "move": "FLAME_BURST"
       },
       {
         "level": 32,
+        "move": "GIGA_DRAIN"
+      },
+      {
+        "level": 36,
         "move": "MORNING_SUN"
       },
       {
-        "level": 35,
+        "level": 40,
         "move": "FLAMETHROWER"
       },
       {
-        "level": 39,
+        "level": 43,
+        "move": "ENERGY_BALL"
+      },
+      {
+        "level": 49,
+        "move": "PETAL_DANCE"
+      },
+      {
+        "level": 54,
         "move": "SOLAR_BEAM"
       }
     ],
@@ -20872,7 +21164,7 @@
       },
       {
         "level": 38,
-        "move": "MIST"
+        "move": "LIQUIDATION"
       },
       {
         "level": 41,
@@ -20881,6 +21173,10 @@
       {
         "level": 44,
         "move": "MUDDY_WATER"
+      },
+      {
+        "level": 48,
+        "move": "MIST"
       }
     ],
     "_dexNum": 194,
@@ -20981,7 +21277,7 @@
       },
       {
         "level": 38,
-        "move": "MIST"
+        "move": "LIQUIDATION"
       },
       {
         "level": 41,
@@ -20990,6 +21286,10 @@
       {
         "level": 44,
         "move": "MUDDY_WATER"
+      },
+      {
+        "level": 48,
+        "move": "MIST"
       }
     ],
     "_dexNum": 195,
@@ -21293,11 +21593,15 @@
       },
       {
         "level": 41,
-        "move": "MEAN_LOOK"
+        "move": "DARK_PULSE"
       },
       {
         "level": 44,
         "move": "SKY_ATTACK"
+      },
+      {
+        "level": 48,
+        "move": "MEAN_LOOK"
       }
     ],
     "_dexNum": 198,
@@ -21393,11 +21697,11 @@
       },
       {
         "level": 40,
-        "move": "AMNESIA"
+        "move": "PSYCHIC"
       },
       {
         "level": 45,
-        "move": "PSYCHIC"
+        "move": "AMNESIA"
       },
       {
         "level": 51,
@@ -21516,10 +21820,14 @@
       },
       {
         "level": 39,
-        "move": "PERISH_SONG"
+        "move": "POWER_GEM"
       },
       {
         "level": 42,
+        "move": "PERISH_SONG"
+      },
+      {
+        "level": 46,
         "move": "GRUDGE"
       }
     ],
@@ -22564,7 +22872,7 @@
       },
       {
         "level": 31,
-        "move": "WATERFALL"
+        "move": "LIQUIDATION"
       },
       {
         "level": 37,
@@ -22664,7 +22972,7 @@
       },
       {
         "level": 25,
-        "move": "TWINEEDLE"
+        "move": "FURY_CUTTER"
       },
       {
         "level": 29,
@@ -22679,12 +22987,16 @@
         "move": "STEEL_WING"
       },
       {
-        "level": 42,
-        "move": "SWORDS_DANCE"
+        "level": 41,
+        "move": "TWINEEDLE"
       },
       {
         "level": 46,
         "move": "DOUBLE_TEAM"
+      },
+      {
+        "level": 50,
+        "move": "SWORDS_DANCE"
       }
     ],
     "_dexNum": 212,
@@ -22763,6 +23075,10 @@
       {
         "level": 28,
         "move": "BIDE"
+      },
+      {
+        "level": 32,
+        "move": "SPIKES"
       },
       {
         "level": 37,
@@ -22866,7 +23182,7 @@
       },
       {
         "level": 49,
-        "move": "CROSS_CHOP"
+        "move": "SUPERPOWER"
       }
     ],
     "_dexNum": 214,
@@ -22975,6 +23291,10 @@
       },
       {
         "level": 36,
+        "move": "ICICLE_CRASH"
+      },
+      {
+        "level": 41,
         "move": "BEAT_UP"
       }
     ],
@@ -23096,6 +23416,10 @@
       {
         "level": 47,
         "move": "CROSS_CHOP"
+      },
+      {
+        "level": 52,
+        "move": "SUPERPOWER"
       }
     ],
     "_dexNum": 216,
@@ -23204,6 +23528,10 @@
       {
         "level": 47,
         "move": "CROSS_CHOP"
+      },
+      {
+        "level": 52,
+        "move": "SUPERPOWER"
       }
     ],
     "_dexNum": 217,
@@ -23316,7 +23644,7 @@
       },
       {
         "level": 38,
-        "move": "ROCK_SLIDE"
+        "move": "POWER_GEM"
       },
       {
         "level": 41,
@@ -23415,7 +23743,7 @@
       },
       {
         "level": 38,
-        "move": "ROCK_SLIDE"
+        "move": "POWER_GEM"
       },
       {
         "level": 41,
@@ -23529,7 +23857,7 @@
       },
       {
         "level": 42,
-        "move": "BLIZZARD"
+        "move": "ICICLE_CRASH"
       }
     ],
     "_dexNum": 220,
@@ -23630,7 +23958,7 @@
       },
       {
         "level": 42,
-        "move": "BLIZZARD"
+        "move": "ICICLE_CRASH"
       }
     ],
     "_dexNum": 221,
@@ -23716,7 +24044,7 @@
       },
       {
         "level": 34,
-        "move": "ROCK_BLAST"
+        "move": "ANCIENT_POWER"
       },
       {
         "level": 39,
@@ -23724,7 +24052,7 @@
       },
       {
         "level": 45,
-        "move": "ANCIENT_POWER"
+        "move": "POWER_GEM"
       }
     ],
     "_dexNum": 222,
@@ -24334,7 +24662,7 @@
       },
       {
         "level": 37,
-        "move": "CRUNCH"
+        "move": "DARK_PULSE"
       },
       {
         "level": 41,
@@ -24437,7 +24765,7 @@
       },
       {
         "level": 37,
-        "move": "CRUNCH"
+        "move": "DARK_PULSE"
       },
       {
         "level": 41,
@@ -24538,15 +24866,15 @@
       },
       {
         "level": 43,
-        "move": "HYDRO_PUMP"
+        "move": "DRAGON_DANCE"
       },
       {
         "level": 47,
-        "move": "BODY_SLAM"
+        "move": "DRAGON_PULSE"
       },
       {
-        "level": 51,
-        "move": "DRAGON_DANCE"
+        "level": 54,
+        "move": "HYDRO_PUMP"
       }
     ],
     "_dexNum": 230,
@@ -24648,16 +24976,16 @@
         "move": "KNOCK_OFF"
       },
       {
-        "level": 34,
-        "move": "EARTHQUAKE"
+        "level": 35,
+        "move": "BONEMERANG"
       },
       {
-        "level": 38,
-        "move": "REVENGE"
+        "level": 39,
+        "move": "MEGAHORN"
       },
       {
         "level": 44,
-        "move": "MEGAHORN"
+        "move": "EARTHQUAKE"
       }
     ],
     "_dexNum": 231,
@@ -24749,16 +25077,16 @@
         "move": "KNOCK_OFF"
       },
       {
-        "level": 34,
-        "move": "EARTHQUAKE"
+        "level": 35,
+        "move": "BONEMERANG"
       },
       {
-        "level": 38,
-        "move": "REVENGE"
+        "level": 39,
+        "move": "MEGAHORN"
       },
       {
         "level": 44,
-        "move": "MEGAHORN"
+        "move": "EARTHQUAKE"
       }
     ],
     "_dexNum": 232,
@@ -25041,6 +25369,26 @@
       {
         "level": 31,
         "move": "SKETCH"
+      },
+      {
+        "level": 41,
+        "move": "SKETCH"
+      },
+      {
+        "level": 51,
+        "move": "SKETCH"
+      },
+      {
+        "level": 61,
+        "move": "SKETCH"
+      },
+      {
+        "level": 71,
+        "move": "SKETCH"
+      },
+      {
+        "level": 81,
+        "move": "SKETCH"
       }
     ],
     "_dexNum": 235,
@@ -25090,6 +25438,10 @@
       }
     ],
     "levelUpLearnset": [
+      {
+        "level": 1,
+        "move": "FAKE_OUT"
+      },
       {
         "level": 1,
         "move": "TACKLE"
@@ -25185,6 +25537,10 @@
       {
         "level": 48,
         "move": "DETECT"
+      },
+      {
+        "level": 48,
+        "move": "SUPERPOWER"
       }
     ],
     "_dexNum": 237,
@@ -25390,15 +25746,15 @@
         "move": "THUNDER_PUNCH"
       },
       {
-        "level": 34,
+        "level": 36,
         "move": "SCREECH"
       },
       {
-        "level": 39,
+        "level": 42,
         "move": "THUNDERBOLT"
       },
       {
-        "level": 44,
+        "level": 55,
         "move": "THUNDER"
       }
     ],
@@ -25491,18 +25847,18 @@
       },
       {
         "level": 30,
-        "move": "FIRE_PUNCH"
+        "move": "FLAME_BURST"
       },
       {
         "level": 34,
         "move": "METAL_SOUND"
       },
       {
-        "level": 39,
+        "level": 42,
         "move": "FLAMETHROWER"
       },
       {
-        "level": 44,
+        "level": 55,
         "move": "FIRE_BLAST"
       }
     ],
@@ -26105,7 +26461,7 @@
       },
       {
         "level": 75,
-        "move": "HYPER_BEAM"
+        "move": "DRAGON_DANCE"
       }
     ],
     "_dexNum": 246,
@@ -26202,7 +26558,7 @@
       },
       {
         "level": 75,
-        "move": "HYPER_BEAM"
+        "move": "DRAGON_DANCE"
       }
     ],
     "_dexNum": 247,
@@ -26292,7 +26648,7 @@
       },
       {
         "level": 75,
-        "move": "HYPER_BEAM"
+        "move": "DRAGON_DANCE"
       }
     ],
     "_dexNum": 248,
@@ -26707,12 +27063,8 @@
         "move": "QUICK_ATTACK"
       },
       {
-        "level": 13,
-        "move": "ASTONISH"
-      },
-      {
         "level": 15,
-        "move": "PURSUIT"
+        "move": "ROCK_TOMB"
       },
       {
         "level": 17,
@@ -26826,12 +27178,8 @@
         "move": "QUICK_ATTACK"
       },
       {
-        "level": 13,
-        "move": "ASTONISH"
-      },
-      {
         "level": 15,
-        "move": "PURSUIT"
+        "move": "ROCK_TOMB"
       },
       {
         "level": 17,
@@ -26937,12 +27285,8 @@
         "move": "QUICK_ATTACK"
       },
       {
-        "level": 13,
-        "move": "ASTONISH"
-      },
-      {
         "level": 15,
-        "move": "PURSUIT"
+        "move": "ROCK_TOMB"
       },
       {
         "level": 17,
@@ -27454,7 +27798,7 @@
       },
       {
         "level": 45,
-        "move": "WATERFALL"
+        "move": "LIQUIDATION"
       },
       {
         "level": 53,
@@ -27573,7 +27917,7 @@
       },
       {
         "level": 45,
-        "move": "WATERFALL"
+        "move": "LIQUIDATION"
       },
       {
         "level": 53,
@@ -27688,7 +28032,7 @@
       },
       {
         "level": 45,
-        "move": "WATERFALL"
+        "move": "LIQUIDATION"
       },
       {
         "level": 53,
@@ -28582,15 +28926,15 @@
         "move": "GIGA_DRAIN"
       },
       {
-        "level": 41,
+        "level": 42,
         "move": "TEETER_DANCE"
       },
       {
-        "level": 44,
+        "level": 48,
         "move": "HYDRO_PUMP"
       },
       {
-        "level": 49,
+        "level": 54,
         "move": "PETAL_DANCE"
       }
     ],
@@ -28701,15 +29045,15 @@
         "move": "GIGA_DRAIN"
       },
       {
-        "level": 41,
+        "level": 42,
         "move": "TEETER_DANCE"
       },
       {
-        "level": 44,
+        "level": 48,
         "move": "HYDRO_PUMP"
       },
       {
-        "level": 49,
+        "level": 54,
         "move": "PETAL_DANCE"
       }
     ],
@@ -28824,15 +29168,15 @@
         "move": "GIGA_DRAIN"
       },
       {
-        "level": 41,
+        "level": 42,
         "move": "TEETER_DANCE"
       },
       {
-        "level": 44,
+        "level": 48,
         "move": "HYDRO_PUMP"
       },
       {
-        "level": 49,
+        "level": 54,
         "move": "PETAL_DANCE"
       }
     ],
@@ -28961,6 +29305,14 @@
       {
         "level": 44,
         "move": "EXTRASENSORY"
+      },
+      {
+        "level": 48,
+        "move": "DARK_PULSE"
+      },
+      {
+        "level": 52,
+        "move": "PETAL_DANCE"
       }
     ],
     "_dexNum": 273,
@@ -29073,6 +29425,14 @@
       {
         "level": 44,
         "move": "EXTRASENSORY"
+      },
+      {
+        "level": 48,
+        "move": "DARK_PULSE"
+      },
+      {
+        "level": 52,
+        "move": "PETAL_DANCE"
       }
     ],
     "_dexNum": 274,
@@ -29188,6 +29548,14 @@
       {
         "level": 44,
         "move": "EXTRASENSORY"
+      },
+      {
+        "level": 48,
+        "move": "DARK_PULSE"
+      },
+      {
+        "level": 52,
+        "move": "PETAL_DANCE"
       }
     ],
     "_dexNum": 275,
@@ -29287,23 +29655,23 @@
         "move": "DOUBLE_TEAM"
       },
       {
-        "level": 24,
+        "level": 25,
         "move": "DETECT"
       },
       {
-        "level": 28,
+        "level": 30,
         "move": "ENDEAVOR"
       },
       {
-        "level": 33,
-        "move": "RAZOR_WIND"
+        "level": 36,
+        "move": "AERIAL_ACE"
       },
       {
-        "level": 37,
+        "level": 41,
         "move": "REVERSAL"
       },
       {
-        "level": 42,
+        "level": 48,
         "move": "SKY_ATTACK"
       }
     ],
@@ -29373,23 +29741,23 @@
         "move": "DOUBLE_TEAM"
       },
       {
-        "level": 24,
+        "level": 25,
         "move": "DETECT"
       },
       {
-        "level": 28,
+        "level": 30,
         "move": "ENDEAVOR"
       },
       {
-        "level": 33,
-        "move": "RAZOR_WIND"
+        "level": 36,
+        "move": "AERIAL_ACE"
       },
       {
-        "level": 37,
+        "level": 41,
         "move": "REVERSAL"
       },
       {
-        "level": 42,
+        "level": 48,
         "move": "SKY_ATTACK"
       }
     ],
@@ -29489,7 +29857,7 @@
         "move": "RAZOR_WIND"
       },
       {
-        "level": 44,
+        "level": 46,
         "move": "HYDRO_PUMP"
       }
     ],
@@ -29589,7 +29957,7 @@
         "move": "RAZOR_WIND"
       },
       {
-        "level": 44,
+        "level": 46,
         "move": "HYDRO_PUMP"
       }
     ],
@@ -29711,7 +30079,11 @@
         "move": "DREAM_EATER"
       },
       {
-        "level": 53,
+        "level": 54,
+        "move": "HYPER_VOICE"
+      },
+      {
+        "level": 59,
         "move": "PSYCHO_BOOST"
       }
     ],
@@ -29835,7 +30207,11 @@
         "move": "DREAM_EATER"
       },
       {
-        "level": 53,
+        "level": 54,
+        "move": "HYPER_VOICE"
+      },
+      {
+        "level": 59,
         "move": "PSYCHO_BOOST"
       }
     ],
@@ -29952,7 +30328,11 @@
         "move": "DREAM_EATER"
       },
       {
-        "level": 53,
+        "level": 54,
+        "move": "HYPER_VOICE"
+      },
+      {
+        "level": 59,
         "move": "PSYCHO_BOOST"
       }
     ],
@@ -30291,6 +30671,10 @@
       {
         "level": 49,
         "move": "DYNAMIC_PUNCH"
+      },
+      {
+        "level": 54,
+        "move": "SPORE"
       }
     ],
     "_dexNum": 285,
@@ -30389,6 +30773,10 @@
       {
         "level": 49,
         "move": "DYNAMIC_PUNCH"
+      },
+      {
+        "level": 54,
+        "move": "SPORE"
       }
     ],
     "_dexNum": 286,
@@ -31149,11 +31537,11 @@
         "move": "CRUNCH"
       },
       {
-        "level": 42,
+        "level": 44,
         "move": "HYPER_VOICE"
       },
       {
-        "level": 48,
+        "level": 52,
         "move": "HYPER_BEAM"
       }
     ],
@@ -31258,11 +31646,11 @@
         "move": "CRUNCH"
       },
       {
-        "level": 42,
+        "level": 44,
         "move": "HYPER_VOICE"
       },
       {
-        "level": 48,
+        "level": 52,
         "move": "HYPER_BEAM"
       }
     ],
@@ -31369,11 +31757,11 @@
         "move": "CRUNCH"
       },
       {
-        "level": 42,
+        "level": 44,
         "move": "HYPER_VOICE"
       },
       {
-        "level": 48,
+        "level": 52,
         "move": "HYPER_BEAM"
       }
     ],
@@ -31498,6 +31886,10 @@
       {
         "level": 44,
         "move": "REVERSAL"
+      },
+      {
+        "level": 51,
+        "move": "SUPERPOWER"
       }
     ],
     "_dexNum": 296,
@@ -31605,6 +31997,10 @@
       {
         "level": 44,
         "move": "REVERSAL"
+      },
+      {
+        "level": 51,
+        "move": "SUPERPOWER"
       }
     ],
     "_dexNum": 297,
@@ -31707,15 +32103,19 @@
         "move": "REVENGE"
       },
       {
-        "level": 35,
+        "level": 36,
+        "move": "LIQUIDATION"
+      },
+      {
+        "level": 42,
         "move": "DOUBLE_EDGE"
       },
       {
-        "level": 41,
+        "level": 49,
         "move": "BELLY_DRUM"
       },
       {
-        "level": 44,
+        "level": 54,
         "move": "SUPERPOWER"
       }
     ],
@@ -31806,10 +32206,14 @@
       },
       {
         "level": 38,
+        "move": "POWER_GEM"
+      },
+      {
+        "level": 41,
         "move": "ZAP_CANNON"
       },
       {
-        "level": 38,
+        "level": 41,
         "move": "LOCK_ON"
       }
     ],
@@ -32140,11 +32544,11 @@
       },
       {
         "level": 28,
-        "move": "CRUNCH"
+        "move": "DETECT"
       },
       {
         "level": 31,
-        "move": "DETECT"
+        "move": "DARK_PULSE"
       },
       {
         "level": 35,
@@ -32766,11 +33170,11 @@
         "move": "THUNDER_PUNCH"
       },
       {
-        "level": 41,
+        "level": 42,
         "move": "RECOVER"
       },
       {
-        "level": 47,
+        "level": 50,
         "move": "HI_JUMP_KICK"
       }
     ],
@@ -32885,11 +33289,11 @@
         "move": "THUNDER_PUNCH"
       },
       {
-        "level": 41,
+        "level": 42,
         "move": "RECOVER"
       },
       {
-        "level": 47,
+        "level": 50,
         "move": "HI_JUMP_KICK"
       }
     ],
@@ -32986,11 +33390,11 @@
       },
       {
         "level": 20,
-        "move": "SPARK"
+        "move": "SHOCK_WAVE"
       },
       {
         "level": 24,
-        "move": "BITE"
+        "move": "FLAME_BURST"
       },
       {
         "level": 28,
@@ -33088,11 +33492,11 @@
       },
       {
         "level": 20,
-        "move": "SPARK"
+        "move": "SHOCK_WAVE"
       },
       {
         "level": 24,
-        "move": "BITE"
+        "move": "FLAME_BURST"
       },
       {
         "level": 28,
@@ -33193,7 +33597,7 @@
       },
       {
         "level": 19,
-        "move": "SPARK"
+        "move": "SHOCK_WAVE"
       },
       {
         "level": 22,
@@ -33213,7 +33617,7 @@
       },
       {
         "level": 34,
-        "move": "FAKE_OUT"
+        "move": "TRICK"
       },
       {
         "level": 37,
@@ -33226,6 +33630,10 @@
       {
         "level": 44,
         "move": "TAIL_GLOW"
+      },
+      {
+        "level": 49,
+        "move": "THUNDER"
       }
     ],
     "_dexNum": 311,
@@ -33265,10 +33673,10 @@
     },
     "stats": {
       "hp": 60,
-      "attack": 40,
-      "defense": 50,
-      "spAttack": 75,
-      "spDefense": 85,
+      "attack": 85,
+      "defense": 75,
+      "spAttack": 50,
+      "spDefense": 40,
       "speed": 110
     },
     "evolutions": [],
@@ -33319,7 +33727,7 @@
       },
       {
         "level": 34,
-        "move": "TRICK"
+        "move": "FAKE_OUT"
       },
       {
         "level": 37,
@@ -33331,7 +33739,11 @@
       },
       {
         "level": 44,
-        "move": "TAIL_GLOW"
+        "move": "EXTREME_SPEED"
+      },
+      {
+        "level": 49,
+        "move": "VOLT_TACKLE"
       }
     ],
     "_dexNum": 312,
@@ -33398,7 +33810,7 @@
       },
       {
         "level": 17,
-        "move": "QUICK_ATTACK"
+        "move": "SHOCK_WAVE"
       },
       {
         "level": 21,
@@ -33508,7 +33920,7 @@
       },
       {
         "level": 23,
-        "move": "TWINEEDLE"
+        "move": "AERIAL_ACE"
       },
       {
         "level": 26,
@@ -33516,7 +33928,7 @@
       },
       {
         "level": 29,
-        "move": "FLATTER"
+        "move": "TWINEEDLE"
       },
       {
         "level": 32,
@@ -33638,11 +34050,15 @@
       },
       {
         "level": 41,
-        "move": "PETAL_DANCE"
+        "move": "ENERGY_BALL"
       },
       {
         "level": 44,
         "move": "SYNTHESIS"
+      },
+      {
+        "level": 49,
+        "move": "PETAL_DANCE"
       }
     ],
     "_dexNum": 315,
@@ -33958,7 +34374,7 @@
       },
       {
         "level": 38,
-        "move": "WATERFALL"
+        "move": "LIQUIDATION"
       },
       {
         "level": 42,
@@ -34064,7 +34480,7 @@
       },
       {
         "level": 38,
-        "move": "WATERFALL"
+        "move": "LIQUIDATION"
       },
       {
         "level": 42,
@@ -34183,11 +34599,11 @@
         "move": "BODY_SLAM"
       },
       {
-        "level": 43,
+        "level": 45,
         "move": "BOUNCE"
       },
       {
-        "level": 49,
+        "level": 52,
         "move": "WATER_SPOUT"
       }
     ],
@@ -34281,11 +34697,11 @@
         "move": "BODY_SLAM"
       },
       {
-        "level": 43,
+        "level": 45,
         "move": "BOUNCE"
       },
       {
-        "level": 49,
+        "level": 52,
         "move": "WATER_SPOUT"
       }
     ],
@@ -34379,7 +34795,7 @@
       },
       {
         "level": 29,
-        "move": "TAKE_DOWN"
+        "move": "FLAME_BURST"
       },
       {
         "level": 31,
@@ -34482,7 +34898,7 @@
       },
       {
         "level": 29,
-        "move": "TAKE_DOWN"
+        "move": "FLAME_BURST"
       },
       {
         "level": 31,
@@ -34578,7 +34994,7 @@
       },
       {
         "level": 20,
-        "move": "BODY_SLAM"
+        "move": "FLAME_BURST"
       },
       {
         "level": 27,
@@ -34586,7 +35002,7 @@
       },
       {
         "level": 30,
-        "move": "HEAT_WAVE"
+        "move": "BODY_SLAM"
       },
       {
         "level": 33,
@@ -34610,7 +35026,7 @@
       },
       {
         "level": 50,
-        "move": "FIRE_BLAST"
+        "move": "HEAT_WAVE"
       }
     ],
     "_dexNum": 324,
@@ -34707,7 +35123,7 @@
       },
       {
         "level": 28,
-        "move": "MAGIC_COAT"
+        "move": "POWER_GEM"
       },
       {
         "level": 32,
@@ -34814,7 +35230,7 @@
       },
       {
         "level": 28,
-        "move": "MAGIC_COAT"
+        "move": "POWER_GEM"
       },
       {
         "level": 32,
@@ -35647,7 +36063,7 @@
       },
       {
         "level": 42,
-        "move": "DRAGON_CLAW"
+        "move": "DRAGON_PULSE"
       },
       {
         "level": 46,
@@ -35758,7 +36174,7 @@
       },
       {
         "level": 42,
-        "move": "DRAGON_CLAW"
+        "move": "DRAGON_PULSE"
       },
       {
         "level": 46,
@@ -36111,8 +36527,12 @@
         "move": "MOONLIGHT"
       },
       {
-        "level": 43,
-        "move": "FUTURE_SIGHT"
+        "level": 46,
+        "move": "POWER_GEM"
+      },
+      {
+        "level": 52,
+        "move": "PSYCHO_BOOST"
       }
     ],
     "_dexNum": 337,
@@ -36219,8 +36639,12 @@
         "move": "MORNING_SUN"
       },
       {
-        "level": 43,
+        "level": 46,
         "move": "EARTHQUAKE"
+      },
+      {
+        "level": 52,
+        "move": "SUPERPOWER"
       }
     ],
     "_dexNum": 338,
@@ -36550,11 +36974,15 @@
       },
       {
         "level": 40,
-        "move": "CRABHAMMER"
+        "move": "LIQUIDATION"
       },
       {
         "level": 46,
         "move": "SWORDS_DANCE"
+      },
+      {
+        "level": 50,
+        "move": "CRABHAMMER"
       }
     ],
     "_dexNum": 341,
@@ -36656,11 +37084,15 @@
       },
       {
         "level": 40,
-        "move": "CRABHAMMER"
+        "move": "LIQUIDATION"
       },
       {
         "level": 46,
         "move": "SWORDS_DANCE"
+      },
+      {
+        "level": 50,
+        "move": "CRABHAMMER"
       }
     ],
     "_dexNum": 342,
@@ -36779,7 +37211,7 @@
       },
       {
         "level": 42,
-        "move": "EARTHQUAKE"
+        "move": "EARTH_POWER"
       },
       {
         "level": 48,
@@ -36887,7 +37319,7 @@
       },
       {
         "level": 42,
-        "move": "EARTHQUAKE"
+        "move": "EARTH_POWER"
       },
       {
         "level": 48,
@@ -37005,8 +37437,12 @@
         "move": "GIGA_DRAIN"
       },
       {
-        "level": 44,
+        "level": 42,
         "move": "SYNTHESIS"
+      },
+      {
+        "level": 46,
+        "move": "POWER_GEM"
       },
       {
         "level": 50,
@@ -37114,8 +37550,12 @@
         "move": "GIGA_DRAIN"
       },
       {
-        "level": 44,
+        "level": 42,
         "move": "SYNTHESIS"
+      },
+      {
+        "level": 46,
+        "move": "POWER_GEM"
       },
       {
         "level": 50,
@@ -37213,7 +37653,7 @@
       },
       {
         "level": 17,
-        "move": "ROCK_TOMB"
+        "move": "ROCK_BLAST"
       },
       {
         "level": 21,
@@ -37221,7 +37661,7 @@
       },
       {
         "level": 26,
-        "move": "CRUSH_CLAW"
+        "move": "PIN_MISSILE"
       },
       {
         "level": 30,
@@ -37313,7 +37753,7 @@
       },
       {
         "level": 17,
-        "move": "ROCK_TOMB"
+        "move": "ROCK_BLAST"
       },
       {
         "level": 21,
@@ -37321,7 +37761,7 @@
       },
       {
         "level": 26,
-        "move": "CRUSH_CLAW"
+        "move": "PIN_MISSILE"
       },
       {
         "level": 30,
@@ -37598,6 +38038,22 @@
       {
         "level": 25,
         "move": "WEATHER_BALL"
+      },
+      {
+        "level": 35,
+        "move": "BLIZZARD"
+      },
+      {
+        "level": 35,
+        "move": "FIRE_BLAST"
+      },
+      {
+        "level": 35,
+        "move": "THUNDER"
+      },
+      {
+        "level": 35,
+        "move": "HYDRO_PUMP"
       }
     ],
     "_dexNum": 351,
@@ -38274,7 +38730,7 @@
       },
       {
         "level": 40,
-        "move": "DRAGON_BREATH"
+        "move": "ENERGY_BALL"
       },
       {
         "level": 44,
@@ -38282,6 +38738,10 @@
       },
       {
         "level": 48,
+        "move": "DRAGON_PULSE"
+      },
+      {
+        "level": 53,
         "move": "PETAL_DANCE"
       }
     ],
@@ -38387,6 +38847,10 @@
       {
         "level": 46,
         "move": "PSYCHIC"
+      },
+      {
+        "level": 52,
+        "move": "PSYCHO_BOOST"
       }
     ],
     "_dexNum": 358,
@@ -38465,7 +38929,7 @@
       },
       {
         "level": 26,
-        "move": "SWORDS_DANCE"
+        "move": "DETECT"
       },
       {
         "level": 31,
@@ -38482,6 +38946,10 @@
       {
         "level": 46,
         "move": "MEGAHORN"
+      },
+      {
+        "level": 51,
+        "move": "SWORDS_DANCE"
       }
     ],
     "_dexNum": 359,
@@ -38667,14 +39135,18 @@
       },
       {
         "level": 38,
-        "move": "BLIZZARD"
+        "move": "ICICLE_CRASH"
       },
       {
         "level": 42,
         "move": "HAIL"
       },
       {
-        "level": 48,
+        "level": 47,
+        "move": "BLIZZARD"
+      },
+      {
+        "level": 54,
         "move": "EXPLOSION"
       }
     ],
@@ -38768,14 +39240,18 @@
       },
       {
         "level": 38,
-        "move": "BLIZZARD"
+        "move": "ICICLE_CRASH"
       },
       {
         "level": 42,
         "move": "HAIL"
       },
       {
-        "level": 48,
+        "level": 47,
+        "move": "BLIZZARD"
+      },
+      {
+        "level": 54,
         "move": "EXPLOSION"
       }
     ],
@@ -38888,11 +39364,15 @@
       },
       {
         "level": 44,
-        "move": "BLIZZARD"
+        "move": "ICICLE_CRASH"
       },
       {
         "level": 48,
         "move": "HYDRO_PUMP"
+      },
+      {
+        "level": 53,
+        "move": "BLIZZARD"
       }
     ],
     "_dexNum": 363,
@@ -39002,11 +39482,15 @@
       },
       {
         "level": 44,
-        "move": "BLIZZARD"
+        "move": "ICICLE_CRASH"
       },
       {
         "level": 48,
         "move": "HYDRO_PUMP"
+      },
+      {
+        "level": 53,
+        "move": "BLIZZARD"
       }
     ],
     "_dexNum": 364,
@@ -39109,11 +39593,15 @@
       },
       {
         "level": 44,
-        "move": "BLIZZARD"
+        "move": "ICICLE_CRASH"
       },
       {
         "level": 48,
         "move": "HYDRO_PUMP"
+      },
+      {
+        "level": 53,
+        "move": "BLIZZARD"
       }
     ],
     "_dexNum": 365,
@@ -39286,7 +39774,7 @@
       },
       {
         "level": 40,
-        "move": "WATERFALL"
+        "move": "LIQUIDATION"
       },
       {
         "level": 44,
@@ -39488,7 +39976,7 @@
       },
       {
         "level": 36,
-        "move": "WATERFALL"
+        "move": "LIQUIDATION"
       },
       {
         "level": 41,
@@ -39602,6 +40090,10 @@
       {
         "level": 42,
         "move": "FLAIL"
+      },
+      {
+        "level": 46,
+        "move": "HYDRO_PUMP"
       }
     ],
     "_dexNum": 370,
@@ -39694,15 +40186,15 @@
       },
       {
         "level": 50,
-        "move": "FLY"
-      },
-      {
-        "level": 61,
         "move": "CRUNCH"
       },
       {
-        "level": 68,
+        "level": 61,
         "move": "DRAGON_CLAW"
+      },
+      {
+        "level": 68,
+        "move": "DRAGON_DANCE"
       },
       {
         "level": 73,
@@ -39805,15 +40297,15 @@
       },
       {
         "level": 50,
-        "move": "FLY"
-      },
-      {
-        "level": 61,
         "move": "CRUNCH"
       },
       {
-        "level": 68,
+        "level": 61,
         "move": "DRAGON_CLAW"
+      },
+      {
+        "level": 68,
+        "move": "DRAGON_DANCE"
       },
       {
         "level": 73,
@@ -39909,15 +40401,15 @@
       },
       {
         "level": 50,
-        "move": "FLY"
-      },
-      {
-        "level": 61,
         "move": "CRUNCH"
       },
       {
-        "level": 68,
+        "level": 61,
         "move": "DRAGON_CLAW"
+      },
+      {
+        "level": 68,
+        "move": "DRAGON_DANCE"
       },
       {
         "level": 73,
