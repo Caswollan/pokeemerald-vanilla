@@ -3699,7 +3699,7 @@ static void Cmd_getexp(void)
                 gBattleScripting.getexpState = 5;
                 gBattleMoveDamage = 0; // used for exp
             }
-            else if (GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL) == MAX_LEVEL)
+            else if (GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL) >= GetCurrentLevelCap())
             {
                 *(&gBattleStruct->sentInPokes) >>= 1;
                 gBattleScripting.getexpState = 5;
@@ -3745,6 +3745,16 @@ static void Cmd_getexp(void)
                     else
                     {
                         i = STRINGID_EMPTYSTRING4;
+                    }
+
+                    // Level cap: the experience can't take the Pokemon past the current cap
+                    {
+                        struct Pokemon *expMon = &gPlayerParty[gBattleStruct->expGetterMonId];
+                        u32 capExp = gExperienceTables[gSpeciesInfo[GetMonData(expMon, MON_DATA_SPECIES)].growthRate][GetCurrentLevelCap()];
+                        u32 curExp = GetMonData(expMon, MON_DATA_EXP);
+
+                        if (curExp + gBattleMoveDamage > capExp)
+                            gBattleMoveDamage = (capExp > curExp) ? capExp - curExp : 0;
                     }
 
                     // get exp getter battler

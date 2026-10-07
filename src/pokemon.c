@@ -4564,6 +4564,87 @@ u8 CalculateEnemyPartyCount(void)
     return gEnemyPartyCount;
 }
 
+// Hard level cap of the hack, as a list of checkpoints in story order. The cap is the level of the checkpoint
+// right after the last one passed (so skipping an optional checkpoint doesn't block the caps); before the first
+// one it is the first level, and there is no cap after the last one (becoming Champion).
+// A checkpoint is passed when any of its flags is set: a badge, a story flag, or T(id) for a defeated trainer.
+// Pokemon at the cap get no experience and can't use Rare Candies.
+// LEVEL_CAPS_ENABLED (include/config.h) turns the caps on or off.
+#define T(trainer) (TRAINER_FLAGS_START + TRAINER_##trainer)
+#define MAX_LEVEL_CAP_FLAGS 6
+
+struct LevelCapCheckpoint
+{
+    u8 level;
+    u16 flags[MAX_LEVEL_CAP_FLAGS]; // 0 = no more flags
+};
+
+static const struct LevelCapCheckpoint sLevelCapCheckpoints[] =
+{
+    {12, {T(GRUNT_PETALBURG_WOODS)}}, // Team Aqua Grunt, Petalburg Woods
+    {15, {FLAG_BADGE01_GET}}, // Roxanne, 1st Gym
+    {19, {T(GRUNT_RUSTURF_TUNNEL)}}, // Team Aqua Grunt, Rusturf Tunnel
+    {22, {T(BRENDAN_RUSTBORO_TREECKO), T(BRENDAN_RUSTBORO_TORCHIC), T(BRENDAN_RUSTBORO_MUDKIP), T(MAY_RUSTBORO_TREECKO), T(MAY_RUSTBORO_TORCHIC), T(MAY_RUSTBORO_MUDKIP)}}, // Rival, Rustboro City
+    {25, {FLAG_BADGE02_GET}}, // Brawly, 2nd Gym
+    {28, {T(GRUNT_MUSEUM_2)}}, // Team Aqua Grunts back to back, Oceanic Museum
+    {30, {T(BRENDAN_ROUTE_110_TREECKO), T(BRENDAN_ROUTE_110_TORCHIC), T(BRENDAN_ROUTE_110_MUDKIP), T(MAY_ROUTE_110_TREECKO), T(MAY_ROUTE_110_TORCHIC), T(MAY_ROUTE_110_MUDKIP)}}, // Rival, Route 110
+    {32, {T(WALLY_MAUVILLE)}}, // Wally, Mauville City
+    {34, {FLAG_BADGE03_GET}}, // Wattson, 3rd Gym
+    {40, {T(TABITHA_MT_CHIMNEY)}}, // Team Magma Tabitha, Mt. Chimney
+    {42, {T(MAXIE_MT_CHIMNEY)}}, // Team Magma Maxie, Mt. Chimney
+    {47, {FLAG_BADGE04_GET}}, // Flannery, 4th Gym
+    {48, {T(WALLY_PETALBURG)}}, // Wally, Petalburg City
+    {50, {FLAG_BADGE05_GET}}, // Norman, 5th Gym
+    {55, {T(SHELLY_WEATHER_INSTITUTE)}}, // Team Aqua Shelly, Weather Institute
+    {57, {T(BRENDAN_ROUTE_119_TREECKO), T(BRENDAN_ROUTE_119_TORCHIC), T(BRENDAN_ROUTE_119_MUDKIP), T(MAY_ROUTE_119_TREECKO), T(MAY_ROUTE_119_TORCHIC), T(MAY_ROUTE_119_MUDKIP)}}, // Rival, Route 119
+    {61, {FLAG_BADGE06_GET}}, // Winona, 6th Gym
+    {64, {T(BRENDAN_LILYCOVE_TREECKO), T(BRENDAN_LILYCOVE_TORCHIC), T(BRENDAN_LILYCOVE_MUDKIP), T(MAY_LILYCOVE_TREECKO), T(MAY_LILYCOVE_TORCHIC), T(MAY_LILYCOVE_MUDKIP)}}, // Rival, Lilycove City
+    {66, {T(ARCHIE_MT_PYRE)}}, // Team Aqua Archie and Matt, Mt. Pyre (double battle)
+    {68, {T(COURTNEY_MAGMA_HIDEOUT)}}, // Team Magma Courtney, Magma Hideout
+    {68, {T(TABITHA_MAGMA_HIDEOUT)}}, // Team Magma Tabitha, Magma Hideout
+    {68, {T(MAXIE_MAGMA_HIDEOUT)}}, // Team Magma Maxie, Magma Hideout
+    {70, {T(MATT)}}, // Team Aqua Matt, Aqua Hideout
+    {72, {FLAG_BADGE07_GET}}, // Tate and Liza, 7th Gym
+    {75, {T(COURTNEY_SPACE_CENTER)}}, // Team Magma Courtney, Space Center
+    {75, {T(MAXIE_MOSSDEEP)}}, // Team Magma Tabitha and Maxie, Space Center (double battle with Steven)
+    {78, {T(SHELLY_SEAFLOOR_CAVERN)}}, // Team Aqua Shelly and Grunt, Seafloor Cavern (optional)
+    {78, {T(ARCHIE)}}, // Team Aqua Archie, Seafloor Cavern
+    {80, {FLAG_BADGE08_GET}}, // Wallace, 8th Gym
+    {83, {T(WALLY_VR_1)}}, // Wally, Victory Road
+    {85, {FLAG_SYS_GAME_CLEAR}}, // Pokemon League
+};
+#undef T
+
+static bool32 IsLevelCapCheckpointPassed(const struct LevelCapCheckpoint *checkpoint)
+{
+    u32 i;
+
+    for (i = 0; i < MAX_LEVEL_CAP_FLAGS && checkpoint->flags[i] != 0; i++)
+    {
+        if (FlagGet(checkpoint->flags[i]))
+            return TRUE;
+    }
+    return FALSE;
+}
+
+u8 GetCurrentLevelCap(void)
+{
+    s32 i;
+
+    if (!LEVEL_CAPS_ENABLED)
+        return MAX_LEVEL;
+    for (i = ARRAY_COUNT(sLevelCapCheckpoints) - 1; i >= 0; i--)
+    {
+        if (IsLevelCapCheckpointPassed(&sLevelCapCheckpoints[i]))
+        {
+            if (i == ARRAY_COUNT(sLevelCapCheckpoints) - 1)
+                return MAX_LEVEL;
+            return sLevelCapCheckpoints[i + 1].level;
+        }
+    }
+    return sLevelCapCheckpoints[0].level;
+}
+
 u8 GetMonsStateToDoubles(void)
 {
     s32 aliveCount = 0;
@@ -4978,7 +5059,7 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
 
             // Rare Candy
             if ((itemEffect[i] & ITEM3_LEVEL_UP)
-             && GetMonData(mon, MON_DATA_LEVEL, NULL) != MAX_LEVEL)
+             && GetMonData(mon, MON_DATA_LEVEL, NULL) < GetCurrentLevelCap())
             {
                 dataUnsigned = gExperienceTables[gSpeciesInfo[GetMonData(mon, MON_DATA_SPECIES, NULL)].growthRate][GetMonData(mon, MON_DATA_LEVEL, NULL) + 1];
                 SetMonData(mon, MON_DATA_EXP, &dataUnsigned);

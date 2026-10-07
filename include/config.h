@@ -44,6 +44,10 @@
 #define CHAR_DEC_SEPARATOR CHAR_COMMA
 #endif
 
+// Hack: level caps by checkpoint (next Gym Leader's ace level, 85 for the League, none after the Champion).
+// TRUE = level caps on, FALSE = no level caps. The cap levels are in GetCurrentLevelCap (src/pokemon.c).
+#define LEVEL_CAPS_ENABLED FALSE
+
 // Uncomment to fix some identified minor bugs
 //#define BUGFIX
 

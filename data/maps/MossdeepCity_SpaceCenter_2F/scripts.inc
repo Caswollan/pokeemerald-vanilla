@@ -244,6 +244,9 @@ MossdeepCity_SpaceCenter_2F_EventScript_DoStevenMultiBattle::
 	special SetCB2WhiteOut
 
 MossdeepCity_SpaceCenter_2F_EventScript_DefeatedMaxieTabitha::
+	@ The multi battle with Steven does not set the trainer flags: set them for the level caps
+	settrainerflag TRAINER_MAXIE_MOSSDEEP
+	settrainerflag TRAINER_TABITHA_MOSSDEEP
 	msgbox MossdeepCity_SpaceCenter_2F_Text_MaxieWeFailedIsAquaAlsoMisguided, MSGBOX_DEFAULT
 	closemessage
 	delay 20
