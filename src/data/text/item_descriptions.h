@@ -1214,8 +1214,8 @@ static const u8 sTM19Desc[] = _(
 
 static const u8 sTM20Desc[] = _(
     "Boosts strength\n"
-    "sharply, but\n"
-    "lowers abilities.");
+    "sharply, but lowers\n"
+    "DEF. and SP. DEF.");
 
 static const u8 sTM21Desc[] = _(
     "Bulks up the body\n"

@@ -1103,7 +1103,7 @@ static const u8 sIngrainDescription[] = _(
 
 static const u8 sSuperpowerDescription[] = _(
     "Boosts strength sharply,\n"
-    "but lowers abilities.");
+    "but lowers both DEFENSES.");
 
 static const u8 sMagicCoatDescription[] = _(
     "Reflects special effects\n"

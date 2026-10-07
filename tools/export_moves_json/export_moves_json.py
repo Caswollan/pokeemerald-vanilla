@@ -63,7 +63,7 @@ EFFECT_TEXT = {
     'RECOIL_IF_MISS': 'The user takes damage if it misses',
     'RECHARGE': 'The user must recharge next turn',
     'OVERHEAT': 'Sharply lowers the user\'s Sp. Atk',
-    'SUPERPOWER': 'Lowers the user\'s Attack and Defense',
+    'SUPERPOWER': 'Lowers the user\'s Defense and Sp. Def',
     'EXPLOSION': 'The user faints, halves the target\'s Defense',
     'MULTI_HIT': 'Hits 2-5 times',
     'DOUBLE_HIT': 'Hits twice',

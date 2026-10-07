@@ -4410,10 +4410,10 @@
     "accuracy": 100,
     "pp": 5,
     "priority": 0,
-    "description": "Boosts strength sharply, but lowers abilities.",
+    "description": "Boosts strength sharply, but lowers both DEFENSES.",
     "effect": "SUPERPOWER",
     "effectChance": 0,
-    "secondaryEffect": "Lowers the user's Attack and Defense"
+    "secondaryEffect": "Lowers the user's Defense and Sp. Def"
   },
   {
     "id": 277,
