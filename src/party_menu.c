@@ -419,6 +419,8 @@ static void DisplayLevelUpStatsPg1(u8);
 static void Task_DisplayLevelUpStatsPg2(u8);
 static void DisplayLevelUpStatsPg2(u8);
 static void Task_TryLearnNewMoves(u8);
+static void Task_RareCandyAfterLevelUpMessage(u8);
+static void TryLearnNewMovesAfterLevelUp(u8);
 static void PartyMenuTryEvolution(u8);
 static void DisplayMonNeedsToReplaceMove(u8);
 static void DisplayMonLearnedMove(u8, u16);
@@ -4521,10 +4523,37 @@ static void Task_DisplayHPRestoredMessage(u8 taskId)
     gTasks[taskId].func = Task_ClosePartyMenuAfterText;
 }
 
+// As in Gen 5+: after using an item from the bag outside battle, the party menu stays open to use it
+// again, as long as there are some left. B goes back to the bag.
+static bool8 CanUseItemAgain(void)
+{
+    return gPartyMenu.action == PARTY_ACTION_USE_ITEM
+        && gPartyMenu.menuType == PARTY_MENU_TYPE_FIELD
+        && CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE
+        && CheckBagHasItem(gSpecialVar_ItemId, 1);
+}
+
+// Back to choosing the Pokemon to use the same item on
+static void ReturnToUseItemAgain(u8 taskId)
+{
+    ClearStdWindowAndFrameToTransparent(WIN_MSG, FALSE);
+    ClearWindowTilemap(WIN_MSG);
+    if (GetPocketByItemId(gSpecialVar_ItemId) == POCKET_TM_HM)
+        DisplayPartyMenuStdMessage(PARTY_MSG_TEACH_WHICH_MON);
+    else
+        DisplayPartyMenuStdMessage(PARTY_MSG_USE_ON_WHICH_MON);
+    gTasks[taskId].func = Task_HandleChooseMonInput;
+}
+
 static void Task_ClosePartyMenuAfterText(u8 taskId)
 {
     if (IsPartyMenuTextPrinterActive() != TRUE)
     {
+        if (CanUseItemAgain())
+        {
+            ReturnToUseItemAgain(taskId);
+            return;
+        }
         if (gPartyMenuUseExitCallback == FALSE)
             sPartyMenuInternal->exitCallback = NULL;
         Task_ClosePartyMenu(taskId);
@@ -4858,7 +4887,10 @@ static void Task_LearnNextMoveOrClosePartyMenu(u8 taskId)
         {
             if (gPartyMenu.data[1] == 2) // never occurs
                 gSpecialVar_Result = TRUE;
-            Task_ClosePartyMenu(taskId);
+            if (CanUseItemAgain())
+                ReturnToUseItemAgain(taskId);
+            else
+                Task_ClosePartyMenu(taskId);
         }
     }
 }
@@ -4905,7 +4937,10 @@ static void CB2_ShowSummaryScreenToForgetMove(void)
 
 static void CB2_ReturnToPartyMenuWhileLearningMove(void)
 {
-    InitPartyMenu(PARTY_MENU_TYPE_FIELD, PARTY_LAYOUT_SINGLE, PARTY_ACTION_CHOOSE_MON, TRUE, PARTY_MSG_NONE, Task_ReturnToPartyMenuWhileLearningMove, gPartyMenu.exitCallback);
+    // Keeps the item use going (Rare Candy, TM), so the item can be used again afterwards
+    u8 action = (gPartyMenu.action == PARTY_ACTION_USE_ITEM) ? PARTY_ACTION_USE_ITEM : PARTY_ACTION_CHOOSE_MON;
+
+    InitPartyMenu(PARTY_MENU_TYPE_FIELD, PARTY_LAYOUT_SINGLE, action, TRUE, PARTY_MSG_NONE, Task_ReturnToPartyMenuWhileLearningMove, gPartyMenu.exitCallback);
 }
 
 static void Task_ReturnToPartyMenuWhileLearningMove(u8 taskId)
@@ -5040,7 +5075,17 @@ void ItemUseCB_RareCandy(u8 taskId, TaskFunc task)
         StringExpandPlaceholders(gStringVar4, gText_PkmnElevatedToLvVar2);
         DisplayPartyMenuMessage(gStringVar4, TRUE);
         ScheduleBgCopyTilemapToVram(2);
-        gTasks[taskId].func = Task_DisplayLevelUpStatsPg1;
+        // Only the level up message is shown, without the stats windows
+        gTasks[taskId].func = Task_RareCandyAfterLevelUpMessage;
+    }
+}
+
+static void Task_RareCandyAfterLevelUpMessage(u8 taskId)
+{
+    if (WaitFanfare(FALSE) && IsPartyMenuTextPrinterActive() != TRUE && ((JOY_NEW(A_BUTTON)) || (JOY_NEW(B_BUTTON))))
+    {
+        PlaySE(SE_SELECT);
+        TryLearnNewMovesAfterLevelUp(taskId);
     }
 }
 
@@ -5098,28 +5143,33 @@ static void DisplayLevelUpStatsPg2(u8 taskId)
 
 static void Task_TryLearnNewMoves(u8 taskId)
 {
-    u16 learnMove;
-
     if (WaitFanfare(FALSE) && ((JOY_NEW(A_BUTTON)) || (JOY_NEW(B_BUTTON))))
     {
         RemoveLevelUpStatsWindow();
-        learnMove = MonTryLearningNewMove(&gPlayerParty[gPartyMenu.slotId], TRUE);
-        gPartyMenu.data[1] = 1;
-        switch (learnMove)
-        {
-        case 0: // No moves to learn
-            PartyMenuTryEvolution(taskId);
-            break;
-        case MON_HAS_MAX_MOVES:
-            DisplayMonNeedsToReplaceMove(taskId);
-            break;
-        case MON_ALREADY_KNOWS_MOVE:
-            gTasks[taskId].func = Task_TryLearningNextMove;
-            break;
-        default:
-            DisplayMonLearnedMove(taskId, learnMove);
-            break;
-        }
+        TryLearnNewMovesAfterLevelUp(taskId);
+    }
+}
+
+// After a Rare Candy: learns the new moves of the level, then tries to evolve
+static void TryLearnNewMovesAfterLevelUp(u8 taskId)
+{
+    u16 learnMove = MonTryLearningNewMove(&gPlayerParty[gPartyMenu.slotId], TRUE);
+
+    gPartyMenu.data[1] = 1;
+    switch (learnMove)
+    {
+    case 0: // No moves to learn
+        PartyMenuTryEvolution(taskId);
+        break;
+    case MON_HAS_MAX_MOVES:
+        DisplayMonNeedsToReplaceMove(taskId);
+        break;
+    case MON_ALREADY_KNOWS_MOVE:
+        gTasks[taskId].func = Task_TryLearningNextMove;
+        break;
+    default:
+        DisplayMonLearnedMove(taskId, learnMove);
+        break;
     }
 }
 
@@ -5150,8 +5200,12 @@ static void PartyMenuTryEvolution(u8 taskId)
 
     if (targetSpecies != SPECIES_NONE)
     {
+        // After the evolution, back to the party menu if the item (e.g. Rare Candy) can be used again
+        if (CanUseItemAgain())
+            gCB2_AfterEvolution = CB2_ShowPartyMenuForItemUse;
+        else
+            gCB2_AfterEvolution = gPartyMenu.exitCallback;
         FreePartyPointers();
-        gCB2_AfterEvolution = gPartyMenu.exitCallback;
         BeginEvolutionScene(mon, targetSpecies, TRUE, gPartyMenu.slotId);
         DestroyTask(taskId);
     }

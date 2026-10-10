@@ -48,6 +48,10 @@
 // TRUE = level caps on, FALSE = no level caps. The cap levels are in GetCurrentLevelCap (src/pokemon.c).
 #define LEVEL_CAPS_ENABLED FALSE
 
+// Hack: instant text. TRUE = messages appear all at once (they still wait for the button between pages),
+// whatever the text speed in the options. FALSE = text printed letter by letter as in Emerald.
+#define INSTANT_TEXT TRUE
+
 // Uncomment to fix some identified minor bugs
 //#define BUGFIX
 

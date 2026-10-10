@@ -327,6 +327,17 @@ void RunTextPrinters(void)
             if (sTextPrinters[i].active)
             {
                 u16 renderCmd = RenderFont(&sTextPrinters[i]);
+
+                // Instant text: the fastest printers print all the characters in one frame, up to the
+                // end of the text or to a pause (button press, page scroll)
+                if (INSTANT_TEXT && renderCmd == RENDER_PRINT && sTextPrinters[i].textSpeed == 0)
+                {
+                    while (renderCmd == RENDER_PRINT)
+                        renderCmd = RenderFont(&sTextPrinters[i]);
+                    // the last characters are shown even if the text stops or ends here
+                    CopyWindowToVram(sTextPrinters[i].printerTemplate.windowId, COPYWIN_GFX);
+                }
+
                 switch (renderCmd)
                 {
                 case RENDER_PRINT:
