@@ -438,6 +438,9 @@ enum {
     ITEM_MAGMA_EMBLEM,
     ITEM_OLD_SEA_MAP,
 
+    // Added items
+    ITEM_ABILITY_CAPSULE,
+
     ITEMS_COUNT
 };
 

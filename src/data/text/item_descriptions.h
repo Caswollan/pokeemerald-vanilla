@@ -1687,6 +1687,11 @@ static const u8 sMagmaEmblemDesc[] = _(
     "the same shape as\n"
     "TEAM MAGMA's mark.");
 
+static const u8 sAbilityCapsuleDesc[] = _(
+    "Swaps the ability\n"
+    "of a POKéMON to\n"
+    "its other one.");
+
 static const u8 sOldSeaMapDesc[] = _(
     "A faded sea chart\n"
     "that shows the way\n"

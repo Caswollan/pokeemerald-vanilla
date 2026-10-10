@@ -11,6 +11,8 @@
 #include "decoration.h"
 #include "decoration_inventory.h"
 #include "event_data.h"
+#include "constants/flags.h"
+#include "constants/moves.h"
 #include "field_door.h"
 #include "field_effect.h"
 #include "event_object_lock.h"
@@ -1710,6 +1712,45 @@ bool8 ScrCmd_setmonmove(struct ScriptContext *ctx)
     return FALSE;
 }
 
+// HM moves don't need to be taught, as in Gen 7: with the badge of the move, the first Pokemon of the party
+// uses it (only for the animation and the messages).
+static const u16 sHMBadges[][2] =
+{
+    {MOVE_CUT,        FLAG_BADGE01_GET},
+    {MOVE_FLASH,      FLAG_BADGE02_GET},
+    {MOVE_ROCK_SMASH, FLAG_BADGE03_GET},
+    {MOVE_STRENGTH,   FLAG_BADGE04_GET},
+    {MOVE_SURF,       FLAG_BADGE05_GET},
+    {MOVE_FLY,        FLAG_BADGE06_GET},
+    {MOVE_DIVE,       FLAG_BADGE07_GET},
+    {MOVE_WATERFALL,  FLAG_BADGE08_GET},
+};
+
+static void TryUseHMWithoutMove(u16 move)
+{
+    u8 i;
+
+    for (i = 0; i < ARRAY_COUNT(sHMBadges); i++)
+    {
+        if (sHMBadges[i][0] == move)
+            break;
+    }
+    if (i == ARRAY_COUNT(sHMBadges) || !FlagGet(sHMBadges[i][1]))
+        return;
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL);
+        if (!species)
+            break;
+        if (!GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG))
+        {
+            gSpecialVar_Result = i;
+            gSpecialVar_0x8004 = species;
+            return;
+        }
+    }
+}
+
 bool8 ScrCmd_checkpartymove(struct ScriptContext *ctx)
 {
     u8 i;
@@ -1728,6 +1769,8 @@ bool8 ScrCmd_checkpartymove(struct ScriptContext *ctx)
             break;
         }
     }
+    if (gSpecialVar_Result == PARTY_SIZE)
+        TryUseHMWithoutMove(move);
     return FALSE;
 }
 

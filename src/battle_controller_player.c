@@ -1494,17 +1494,107 @@ static void MoveSelectionDisplayPPNumber(void)
     BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_PP_REMAINING);
 }
 
+// The type of the selected move is colored by its effectiveness against the opponent, as in Gen 7+:
+// green = super effective, yellow = not very effective, red = no effect. The colors use the free
+// slots 5-10 of the move menu palette (palette 5).
+#define TYPE_TEXT_COLOR_SUPER_EFFECTIVE    5
+#define TYPE_TEXT_COLOR_NOT_EFFECTIVE      7
+#define TYPE_TEXT_COLOR_NO_EFFECT          9
+
+static const u16 sMoveEffectivenessColors[] =
+{
+    RGB(3, 17, 3),   RGB(21, 27, 21), // super effective (text, shadow)
+    RGB(24, 18, 0),  RGB(30, 28, 18), // not very effective
+    RGB(25, 3, 3),   RGB(29, 22, 22), // no effect
+};
+
+// Effectiveness of a move (TYPE_MUL_*) against the only opponent on the field. TYPE_MUL_NORMAL when it
+// can't be told: status moves, or two opponents in a double battle (the target isn't chosen yet).
+static u8 GetMoveEffectivenessInMenu(u16 move)
+{
+    u8 target = MAX_BATTLERS_COUNT;
+    u8 moveType = gBattleMoves[move].type;
+    u8 type1, type2;
+    u16 multiplier = TYPE_MUL_NORMAL;
+    s32 i;
+
+    if (gBattleMoves[move].power == 0)
+        return TYPE_MUL_NORMAL;
+    for (i = 0; i < gBattlersCount; i++)
+    {
+        if (GetBattlerSide(i) == B_SIDE_PLAYER || (gAbsentBattlerFlags & gBitTable[i]) || gBattleMons[i].hp == 0)
+            continue;
+        if (target != MAX_BATTLERS_COUNT)
+            return TYPE_MUL_NORMAL;
+        target = i;
+    }
+    if (target == MAX_BATTLERS_COUNT)
+        return TYPE_MUL_NORMAL;
+
+    type1 = gBattleMons[target].types[0];
+    type2 = gBattleMons[target].types[1];
+    for (i = 0; TYPE_EFFECT_ATK_TYPE(i) != TYPE_ENDTABLE; i += 3)
+    {
+        if (TYPE_EFFECT_ATK_TYPE(i) == TYPE_FORESIGHT)
+        {
+            if (gBattleMons[target].status2 & STATUS2_FORESIGHT)
+                break;
+            continue;
+        }
+        if (TYPE_EFFECT_ATK_TYPE(i) != moveType)
+            continue;
+        if (TYPE_EFFECT_DEF_TYPE(i) == type1)
+            multiplier = multiplier * TYPE_EFFECT_MULTIPLIER(i) / TYPE_MUL_NORMAL;
+        if (TYPE_EFFECT_DEF_TYPE(i) == type2 && type1 != type2)
+            multiplier = multiplier * TYPE_EFFECT_MULTIPLIER(i) / TYPE_MUL_NORMAL;
+    }
+    if (multiplier == 0)
+        return TYPE_MUL_NO_EFFECT;
+    if (multiplier > TYPE_MUL_NORMAL)
+        return TYPE_MUL_SUPER_EFFECTIVE;
+    if (multiplier < TYPE_MUL_NORMAL)
+        return TYPE_MUL_NOT_EFFECTIVE;
+    return TYPE_MUL_NORMAL;
+}
+
 static void MoveSelectionDisplayMoveType(void)
 {
     u8 *txtPtr;
+    u8 color;
     struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleBufferA[gActiveBattler][4]);
+    u16 move = moveInfo->moves[gMoveSelectionCursor[gActiveBattler]];
 
     txtPtr = StringCopy(gDisplayedStringBattle, gText_MoveInterfaceType);
     *(txtPtr)++ = EXT_CTRL_CODE_BEGIN;
     *(txtPtr)++ = EXT_CTRL_CODE_FONT;
     *(txtPtr)++ = FONT_NORMAL;
 
-    StringCopy(txtPtr, gTypeNames[gBattleMoves[moveInfo->moves[gMoveSelectionCursor[gActiveBattler]]].type]);
+    switch (GetMoveEffectivenessInMenu(move))
+    {
+    case TYPE_MUL_SUPER_EFFECTIVE:
+        color = TYPE_TEXT_COLOR_SUPER_EFFECTIVE;
+        break;
+    case TYPE_MUL_NOT_EFFECTIVE:
+        color = TYPE_TEXT_COLOR_NOT_EFFECTIVE;
+        break;
+    case TYPE_MUL_NO_EFFECT:
+        color = TYPE_TEXT_COLOR_NO_EFFECT;
+        break;
+    default:
+        color = 0;
+        break;
+    }
+    if (color != 0)
+    {
+        LoadPalette(sMoveEffectivenessColors, BG_PLTT_ID(5) + TYPE_TEXT_COLOR_SUPER_EFFECTIVE, sizeof(sMoveEffectivenessColors));
+        *(txtPtr)++ = EXT_CTRL_CODE_BEGIN;
+        *(txtPtr)++ = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
+        *(txtPtr)++ = color;
+        *(txtPtr)++ = 14; // background of the move menu
+        *(txtPtr)++ = color + 1;
+    }
+
+    StringCopy(txtPtr, gTypeNames[gBattleMoves[move].type]);
     BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_MOVE_TYPE);
     MoveSelectionDisplayCategoryIcon();
 }

@@ -854,12 +854,23 @@ static void Task_UseRepel(u8 taskId)
     if (!IsSEPlaying())
     {
         VarSet(VAR_REPEL_STEP_COUNT, GetItemHoldEffectParam(gSpecialVar_ItemId));
+        // Remembered to offer another one when it wears off (not in the Battle Pyramid, which has its own bag)
+        if (CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE)
+            VarSet(VAR_LAST_REPEL_USED, gSpecialVar_ItemId);
+        else
+            VarSet(VAR_LAST_REPEL_USED, ITEM_NONE);
         RemoveUsedItem();
         if (CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE)
             DisplayItemMessage(taskId, FONT_NORMAL, gStringVar4, CloseItemMessage);
         else
             DisplayItemMessageInBattlePyramid(taskId, gStringVar4, Task_CloseBattlePyramidBagMessage);
     }
+}
+
+// Special: starts again the last Repel used, after the "use another one?" prompt
+void RestartLastRepel(void)
+{
+    VarSet(VAR_REPEL_STEP_COUNT, GetItemHoldEffectParam(VarGet(VAR_LAST_REPEL_USED)));
 }
 
 static void Task_UsedBlackWhiteFlute(u8 taskId)
@@ -932,6 +943,12 @@ void ItemUseOutOfBattle_EscapeRope(u8 taskId)
 void ItemUseOutOfBattle_EvolutionStone(u8 taskId)
 {
     gItemUseCB = ItemUseCB_EvolutionStone;
+    SetUpItemUseCallback(taskId);
+}
+
+void ItemUseOutOfBattle_AbilityCapsule(u8 taskId)
+{
+    gItemUseCB = ItemUseCB_AbilityCapsule;
     SetUpItemUseCallback(taskId);
 }
 

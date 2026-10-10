@@ -4856,4 +4856,15 @@ const struct Item gItems[] =
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
     },
+
+    [ITEM_ABILITY_CAPSULE] =
+    {
+        .name = _("ABIL. CAPSULE"),
+        .itemId = ITEM_ABILITY_CAPSULE,
+        .price = 10000,
+        .description = sAbilityCapsuleDesc,
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityCapsule,
+    },
 };

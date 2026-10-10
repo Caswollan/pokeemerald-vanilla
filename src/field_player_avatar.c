@@ -1306,6 +1306,9 @@ bool8 PartyHasMonWithSurf(void)
                 break;
             if (MonKnowsMove(&gPlayerParty[i], MOVE_SURF))
                 return TRUE;
+            // Surf doesn't need to be taught (Gen 7 style)
+            if (FlagGet(FLAG_BADGE05_GET) && !GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG))
+                return TRUE;
         }
     }
     return FALSE;

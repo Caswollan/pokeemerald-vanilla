@@ -64,6 +64,7 @@
 #include "trade.h"
 #include "union_room.h"
 #include "window.h"
+#include "constants/abilities.h"
 #include "constants/battle.h"
 #include "constants/battle_frontier.h"
 #include "constants/field_effects.h"
@@ -2607,6 +2608,23 @@ static void SetPartyMonSelectionActions(struct Pokemon *mons, u8 slotId, u8 acti
     }
 }
 
+// Adds an HM field move to the action list if its badge is obtained and it isn't listed yet.
+// Room is kept for SWITCH, ITEM, MOVE RELEARN and CANCEL.
+static void TryAppendHMFieldMove(u8 fieldMove)
+{
+    u8 i;
+
+    if (!FlagGet(FLAG_BADGE01_GET + fieldMove)
+     || sPartyMenuInternal->numActions + 5 > ARRAY_COUNT(sPartyMenuInternal->actions))
+        return;
+    for (i = 0; i < sPartyMenuInternal->numActions; i++)
+    {
+        if (sPartyMenuInternal->actions[i] == fieldMove + MENU_FIELD_MOVES)
+            return;
+    }
+    AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, fieldMove + MENU_FIELD_MOVES);
+}
+
 static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
 {
     u8 i, j;
@@ -2625,6 +2643,14 @@ static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
                 break;
             }
         }
+    }
+
+    // HMs don't need to be taught (Gen 7 style): once the badge is obtained, any Pokemon can use FLY and FLASH.
+    // The other HMs start from the overworld (trees, rocks, boulders, water).
+    if (!GetMonData(&mons[slotId], MON_DATA_IS_EGG))
+    {
+        TryAppendHMFieldMove(FIELD_MOVE_FLY);
+        TryAppendHMFieldMove(FIELD_MOVE_FLASH);
     }
 
     if (!InBattlePike())
@@ -5270,6 +5296,39 @@ void ItemUseCB_EvolutionStone(u8 taskId, TaskFunc task)
         RemoveBagItem(gSpecialVar_ItemId, 1);
         FreePartyPointers();
     }
+}
+
+// Ability Capsule: switches the Pokemon to the other ability of its species
+void ItemUseCB_AbilityCapsule(u8 taskId, TaskFunc task)
+{
+    static const u8 sText_AbilityChanged[] = _("{STR_VAR_1}'s ability changed\nto {STR_VAR_2}!{PAUSE_UNTIL_PRESS}");
+    struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
+    u16 species = GetMonData(mon, MON_DATA_SPECIES);
+    u8 abilityNum = GetMonData(mon, MON_DATA_ABILITY_NUM);
+
+    if (GetMonData(mon, MON_DATA_IS_EGG)
+     || gSpeciesInfo[species].abilities[1] == ABILITY_NONE
+     || gSpeciesInfo[species].abilities[0] == gSpeciesInfo[species].abilities[1])
+    {
+        gPartyMenuUseExitCallback = FALSE;
+        PlaySE(SE_SELECT);
+        DisplayPartyMenuMessage(gText_WontHaveEffect, TRUE);
+        ScheduleBgCopyTilemapToVram(2);
+        gTasks[taskId].func = task;
+        return;
+    }
+
+    gPartyMenuUseExitCallback = TRUE;
+    PlaySE(SE_USE_ITEM);
+    abilityNum ^= 1;
+    SetMonData(mon, MON_DATA_ABILITY_NUM, &abilityNum);
+    RemoveBagItem(gSpecialVar_ItemId, 1);
+    GetMonNickname(mon, gStringVar1);
+    StringCopy(gStringVar2, gAbilityNames[GetAbilityBySpecies(species, abilityNum)]);
+    StringExpandPlaceholders(gStringVar4, sText_AbilityChanged);
+    DisplayPartyMenuMessage(gStringVar4, TRUE);
+    ScheduleBgCopyTilemapToVram(2);
+    gTasks[taskId].func = task;
 }
 
 u8 GetItemEffectType(u16 item)

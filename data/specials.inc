@@ -543,3 +543,4 @@ gSpecials::
 	def_special TrySetBattleTowerLinkType
 	def_special BufferNatureChangerMonInfo
 	def_special ChangeMonNature
+	def_special RestartLastRepel

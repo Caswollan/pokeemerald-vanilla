@@ -39,6 +39,7 @@ OldaleTown_EventScript_CandyGiver::
 	faceplayer
 	msgbox OldaleTown_Text_CandyGiverGift, MSGBOX_DEFAULT
 	giveitem ITEM_RARE_CANDY, 99
+	giveitem ITEM_ABILITY_CAPSULE, 99
 	giveitem ITEM_POMEG_BERRY, 99
 	release
 	end
