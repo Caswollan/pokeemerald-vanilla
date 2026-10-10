@@ -208,6 +208,7 @@ extern const u8 BattleScript_FocusBandActivates[];
 extern const u8 BattleScript_BerryConfuseHealEnd2[];
 extern const u8 BattleScript_BerryStatRaiseEnd2[];
 extern const u8 BattleScript_MultiHitBerryHeal[];
+extern const u8 BattleScript_FaintedMonMidTurn[];
 extern const u8 BattleScript_MultiHitBerryConfuseHeal[];
 extern const u8 BattleScript_MultiHitBerryStatRaise[];
 extern const u8 BattleScript_MultiHitBerryFocusEnergy[];

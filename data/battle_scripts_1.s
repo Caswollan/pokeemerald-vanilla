@@ -2920,6 +2920,12 @@ BattleScript_GiveExp::
 	getexp BS_TARGET
 	end2
 
+@ A Pokemon fainted during the turn: it is replaced at the end of the turn (Gen 5+), only check if the battle is over
+BattleScript_FaintedMonMidTurn::
+	checkteamslost BattleScript_FaintedMonMidTurnEnd
+BattleScript_FaintedMonMidTurnEnd::
+	end2
+
 BattleScript_HandleFaintedMon::
 	checkteamslost BattleScript_LinkHandleFaintedMonMultiple
 	jumpifbyte CMP_NOT_EQUAL, gBattleOutcome, 0, BattleScript_FaintedMonEnd

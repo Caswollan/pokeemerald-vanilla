@@ -1891,6 +1891,15 @@ bool8 HandleWishPerishSongOnTurnEnd(void)
 
 #define FAINTED_ACTIONS_MAX_CASE 7
 
+// Fainted Pokemon are replaced at the end of the turn, as in Gen 5+. After an action (mid-turn) a fainted
+// Pokemon only leaves the field: it is marked absent, so moves aimed at it go to its partner, and the battle
+// ends right away if its side has no Pokemon left. Link battles keep the Gen 3 behaviour.
+static bool32 IsMidTurnFaintedAction(void)
+{
+    return gCurrentTurnActionNumber < gBattlersCount
+        && !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK));
+}
+
 bool8 HandleFaintedMonActions(void)
 {
     if (gBattleTypeFlags & BATTLE_TYPE_SAFARI)
@@ -1903,7 +1912,7 @@ bool8 HandleFaintedMonActions(void)
         case 0:
             gBattleStruct->faintedActionsBattlerId = 0;
             gBattleStruct->faintedActionsState++;
-            for (i = 0; i < gBattlersCount; i++)
+            for (i = 0; i < gBattlersCount && !IsMidTurnFaintedAction(); i++)
             {
                 if (gAbsentBattlerFlags & gBitTable[i] && !HasNoMonsToSwitch(i, PARTY_SIZE, PARTY_SIZE))
                     gAbsentBattlerFlags &= ~(gBitTable[i]);
@@ -1932,6 +1941,26 @@ bool8 HandleFaintedMonActions(void)
                 gBattleStruct->faintedActionsState = 1;
             break;
         case 3:
+            if (IsMidTurnFaintedAction())
+            {
+                bool32 fainted = FALSE;
+
+                for (i = 0; i < gBattlersCount; i++)
+                {
+                    if (gBattleMons[i].hp == 0 && !(gAbsentBattlerFlags & gBitTable[i]))
+                    {
+                        gAbsentBattlerFlags |= gBitTable[i];
+                        fainted = TRUE;
+                    }
+                }
+                gBattleStruct->faintedActionsState = 6;
+                if (fainted)
+                {
+                    BattleScriptExecute(BattleScript_FaintedMonMidTurn);
+                    return TRUE;
+                }
+                break;
+            }
             gBattleStruct->faintedActionsBattlerId = 0;
             gBattleStruct->faintedActionsState++;
             // fall through
