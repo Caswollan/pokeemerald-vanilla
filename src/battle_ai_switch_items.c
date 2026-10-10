@@ -50,7 +50,7 @@ static bool8 ShouldSwitch(void)
     {
         if (gBattleMons[gActiveBattler].status2 & (STATUS2_WRAPPED | STATUS2_ESCAPE_PREVENTION))
             return FALSE;
-        if (ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_SHADOW_TAG))
+        if (ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_SHADOW_TAG) && gBattleMons[gActiveBattler].ability != ABILITY_SHADOW_TAG)
             return FALSE;
         if (ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_ARENA_TRAP)) // Misses the flying type and Levitate check.
             return FALSE;

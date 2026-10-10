@@ -4082,7 +4082,8 @@ u8 IsRunningFromBattleImpossible(void)
     for (i = 0; i < gBattlersCount; i++)
     {
         if (side != GetBattlerSide(i)
-         && gBattleMons[i].ability == ABILITY_SHADOW_TAG)
+         && gBattleMons[i].ability == ABILITY_SHADOW_TAG
+         && gBattleMons[gActiveBattler].ability != ABILITY_SHADOW_TAG) // Shadow Tag users aren't trapped (Gen 4+)
         {
             gBattleScripting.battler = i;
             gLastUsedAbility = gBattleMons[i].ability;
@@ -4285,7 +4286,8 @@ static void HandleTurnActionSelectionState(void)
                         BtlController_EmitChoosePokemon(B_COMM_TO_CONTROLLER, PARTY_ACTION_CANT_SWITCH, PARTY_SIZE, ABILITY_NONE, gBattleStruct->battlerPartyOrders[gActiveBattler]);
                     }
                     else if (!IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_GHOST) // Ghost types can always switch, as in Gen 6+
-                          && ((i = ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_SHADOW_TAG))
+                          && (((i = ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_SHADOW_TAG))
+                               && gBattleMons[gActiveBattler].ability != ABILITY_SHADOW_TAG)
                              || ((i = ABILITY_ON_OPPOSING_FIELD(gActiveBattler, ABILITY_ARENA_TRAP))
                                  && !IS_BATTLER_OF_TYPE(gActiveBattler, TYPE_FLYING)
                                  && gBattleMons[gActiveBattler].ability != ABILITY_LEVITATE)

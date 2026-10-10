@@ -3114,6 +3114,16 @@ void DeleteFirstMoveAndGiveMoveToBoxMon(struct BoxPokemon *boxMon, u16 move)
     (var) /= (gStatStageRatios)[(mon)->statStages[(statIndex)]][1];                 \
 }
 
+// TRUE if the ally of this battler is on the field and has Plus or Minus.
+static bool8 IsPlusMinusAllyOnField(u8 battler)
+{
+    u8 ally = BATTLE_PARTNER(battler);
+
+    if (!(gBattleTypeFlags & BATTLE_TYPE_DOUBLE) || (gAbsentBattlerFlags & gBitTable[ally]) || gBattleMons[ally].hp == 0)
+        return FALSE;
+    return gBattleMons[ally].ability == ABILITY_PLUS || gBattleMons[ally].ability == ABILITY_MINUS;
+}
+
 // TRUE if a move that hits several Pokémon has more than one target on the field.
 static bool8 IsSpreadMoveWithMultipleTargets(u32 move, u8 battlerAtk, u8 battlerDef)
 {
@@ -3254,9 +3264,8 @@ s32 CalculateBaseDamage(struct BattlePokemon *attacker, struct BattlePokemon *de
     }
     if (attacker->ability == ABILITY_HUSTLE)
         attack = (150 * attack) / 100;
-    if (attacker->ability == ABILITY_PLUS && ABILITY_ON_FIELD2(ABILITY_MINUS))
-        spAttack = (150 * spAttack) / 100;
-    if (attacker->ability == ABILITY_MINUS && ABILITY_ON_FIELD2(ABILITY_PLUS))
+    // Plus and Minus: 1.5x Sp. Atk if an ally has Plus or Minus, as in Gen 5+
+    if ((attacker->ability == ABILITY_PLUS || attacker->ability == ABILITY_MINUS) && IsPlusMinusAllyOnField(battlerIdAtk))
         spAttack = (150 * spAttack) / 100;
     if (attacker->ability == ABILITY_GUTS && attacker->status1)
         attack = (150 * attack) / 100;

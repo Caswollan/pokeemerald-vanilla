@@ -34815,6 +34815,10 @@
       },
       {
         "level": 45,
+        "move": "EARTH_POWER"
+      },
+      {
+        "level": 52,
         "move": "ERUPTION"
       }
     ],
@@ -34918,6 +34922,10 @@
       },
       {
         "level": 45,
+        "move": "EARTH_POWER"
+      },
+      {
+        "level": 52,
         "move": "ERUPTION"
       }
     ],

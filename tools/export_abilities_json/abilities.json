@@ -5,7 +5,7 @@
     "name": "Stench",
     "gameName": "STENCH",
     "description": "Helps repel wild POKéMON.",
-    "effect": "Halves the wild encounter rate when the Pokemon leads the party. No effect in battle.",
+    "effect": "10% chance to make the target flinch with its attacks. Halves the wild encounter rate when the Pokemon leads the party.",
     "pokemon": [
       "GRIMER",
       "MUK"
@@ -364,7 +364,7 @@
     "name": "Shadow Tag",
     "gameName": "SHADOW TAG",
     "description": "Prevents the foe's escape.",
-    "effect": "Opponents can't flee or switch out.",
+    "effect": "Opponents can't flee or switch out, unless they also have Shadow Tag or are Ghost types.",
     "pokemon": [
       "WOBBUFFET",
       "WYNAUT"
@@ -445,7 +445,7 @@
     "name": "Synchronize",
     "gameName": "SYNCHRONIZE",
     "description": "Passes on status problems.",
-    "effect": "When the Pokemon is burned, paralyzed or poisoned, the opponent gets the same status.",
+    "effect": "When the Pokemon is burned, paralyzed, poisoned or badly poisoned, the opponent gets the same status.",
     "pokemon": [
       "ABRA",
       "KADABRA",
@@ -966,7 +966,7 @@
     "name": "Plus",
     "gameName": "PLUS",
     "description": "Powers up with MINUS.",
-    "effect": "Raises Sp. Atk by 50% if a Pokemon with Minus is on the field.",
+    "effect": "Raises Sp. Atk by 50% if an ally has Plus or Minus.",
     "pokemon": [
       "PLUSLE"
     ]
@@ -977,7 +977,7 @@
     "name": "Minus",
     "gameName": "MINUS",
     "description": "Powers up with PLUS.",
-    "effect": "Raises Sp. Atk by 50% if a Pokemon with Plus is on the field.",
+    "effect": "Raises Sp. Atk by 50% if an ally has Plus or Minus.",
     "pokemon": [
       "MINUN"
     ]
