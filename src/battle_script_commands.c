@@ -1727,15 +1727,10 @@ static void UNUSED Unused_ApplyRandomDmgMultiplier(void)
 
 #define STURDY_PREVENTS_KO(battler) (gBattleMons[battler].ability == ABILITY_STURDY && gBattleMons[battler].hp == gBattleMons[battler].maxHP)
 
-static void SetHiddenPowerPowerAndType(u8 battler)
+// Type of Hidden Power for this battler, from its IVs
+u8 GetBattlerHiddenPowerType(u8 battler)
 {
-    u8 powerBits = ((gBattleMons[battler].hpIV & 2) >> 1)
-                 | ((gBattleMons[battler].attackIV & 2) << 0)
-                 | ((gBattleMons[battler].defenseIV & 2) << 1)
-                 | ((gBattleMons[battler].speedIV & 2) << 2)
-                 | ((gBattleMons[battler].spAttackIV & 2) << 3)
-                 | ((gBattleMons[battler].spDefenseIV & 2) << 4);
-
+    u8 type;
     u8 typeBits  = ((gBattleMons[battler].hpIV & 1) << 0)
                  | ((gBattleMons[battler].attackIV & 1) << 1)
                  | ((gBattleMons[battler].defenseIV & 1) << 2)
@@ -1743,14 +1738,19 @@ static void SetHiddenPowerPowerAndType(u8 battler)
                  | ((gBattleMons[battler].spAttackIV & 1) << 4)
                  | ((gBattleMons[battler].spDefenseIV & 1) << 5);
 
-    gDynamicBasePower = (40 * powerBits) / 63 + 30;
-
     // Subtract 3 instead of 1 below because 2 types are excluded (TYPE_NORMAL and TYPE_MYSTERY)
     // The final + 1 skips past Normal, and the following conditional skips TYPE_MYSTERY
-    gBattleStruct->dynamicMoveType = ((NUMBER_OF_MON_TYPES - 3) * typeBits) / 63 + 1;
-    if (gBattleStruct->dynamicMoveType >= TYPE_MYSTERY)
-        gBattleStruct->dynamicMoveType++;
-    gBattleStruct->dynamicMoveType |= F_DYNAMIC_TYPE_IGNORE_PHYSICALITY | F_DYNAMIC_TYPE_SET;
+    type = ((NUMBER_OF_MON_TYPES - 3) * typeBits) / 63 + 1;
+    if (type >= TYPE_MYSTERY)
+        type++;
+    return type;
+}
+
+// Hidden Power: the type depends on the IVs, the power is always 60 as in Gen 6+
+static void SetHiddenPowerPowerAndType(u8 battler)
+{
+    gDynamicBasePower = gBattleMoves[MOVE_HIDDEN_POWER].power;
+    gBattleStruct->dynamicMoveType = GetBattlerHiddenPowerType(battler) | F_DYNAMIC_TYPE_IGNORE_PHYSICALITY | F_DYNAMIC_TYPE_SET;
 }
 
 static void SetWeatherBallTypeAndMultiplier(void)

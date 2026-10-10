@@ -3,6 +3,8 @@
 
 #include "constants/battle_script_commands.h"
 
+u8 GetBattlerHiddenPowerType(u8 battler);
+
 // Arguments for 'flags' in HandleBattleWindow
 #define WINDOW_CLEAR (1 << 0)
 #define WINDOW_BG1   (1 << 7)

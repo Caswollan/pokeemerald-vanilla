@@ -115,7 +115,7 @@ EFFECT_TEXT = {
     'FRUSTRATION': 'More power the lower the friendship (max 102)',
     'MAGNITUDE': 'Random power from 10 to 150',
     'PRESENT': 'Random power, may heal the target',
-    'HIDDEN_POWER': 'Type and power depend on the user\'s IVs',
+    'HIDDEN_POWER': 'Type depends on the user\'s IVs, power is always 60',
     'WEATHER_BALL': 'Type changes with the weather, double power in weather',
     'FURY_CUTTER': 'Power doubles with each consecutive hit (max 160)',
     'SPIT_UP': 'Power depends on Stockpile',

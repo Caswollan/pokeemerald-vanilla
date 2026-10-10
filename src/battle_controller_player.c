@@ -6,6 +6,8 @@
 #include "battle_dome.h"
 #include "battle_interface.h"
 #include "battle_message.h"
+#include "battle_script_commands.h"
+#include "constants/battle_move_effects.h"
 #include "battle_setup.h"
 #include "battle_tv.h"
 #include "bg.h"
@@ -1510,10 +1512,9 @@ static const u16 sMoveEffectivenessColors[] =
 
 // Effectiveness of a move (TYPE_MUL_*) against the only opponent on the field. TYPE_MUL_NORMAL when it
 // can't be told: status moves, or two opponents in a double battle (the target isn't chosen yet).
-static u8 GetMoveEffectivenessInMenu(u16 move)
+static u8 GetMoveEffectivenessInMenu(u16 move, u8 moveType)
 {
     u8 target = MAX_BATTLERS_COUNT;
-    u8 moveType = gBattleMoves[move].type;
     u8 type1, type2;
     u16 multiplier = TYPE_MUL_NORMAL;
     s32 i;
@@ -1563,13 +1564,18 @@ static void MoveSelectionDisplayMoveType(void)
     u8 color;
     struct ChooseMoveStruct *moveInfo = (struct ChooseMoveStruct *)(&gBattleBufferA[gActiveBattler][4]);
     u16 move = moveInfo->moves[gMoveSelectionCursor[gActiveBattler]];
+    u8 moveType = gBattleMoves[move].type;
+
+    // Hidden Power shows the type it really has
+    if (gBattleMoves[move].effect == EFFECT_HIDDEN_POWER)
+        moveType = GetBattlerHiddenPowerType(gActiveBattler);
 
     txtPtr = StringCopy(gDisplayedStringBattle, gText_MoveInterfaceType);
     *(txtPtr)++ = EXT_CTRL_CODE_BEGIN;
     *(txtPtr)++ = EXT_CTRL_CODE_FONT;
     *(txtPtr)++ = FONT_NORMAL;
 
-    switch (GetMoveEffectivenessInMenu(move))
+    switch (GetMoveEffectivenessInMenu(move, moveType))
     {
     case TYPE_MUL_SUPER_EFFECTIVE:
         color = TYPE_TEXT_COLOR_SUPER_EFFECTIVE;
@@ -1594,7 +1600,7 @@ static void MoveSelectionDisplayMoveType(void)
         *(txtPtr)++ = color + 1;
     }
 
-    StringCopy(txtPtr, gTypeNames[gBattleMoves[move].type]);
+    StringCopy(txtPtr, gTypeNames[moveType]);
     BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_MOVE_TYPE);
     MoveSelectionDisplayCategoryIcon();
 }

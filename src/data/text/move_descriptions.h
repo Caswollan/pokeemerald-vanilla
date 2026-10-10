@@ -946,8 +946,8 @@ static const u8 sMoonlightDescription[] = _(
     "varies with the weather.");
 
 static const u8 sHiddenPowerDescription[] = _(
-    "The effectiveness varies\n"
-    "with the user.");
+    "An attack whose type\n"
+    "varies with the user.");
 
 static const u8 sCrossChopDescription[] = _(
     "A double-chopping attack.\n"
@@ -1453,6 +1453,70 @@ static const u8 sIcicleCrashDescription[] = _(
     "Drops large icicles on the\n"
     "foe. May cause flinching.");
 
+static const u8 sHiddenPowerFightingDescription[] = _(
+    "A hidden power attack\n"
+    "of the FIGHTING type.");
+
+static const u8 sHiddenPowerFlyingDescription[] = _(
+    "A hidden power attack\n"
+    "of the FLYING type.");
+
+static const u8 sHiddenPowerPoisonDescription[] = _(
+    "A hidden power attack\n"
+    "of the POISON type.");
+
+static const u8 sHiddenPowerGroundDescription[] = _(
+    "A hidden power attack\n"
+    "of the GROUND type.");
+
+static const u8 sHiddenPowerRockDescription[] = _(
+    "A hidden power attack\n"
+    "of the ROCK type.");
+
+static const u8 sHiddenPowerBugDescription[] = _(
+    "A hidden power attack\n"
+    "of the BUG type.");
+
+static const u8 sHiddenPowerGhostDescription[] = _(
+    "A hidden power attack\n"
+    "of the GHOST type.");
+
+static const u8 sHiddenPowerSteelDescription[] = _(
+    "A hidden power attack\n"
+    "of the STEEL type.");
+
+static const u8 sHiddenPowerFireDescription[] = _(
+    "A hidden power attack\n"
+    "of the FIRE type.");
+
+static const u8 sHiddenPowerWaterDescription[] = _(
+    "A hidden power attack\n"
+    "of the WATER type.");
+
+static const u8 sHiddenPowerGrassDescription[] = _(
+    "A hidden power attack\n"
+    "of the GRASS type.");
+
+static const u8 sHiddenPowerElectricDescription[] = _(
+    "A hidden power attack\n"
+    "of the ELECTRIC type.");
+
+static const u8 sHiddenPowerPsychicDescription[] = _(
+    "A hidden power attack\n"
+    "of the PSYCHIC type.");
+
+static const u8 sHiddenPowerIceDescription[] = _(
+    "A hidden power attack\n"
+    "of the ICE type.");
+
+static const u8 sHiddenPowerDragonDescription[] = _(
+    "A hidden power attack\n"
+    "of the DRAGON type.");
+
+static const u8 sHiddenPowerDarkDescription[] = _(
+    "A hidden power attack\n"
+    "of the DARK type.");
+
 // MOVE_NONE is ignored in this table. Make sure to always subtract 1 before getting the right pointer.
 const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
 {
@@ -1819,4 +1883,20 @@ const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
     [MOVE_FLAME_BURST - 1] = sFlameBurstDescription,
     [MOVE_LIQUIDATION - 1] = sLiquidationDescription,
     [MOVE_ICICLE_CRASH - 1] = sIcicleCrashDescription,
+    [MOVE_HIDDEN_POWER_FIGHTING - 1] = sHiddenPowerFightingDescription,
+    [MOVE_HIDDEN_POWER_FLYING - 1] = sHiddenPowerFlyingDescription,
+    [MOVE_HIDDEN_POWER_POISON - 1] = sHiddenPowerPoisonDescription,
+    [MOVE_HIDDEN_POWER_GROUND - 1] = sHiddenPowerGroundDescription,
+    [MOVE_HIDDEN_POWER_ROCK - 1] = sHiddenPowerRockDescription,
+    [MOVE_HIDDEN_POWER_BUG - 1] = sHiddenPowerBugDescription,
+    [MOVE_HIDDEN_POWER_GHOST - 1] = sHiddenPowerGhostDescription,
+    [MOVE_HIDDEN_POWER_STEEL - 1] = sHiddenPowerSteelDescription,
+    [MOVE_HIDDEN_POWER_FIRE - 1] = sHiddenPowerFireDescription,
+    [MOVE_HIDDEN_POWER_WATER - 1] = sHiddenPowerWaterDescription,
+    [MOVE_HIDDEN_POWER_GRASS - 1] = sHiddenPowerGrassDescription,
+    [MOVE_HIDDEN_POWER_ELECTRIC - 1] = sHiddenPowerElectricDescription,
+    [MOVE_HIDDEN_POWER_PSYCHIC - 1] = sHiddenPowerPsychicDescription,
+    [MOVE_HIDDEN_POWER_ICE - 1] = sHiddenPowerIceDescription,
+    [MOVE_HIDDEN_POWER_DRAGON - 1] = sHiddenPowerDragonDescription,
+    [MOVE_HIDDEN_POWER_DARK - 1] = sHiddenPowerDarkDescription,
 };
