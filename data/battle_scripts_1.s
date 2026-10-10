@@ -617,6 +617,7 @@ BattleScript_MultiHitLoop::
 	jumpifhalfword CMP_EQUAL, gChosenMove, MOVE_SLEEP_TALK, BattleScript_DoMultiHit
 	jumpifstatus BS_ATTACKER, STATUS1_SLEEP, BattleScript_MultiHitPrintStrings
 BattleScript_DoMultiHit::
+	various BS_TARGET, VARIOUS_TRY_MULTIHIT_BERRY
 	movevaluescleanup
 	copybyte cEFFECT_CHOOSER, sMULTIHIT_EFFECT
 	critcalc
@@ -1397,6 +1398,7 @@ BattleScript_TripleKickLoop::
 	jumpifhalfword CMP_EQUAL, gChosenMove, MOVE_SLEEP_TALK, BattleScript_DoTripleKickAttack
 	jumpifstatus BS_ATTACKER, STATUS1_SLEEP, BattleScript_TripleKickNoMoreHits
 BattleScript_DoTripleKickAttack::
+	various BS_TARGET, VARIOUS_TRY_MULTIHIT_BERRY
 	accuracycheck BattleScript_TripleKickNoMoreHits, ACC_CURR_MOVE
 	movevaluescleanup
 	addbyte sTRIPLE_KICK_POWER, 10
@@ -1972,6 +1974,7 @@ BattleScript_EffectBeatUp::
 	ppreduce
 	setbyte gBattleCommunication, 0
 BattleScript_BeatUpLoop::
+	various BS_TARGET, VARIOUS_TRY_MULTIHIT_BERRY
 	movevaluescleanup
 	trydobeatup BattleScript_BeatUpEnd, BattleScript_ButItFailed
 	printstring STRINGID_PKMNATTACK
@@ -4545,6 +4548,49 @@ BattleScript_BerryFocusEnergyEnd2::
 	waitmessage B_WAIT_TIME_LONG
 	removeitem BS_ATTACKER
 	end2
+
+@ Berries eaten between the hits of a multi-hit move (Gen 4+). The holder is the target of the move.
+BattleScript_MultiHitBerryHeal::
+	playanimation BS_TARGET, B_ANIM_HELD_ITEM_EFFECT
+	printstring STRINGID_PKMNSITEMRESTOREDHEALTH
+	waitmessage B_WAIT_TIME_LONG
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	healthbarupdate BS_TARGET
+	datahpupdate BS_TARGET
+	bicword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	removeitem BS_TARGET
+	return
+
+BattleScript_MultiHitBerryConfuseHeal::
+	playanimation BS_TARGET, B_ANIM_HELD_ITEM_EFFECT
+	printstring STRINGID_PKMNSITEMRESTOREDHEALTH
+	waitmessage B_WAIT_TIME_LONG
+	orword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	healthbarupdate BS_TARGET
+	datahpupdate BS_TARGET
+	bicword gHitMarker, HITMARKER_IGNORE_SUBSTITUTE
+	printstring STRINGID_FORXCOMMAYZ
+	waitmessage B_WAIT_TIME_LONG
+	setmoveeffect MOVE_EFFECT_CONFUSION
+	seteffectprimary
+	removeitem BS_TARGET
+	return
+
+BattleScript_MultiHitBerryStatRaise::
+	playanimation BS_TARGET, B_ANIM_HELD_ITEM_EFFECT
+	statbuffchange STAT_CHANGE_ALLOW_PTR, BattleScript_MultiHitBerryStatRaiseDoStatUp
+BattleScript_MultiHitBerryStatRaiseDoStatUp::
+	setbyte cMULTISTRING_CHOOSER, B_MSG_STAT_ROSE_ITEM
+	call BattleScript_StatUp
+	removeitem BS_TARGET
+	return
+
+BattleScript_MultiHitBerryFocusEnergy::
+	playanimation BS_TARGET, B_ANIM_HELD_ITEM_EFFECT
+	printstring STRINGID_PKMNUSEDXTOGETPUMPED
+	waitmessage B_WAIT_TIME_LONG
+	removeitem BS_TARGET
+	return
 
 BattleScript_ActionSelectionItemsCantBeUsed::
 	printselectionstring STRINGID_ITEMSCANTBEUSEDNOW

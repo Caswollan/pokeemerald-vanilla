@@ -359,6 +359,7 @@ enum BattleScriptOpcode
 #define VARIOUS_SET_TELEPORT_OUTCOME            25
 #define VARIOUS_PLAY_TRAINER_DEFEATED_MUSIC     26
 #define VARIOUS_TRY_FLAME_BURST_SPLASH          27
+#define VARIOUS_TRY_MULTIHIT_BERRY              28
 
 // Cmd_manipulatedmg
 #define DMG_CHANGE_SIGN            0

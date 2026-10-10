@@ -1957,9 +1957,16 @@ bool8 HandleFaintedMonActions(void)
             break;
         case 6:
             if (AbilityBattleEffects(ABILITYEFFECT_INTIMIDATE1, 0, 0, 0, 0)
-             || AbilityBattleEffects(ABILITYEFFECT_TRACE, 0, 0, 0, 0)
-             || ItemBattleEffects(ITEMEFFECT_NORMAL, 0, TRUE)
-             || AbilityBattleEffects(ABILITYEFFECT_FORECAST, 0, 0, 0, 0))
+             || AbilityBattleEffects(ABILITYEFFECT_TRACE, 0, 0, 0, 0))
+                return TRUE;
+            // Held items of every battler (berries activate right after the move, as in Gen 4+)
+            for (i = 0; i < gBattlersCount; i++)
+            {
+                gActiveBattler = i;
+                if (ItemBattleEffects(ITEMEFFECT_NORMAL, i, TRUE))
+                    return TRUE;
+            }
+            if (AbilityBattleEffects(ABILITYEFFECT_FORECAST, 0, 0, 0, 0))
                 return TRUE;
             gBattleStruct->faintedActionsState++;
             break;
@@ -3235,7 +3242,7 @@ enum
 };
 
 #define TRY_EAT_CONFUSE_BERRY(flavor)                                                       \
-    if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / 2 && !moveTurn)         \
+    if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / 2)                      \
     {                                                                                       \
         PREPARE_FLAVOR_BUFFER(gBattleTextBuff1, flavor);                                    \
         gBattleMoveDamage = gBattleMons[battler].maxHP / battlerHoldEffectParam;          \
@@ -3253,7 +3260,7 @@ enum
 
 #define TRY_EAT_STAT_UP_BERRY(stat)                                                         \
     if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / battlerHoldEffectParam  \
-    && !moveTurn && gBattleMons[battler].statStages[stat] < MAX_STAT_STAGE)               \
+    && gBattleMons[battler].statStages[stat] < MAX_STAT_STAGE)                            \
     {                                                                                       \
         PREPARE_STAT_BUFFER(gBattleTextBuff1, stat);                                        \
         gEffectBattler = battler;                                                         \
@@ -3263,6 +3270,133 @@ enum
         BattleScriptExecute(BattleScript_BerryStatRaiseEnd2);                               \
         effect = ITEM_STATS_CHANGE;                                                         \
     }
+
+// Gen 4+: between the hits of a multi-hit move, the target eats its berry as soon as its HP drop below the
+// threshold. Run from a battle script (VARIOUS_TRY_MULTIHIT_BERRY), so the berry scripts return to the move.
+bool8 TryMultiHitBerry(u8 battler)
+{
+    u8 holdEffect, holdEffectParam, flavor, stat;
+    u16 hp = gBattleMons[battler].hp;
+    u16 maxHP = gBattleMons[battler].maxHP;
+    bool8 heals = FALSE;
+    const u8 *script = NULL;
+    s32 i;
+
+    if (hp == 0 || gBattleMons[battler].item == ITEM_NONE)
+        return FALSE;
+
+    gLastUsedItem = gBattleMons[battler].item;
+    if (gLastUsedItem == ITEM_ENIGMA_BERRY)
+    {
+        holdEffect = gEnigmaBerries[battler].holdEffect;
+        holdEffectParam = gEnigmaBerries[battler].holdEffectParam;
+    }
+    else
+    {
+        holdEffect = GetItemHoldEffect(gLastUsedItem);
+        holdEffectParam = GetItemHoldEffectParam(gLastUsedItem);
+    }
+
+    switch (holdEffect)
+    {
+    case HOLD_EFFECT_RESTORE_HP:
+        if (hp <= maxHP / 2)
+        {
+            gBattleMoveDamage = holdEffectParam;
+            heals = TRUE;
+            script = BattleScript_MultiHitBerryHeal;
+        }
+        break;
+    case HOLD_EFFECT_RESTORE_PCT_HP:
+        if (hp <= maxHP / 2)
+        {
+            gBattleMoveDamage = maxHP * holdEffectParam / 100;
+            heals = TRUE;
+            script = BattleScript_MultiHitBerryHeal;
+        }
+        break;
+    case HOLD_EFFECT_CONFUSE_SPICY:
+    case HOLD_EFFECT_CONFUSE_DRY:
+    case HOLD_EFFECT_CONFUSE_SWEET:
+    case HOLD_EFFECT_CONFUSE_BITTER:
+    case HOLD_EFFECT_CONFUSE_SOUR:
+        if (hp <= maxHP / 2)
+        {
+            flavor = FLAVOR_SPICY + (holdEffect - HOLD_EFFECT_CONFUSE_SPICY);
+            PREPARE_FLAVOR_BUFFER(gBattleTextBuff1, flavor);
+            gBattleMoveDamage = maxHP / holdEffectParam;
+            heals = TRUE;
+            if (GetMonFlavorRelation(&(GetBattlerSide(battler) == B_SIDE_PLAYER ? gPlayerParty : gEnemyParty)[gBattlerPartyIndexes[battler]], flavor) < 0)
+                script = BattleScript_MultiHitBerryConfuseHeal;
+            else
+                script = BattleScript_MultiHitBerryHeal;
+        }
+        break;
+    case HOLD_EFFECT_ATTACK_UP:
+    case HOLD_EFFECT_DEFENSE_UP:
+    case HOLD_EFFECT_SPEED_UP:
+    case HOLD_EFFECT_SP_ATTACK_UP:
+    case HOLD_EFFECT_SP_DEFENSE_UP:
+        stat = STAT_ATK + (holdEffect - HOLD_EFFECT_ATTACK_UP);
+        if (hp <= maxHP / holdEffectParam && gBattleMons[battler].statStages[stat] < MAX_STAT_STAGE)
+        {
+            PREPARE_STAT_BUFFER(gBattleTextBuff1, stat);
+            SET_STATCHANGER(stat, 1, FALSE);
+            gBattleScripting.animArg1 = STAT_ANIM_PLUS1 + stat;
+            gBattleScripting.animArg2 = 0;
+            script = BattleScript_MultiHitBerryStatRaise;
+        }
+        break;
+    case HOLD_EFFECT_CRITICAL_UP:
+        if (hp <= maxHP / holdEffectParam && !(gBattleMons[battler].status2 & STATUS2_FOCUS_ENERGY))
+        {
+            gBattleMons[battler].status2 |= STATUS2_FOCUS_ENERGY;
+            script = BattleScript_MultiHitBerryFocusEnergy;
+        }
+        break;
+    case HOLD_EFFECT_RANDOM_STAT_UP:
+        if (hp <= maxHP / holdEffectParam)
+        {
+            for (i = 0; i < NUM_STATS - 1; i++)
+            {
+                if (gBattleMons[battler].statStages[STAT_ATK + i] < MAX_STAT_STAGE)
+                    break;
+            }
+            if (i != NUM_STATS - 1)
+            {
+                do
+                {
+                    i = Random() % (NUM_STATS - 1);
+                } while (gBattleMons[battler].statStages[STAT_ATK + i] == MAX_STAT_STAGE);
+
+                PREPARE_STAT_BUFFER(gBattleTextBuff1, i + 1);
+                SET_STATCHANGER(i + 1, 2, FALSE);
+                gBattleScripting.animArg1 = STAT_ANIM_PLUS2 + (i + 1);
+                gBattleScripting.animArg2 = 0;
+                script = BattleScript_MultiHitBerryStatRaise;
+            }
+        }
+        break;
+    }
+
+    if (script == NULL)
+        return FALSE;
+
+    if (heals)
+    {
+        if (gBattleMoveDamage == 0)
+            gBattleMoveDamage = 1;
+        if (hp + gBattleMoveDamage > maxHP)
+            gBattleMoveDamage = maxHP - hp;
+        gBattleMoveDamage *= -1;
+    }
+    gBattleScripting.battler = battler;
+    gEffectBattler = battler;
+    gPotentialItemEffectBattler = battler;
+    BattleScriptPushCursor();
+    gBattlescriptCurrInstr = script;
+    return TRUE;
+}
 
 u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn)
 {
@@ -3343,8 +3477,10 @@ u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn)
         {
             switch (battlerHoldEffect)
             {
+            // Berries activate as soon as the HP drop, as in Gen 4+: right after a move (HandleFaintedMonActions)
+            // and after the end-of-turn damage, not only at the first end-of-turn item check.
             case HOLD_EFFECT_RESTORE_HP:
-                if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / 2 && !moveTurn)
+                if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / 2)
                 {
                     gBattleMoveDamage = battlerHoldEffectParam;
                     if (gBattleMons[battler].hp + battlerHoldEffectParam > gBattleMons[battler].maxHP)
@@ -3355,7 +3491,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn)
                 }
                 break;
             case HOLD_EFFECT_RESTORE_PCT_HP:
-                if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / 2 && !moveTurn)
+                if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / 2)
                 {
                     gBattleMoveDamage = gBattleMons[battler].maxHP * battlerHoldEffectParam / 100;
                     if (gBattleMoveDamage == 0)
@@ -3368,7 +3504,6 @@ u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn)
                 }
                 break;
             case HOLD_EFFECT_RESTORE_PP:
-                if (!moveTurn)
                 {
                     struct Pokemon *mon;
                     u8 ppBonuses;
@@ -3451,7 +3586,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn)
                 break;
             case HOLD_EFFECT_ATTACK_UP:
                 if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / battlerHoldEffectParam
-                && !moveTurn && gBattleMons[battler].statStages[STAT_ATK] < MAX_STAT_STAGE)
+                && gBattleMons[battler].statStages[STAT_ATK] < MAX_STAT_STAGE)
                 {
                     PREPARE_STAT_BUFFER(gBattleTextBuff1, STAT_ATK);
                     PREPARE_STRING_BUFFER(gBattleTextBuff2, STRINGID_STATROSE); // Only the Attack stat-up berry has this
@@ -3476,7 +3611,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn)
                 TRY_EAT_STAT_UP_BERRY(STAT_SPDEF);
                 break;
             case HOLD_EFFECT_CRITICAL_UP:
-                if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / battlerHoldEffectParam && !moveTurn
+                if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / battlerHoldEffectParam
                     && !(gBattleMons[battler].status2 & STATUS2_FOCUS_ENERGY))
                 {
                     gBattleMons[battler].status2 |= STATUS2_FOCUS_ENERGY;
@@ -3485,7 +3620,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn)
                 }
                 break;
             case HOLD_EFFECT_RANDOM_STAT_UP:
-                if (!moveTurn && gBattleMons[battler].hp <= gBattleMons[battler].maxHP / battlerHoldEffectParam)
+                if (gBattleMons[battler].hp <= gBattleMons[battler].maxHP / battlerHoldEffectParam)
                 {
                     for (i = 0; i < NUM_STATS - 1; i++)
                     {

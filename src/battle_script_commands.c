@@ -6879,6 +6879,11 @@ static void Cmd_various(void)
             }
         }
         break;
+    case VARIOUS_TRY_MULTIHIT_BERRY:
+        // Between the hits of a multi-hit move the target eats its berry right away, as in Gen 4+
+        gBattlescriptCurrInstr += 3;
+        TryMultiHitBerry(gActiveBattler);
+        return;
     }
 
     gBattlescriptCurrInstr += 3;
