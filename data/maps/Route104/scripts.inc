@@ -104,12 +104,8 @@ Route104_EventScript_MayEncounter::
 	waitmovement 0
 	applywaitmovement LOCALID_ROUTE104_RIVAL, Route104_Movement_RivalApproachPlayer
 	copyobjectxytoperm LOCALID_ROUTE104_RIVAL
-	msgbox Route104_Text_MayMinesDecentLetsBattle, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, Route104_EventScript_BattleMay
-	msgbox Route104_Text_MayHaventRaisedPokemon, MSGBOX_DEFAULT
-	call Route104_EventScript_RestoreMusic
-	releaseall
-	end
+	msgbox Route104_Text_MayMinesDecentLetsBattle, MSGBOX_DEFAULT
+	goto Route104_EventScript_BattleMay
 
 Route104_Movement_RivalWalkSlowLeft:
 	walk_slow_left
@@ -126,11 +122,8 @@ Route104_Movement_PlayerFaceRival:
 	step_end
 
 Route104_EventScript_MayAskToBattle::
-	msgbox Route104_Text_MayLetsBattle, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, Route104_EventScript_BattleMay
-	msgbox Route104_Text_MayHaventRaisedPokemon, MSGBOX_DEFAULT
-	releaseall
-	end
+	msgbox Route104_Text_MayLetsBattle, MSGBOX_DEFAULT
+	goto Route104_EventScript_BattleMay
 
 Route104_EventScript_BattleMay::
 	msgbox Route104_Text_MayIntro, MSGBOX_DEFAULT
@@ -189,19 +182,12 @@ Route104_EventScript_BrendanEncounter::
 	waitmovement 0
 	applywaitmovement LOCALID_ROUTE104_RIVAL, Route104_Movement_RivalApproachPlayer
 	copyobjectxytoperm LOCALID_ROUTE104_RIVAL
-	msgbox Route104_Text_BrendanDoingGreatLetsBattle, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, Route104_EventScript_BattleBrendan
-	msgbox Route104_Text_BrendanNoConfidence, MSGBOX_DEFAULT
-	call Route104_EventScript_RestoreMusic
-	releaseall
-	end
+	msgbox Route104_Text_BrendanDoingGreatLetsBattle, MSGBOX_DEFAULT
+	goto Route104_EventScript_BattleBrendan
 
 Route104_EventScript_BrendanAskToBattle::
-	msgbox Route104_Text_BrendanLetsBattle, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, Route104_EventScript_BattleBrendan
-	msgbox Route104_Text_BrendanNoConfidence, MSGBOX_DEFAULT
-	releaseall
-	end
+	msgbox Route104_Text_BrendanLetsBattle, MSGBOX_DEFAULT
+	goto Route104_EventScript_BattleBrendan
 
 Route104_EventScript_BattleBrendan::
 	msgbox Route104_Text_BrendanIntro, MSGBOX_DEFAULT
@@ -1082,7 +1068,7 @@ Route104_Text_MayHowsYourPokedex:
 Route104_Text_MayMinesDecentLetsBattle:
 	.string "Mine's looking pretty decent.\n"
 	.string "So…\l"
-	.string "How about a little battle?$"
+	.string "Let's have a little battle!$"
 
 Route104_Text_MayHaventRaisedPokemon:
 	.string "MAY: Oh, what's the matter?\p"
@@ -1091,8 +1077,8 @@ Route104_Text_MayHaventRaisedPokemon:
 	.string "That's not very good for a TRAINER!$"
 
 Route104_Text_MayLetsBattle:
-	.string "MAY: So, what do you think?\n"
-	.string "How about a little battle here?$"
+	.string "MAY: There you are, {PLAYER}{KUN}!\n"
+	.string "Let's have our battle!$"
 
 Route104_Text_MayIntro:
 	.string "MAY: You just became a TRAINER,\n"
@@ -1127,16 +1113,16 @@ Route104_Text_BrendanHowsYourPokedex:
 
 Route104_Text_BrendanDoingGreatLetsBattle:
 	.string "Me, I'm doing great!\p"
-	.string "Want to check out how good I am with\n"
-	.string "a battle?$"
+	.string "Let's check out how good I am with\n"
+	.string "a battle!$"
 
 Route104_Text_BrendanNoConfidence:
 	.string "BRENDAN: What's the matter? Don't have\n"
 	.string "any confidence in your POKéMON?$"
 
 Route104_Text_BrendanLetsBattle:
-	.string "BRENDAN: What's up?\n"
-	.string "Want to have a battle with me?$"
+	.string "BRENDAN: There you are, {PLAYER}!\n"
+	.string "Let's have our battle!$"
 
 Route104_Text_BrendanIntro:
 	.string "BRENDAN: I know you just became\n"
