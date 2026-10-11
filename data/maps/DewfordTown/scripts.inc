@@ -69,43 +69,31 @@ DewfordTown_EventScript_HallSign::
 	msgbox DewfordTown_Text_HallSign, MSGBOX_SIGN
 	end
 
-DewfordTown_EventScript_OldRodFisherman::
+@ Fisherman: gives the Good Rod (the Old Rod is now given at the Route 102 pond)
+DewfordTown_EventScript_GoodRodFisherman::
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_OLD_ROD, DewfordTown_EventScript_HowsFishing
-	msgbox DewfordTown_Text_GettingItchToFish, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, DewfordTown_EventScript_GiveOldRod
-	goto_if_eq VAR_RESULT, NO, DewfordTown_EventScript_NotGettingItchToFish
+	goto_if_set FLAG_RECEIVED_GOOD_ROD, DewfordTown_EventScript_ReceivedGoodRod
+	msgbox DewfordTown_Text_YouAgreeGoodRodIsGood, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, DewfordTown_EventScript_ReceiveGoodRod
+	goto_if_eq VAR_RESULT, NO, DewfordTown_EventScript_DeclineGoodRod
 	end
 
-DewfordTown_EventScript_GiveOldRod::
-	msgbox DewfordTown_Text_GiveYouOneOfMyRods, MSGBOX_DEFAULT
-	giveitem ITEM_OLD_ROD
-	setflag FLAG_RECEIVED_OLD_ROD
-	msgbox DewfordTown_Text_ThrowInFishingAdvice, MSGBOX_DEFAULT
+DewfordTown_EventScript_ReceiveGoodRod::
+	msgbox DewfordTown_Text_IdenticalMindsTakeThis, MSGBOX_DEFAULT
+	giveitem ITEM_GOOD_ROD
+	setflag FLAG_RECEIVED_GOOD_ROD
+	msgbox DewfordTown_Text_TryYourLuckFishing, MSGBOX_DEFAULT
 	release
 	end
 
-DewfordTown_EventScript_NotGettingItchToFish::
-	msgbox DewfordTown_Text_ThatsTooBadThen, MSGBOX_DEFAULT
+DewfordTown_EventScript_DeclineGoodRod::
+	msgbox DewfordTown_Text_DontYouLikeToFish, MSGBOX_DEFAULT
 	release
 	end
 
-DewfordTown_EventScript_HowsFishing::
-	message DewfordTown_Text_HowsYourFishing
-	waitmessage
-	multichoice 20, 8, MULTI_HOWS_FISHING, TRUE
-	goto_if_eq VAR_RESULT, 0, DewfordTown_EventScript_FishingExcellent
-	goto_if_eq VAR_RESULT, 1, DewfordTown_EventScript_FishingNotSoGood
-	end
-
-DewfordTown_EventScript_FishingExcellent::
-	msgbox DewfordTown_Text_GreatHaulInSomeBigOnes, MSGBOX_DEFAULT
-	release
-	end
-
-DewfordTown_EventScript_FishingNotSoGood::
-	msgbox DewfordTown_Text_FishingAdvice, MSGBOX_DEFAULT
+DewfordTown_EventScript_ReceivedGoodRod::
+	msgbox DewfordTown_Text_TryCatchingMonWithGoodRod, MSGBOX_DEFAULT
 	release
 	end
 
@@ -683,51 +671,6 @@ DewfordTown_Text_JustTellMeWhenYouNeedToSetSail:
 	.string "MR. BRINEY: You just tell me whenever\n"
 	.string "you need to set sail again!$"
 
-DewfordTown_Text_GettingItchToFish:
-	.string "This is a renowned fishing spot.\n"
-	.string "Are you getting the itch to fish?$"
-
-DewfordTown_Text_GiveYouOneOfMyRods:
-	.string "I hear you, and I like what\n"
-	.string "you're saying!\p"
-	.string "I'll give you one of my fishing RODS.$"
-
-DewfordTown_Text_ThrowInFishingAdvice:
-	.string "And, as an added bonus, I'll even throw\n"
-	.string "in a little fishing advice!\p"
-	.string "First, you want to face the water,\n"
-	.string "then use the ROD.\p"
-	.string "Focus your mind…\n"
-	.string "If you get a bite, pull on the ROD.\p"
-	.string "Sometimes you can snag something\n"
-	.string "immediately, but with bigger catches,\l"
-	.string "you need to time the pulls on your ROD\l"
-	.string "to haul them in.$"
-
-DewfordTown_Text_ThatsTooBadThen:
-	.string "Oh, is that so?\n"
-	.string "That's too bad, then.$"
-
-DewfordTown_Text_HowsYourFishing:
-	.string "Yo!\n"
-	.string "How's your fishing?$"
-
-DewfordTown_Text_GreatHaulInSomeBigOnes:
-	.string "Is that right! That's great!\n"
-	.string "Haul in some big ones!$"
-
-DewfordTown_Text_FishingAdvice:
-	.string "Oh, hey, don't get down on yourself!\n"
-	.string "I'll give you a little fishing advice.\p"
-	.string "First, you want to face the water,\n"
-	.string "then use the ROD.\p"
-	.string "Focus your mind…\n"
-	.string "If you get a bite, pull the ROD.\p"
-	.string "Sometimes you can snag something\n"
-	.string "immediately, but with bigger catches,\l"
-	.string "you need to time the pulls on your ROD\l"
-	.string "to haul them in.$"
-
 DewfordTown_Text_XIsTheBiggestHappeningThingRight:
 	.string "I like what's hip, happening, and trendy.\n"
 	.string "I'm always checking it out.\p"
@@ -781,3 +724,25 @@ DewfordTown_Text_YeahDefinitionOfInRightNow:
 	.string "Yeah, absolutely right!\p"
 	.string "“{STR_VAR_1}” is the\n"
 	.string "definition of “in” right now.$"
+
+DewfordTown_Text_YouAgreeGoodRodIsGood:
+	.string "Hmm!\n"
+	.string "A GOOD ROD is really good!\p"
+	.string "Wouldn't you agree?$"
+
+DewfordTown_Text_IdenticalMindsTakeThis:
+	.string "Hmm!\n"
+	.string "We're of identical minds!\p"
+	.string "Hmm!\n"
+	.string "Take this GOOD ROD!$"
+
+DewfordTown_Text_TryYourLuckFishing:
+	.string "Wherever there's water, try your luck\n"
+	.string "at fishing.$"
+
+DewfordTown_Text_DontYouLikeToFish:
+	.string "Don't you like to fish?$"
+
+DewfordTown_Text_TryCatchingMonWithGoodRod:
+	.string "Try catching all sorts of POKéMON\n"
+	.string "with your GOOD ROD.$"

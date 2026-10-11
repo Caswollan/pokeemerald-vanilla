@@ -20,30 +20,27 @@ Route118_OnFrame:
 	map_script_2 VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_EndEventAndCleanup_1
 	.2byte 0
 
-Route118_EventScript_GoodRodFisherman::
+@ Fisherman: gives the Super Rod (the Good Rod is now given in Dewford Town)
+Route118_EventScript_SuperRodFisherman::
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_GOOD_ROD, Route118_EventScript_ReceivedGoodRod
-	msgbox Route118_Text_YouAgreeGoodRodIsGood, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, Route118_EventScript_ReceiveGoodRod
-	goto_if_eq VAR_RESULT, NO, Route118_EventScript_DeclineGoodRod
-	end
-
-Route118_EventScript_ReceiveGoodRod::
-	msgbox Route118_Text_IdenticalMindsTakeThis, MSGBOX_DEFAULT
-	giveitem ITEM_GOOD_ROD
-	setflag FLAG_RECEIVED_GOOD_ROD
-	msgbox Route118_Text_TryYourLuckFishing, MSGBOX_DEFAULT
+	goto_if_set FLAG_RECEIVED_SUPER_ROD, Route118_EventScript_ReceivedSuperRod
+	msgbox Route118_Text_YouWantSuperRod, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Route118_EventScript_DeclineSuperRod
+	msgbox Route118_Text_SuperRodIsSuper, MSGBOX_DEFAULT
+	giveitem ITEM_SUPER_ROD
+	setflag FLAG_RECEIVED_SUPER_ROD
+	msgbox Route118_Text_TryDroppingRodInWater, MSGBOX_DEFAULT
 	release
 	end
 
-Route118_EventScript_DeclineGoodRod::
+Route118_EventScript_ReceivedSuperRod::
+	msgbox Route118_Text_GoAfterSeafloorPokemon, MSGBOX_DEFAULT
+	release
+	end
+
+Route118_EventScript_DeclineSuperRod::
 	msgbox Route118_Text_DontYouLikeToFish, MSGBOX_DEFAULT
-	release
-	end
-
-Route118_EventScript_ReceivedGoodRod::
-	msgbox Route118_Text_TryCatchingMonWithGoodRod, MSGBOX_DEFAULT
 	release
 	end
 
@@ -254,28 +251,6 @@ Route118_Text_StevenQuestions:
 	.string "It would be nice if we were to meet\n"
 	.string "again somewhere.$"
 
-Route118_Text_YouAgreeGoodRodIsGood:
-	.string "Hmm!\n"
-	.string "A GOOD ROD is really good!\p"
-	.string "Wouldn't you agree?$"
-
-Route118_Text_IdenticalMindsTakeThis:
-	.string "Hmm!\n"
-	.string "We're of identical minds!\p"
-	.string "Hmm!\n"
-	.string "Take this GOOD ROD!$"
-
-Route118_Text_TryYourLuckFishing:
-	.string "Wherever there's water, try your luck\n"
-	.string "at fishing.$"
-
-Route118_Text_DontYouLikeToFish:
-	.string "Don't you like to fish?$"
-
-Route118_Text_TryCatchingMonWithGoodRod:
-	.string "Try catching all sorts of POKéMON\n"
-	.string "with your GOOD ROD.$"
-
 Route118_Text_CanCrossRiversWithSurf:
 	.string "Even if there isn't a boat, you can\n"
 	.string "cross rivers and the sea if you have\l"
@@ -291,3 +266,26 @@ Route118_Text_RouteSign119:
 	.string "ROUTE 118\n"
 	.string "{UP_ARROW} ROUTE 119$"
 
+Route118_Text_YouWantSuperRod:
+	.string "Hey there, TRAINER!\n"
+	.string "A SUPER ROD really is super!\p"
+	.string "Say all you want, but this baby can\n"
+	.string "catch POKéMON off the seafloor!\p"
+	.string "What do you think?\n"
+	.string "You want it, don't you?$"
+
+Route118_Text_SuperRodIsSuper:
+	.string "You bet, you bet!\n"
+	.string "After all, a SUPER ROD is really super!$"
+
+Route118_Text_TryDroppingRodInWater:
+	.string "If there's any water, try dropping in\n"
+	.string "your ROD and see what bites!$"
+
+Route118_Text_DontYouLikeToFish:
+	.string "Hunh?\n"
+	.string "Don't you like to fish?$"
+
+Route118_Text_GoAfterSeafloorPokemon:
+	.string "Go after the seafloor POKéMON with\n"
+	.string "your SUPER ROD.$"
