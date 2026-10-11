@@ -10,6 +10,8 @@ DewfordTown_EventScript_Briney::
 	lock
 	faceplayer
 	goto_if_unset FLAG_DELIVERED_STEVEN_LETTER, DewfordTown_EventScript_ReturnToPetalburgPrompt
+	@ Slateport only after the Dewford Gym too
+	goto_if_unset FLAG_BADGE02_GET, DewfordTown_EventScript_GymFirstPetalburgPrompt
 	message DewfordTown_Text_WhereAreWeBound
 	waitmessage
 	multichoicedefault 21, 6, MULTI_BRINEY_ON_DEWFORD, 2, FALSE
@@ -44,6 +46,13 @@ DewfordTown_EventScript_ReturnToPetalburgPrompt::
 	msgbox DewfordTown_Text_SetSailBackToPetalburg, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, DewfordTown_EventScript_SailBackToPetalburg
 	msgbox DewfordTown_Text_GoDeliverIllBeWaiting, MSGBOX_DEFAULT
+	release
+	end
+
+DewfordTown_EventScript_GymFirstPetalburgPrompt::
+	msgbox DewfordTown_Text_HaveYouBeatenGymLeader, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, YES, DewfordTown_EventScript_SailBackToPetalburg
+	msgbox DewfordTown_Text_GoChallengeGymIllBeWaiting, MSGBOX_DEFAULT
 	release
 	end
 
@@ -645,6 +654,16 @@ DewfordTown_Text_PetalburgWereSettingSail2:
 DewfordTown_Text_GoDeliverIllBeWaiting:
 	.string "MR. BRINEY: Then you go on and deliver\n"
 	.string "the LETTER. I'll be waiting.$"
+
+DewfordTown_Text_HaveYouBeatenGymLeader:
+	.string "MR. BRINEY: Have you beaten the GYM\n"
+	.string "LEADER of DEWFORD?\p"
+	.string "Or were you meaning to sail back to\n"
+	.string "PETALBURG?$"
+
+DewfordTown_Text_GoChallengeGymIllBeWaiting:
+	.string "MR. BRINEY: Then you go on and\n"
+	.string "challenge the GYM. I'll be waiting.$"
 
 DewfordTown_Text_BrineyLandedInDewford:
 	.string "MR. BRINEY: Ahoy!\n"
