@@ -12,7 +12,20 @@ Route110_OnTransition:
 	call Common_EventScript_SetupRivalGfxId
 	call Common_EventScript_SetupRivalOnBikeGfxId
 	call_if_eq VAR_CYCLING_CHALLENGE_STATE, 1, Route110_EventScript_SaveCyclingMusic
+	call Route110_EventScript_SetOldWomanPos
 	end
+
+@ Until the first Trick House puzzle is done, the old woman stands in the way north (under the Cycling Road)
+Route110_EventScript_SetOldWomanPos::
+	goto_if_ne VAR_TRICK_HOUSE_LEVEL, 0, Route110_EventScript_OldWomanFreeWalk
+	setobjectxyperm LOCALID_ROUTE110_OLD_WOMAN, 15, 70
+	setobjectmovementtype LOCALID_ROUTE110_OLD_WOMAN, MOVEMENT_TYPE_FACE_LEFT
+	return
+
+Route110_EventScript_OldWomanFreeWalk::
+	setobjectxyperm LOCALID_ROUTE110_OLD_WOMAN, 14, 69
+	setobjectmovementtype LOCALID_ROUTE110_OLD_WOMAN, MOVEMENT_TYPE_WANDER_UP_AND_DOWN
+	return
 
 Route110_EventScript_SaveCyclingMusic::
 	savebgm MUS_CYCLING
@@ -76,8 +89,37 @@ Route110_EventScript_OldMan::
 	end
 
 Route110_EventScript_OldWoman::
+	goto_if_eq VAR_TRICK_HOUSE_LEVEL, 0, Route110_EventScript_OldWomanBlocking
 	msgbox Route110_Text_WalkOnTheLowRoad, MSGBOX_NPC
 	end
+
+Route110_EventScript_OldWomanBlocking::
+	msgbox Route110_Text_SolveTrickHouseFirst, MSGBOX_NPC
+	end
+
+@ Next to the old woman: going east (towards Mauville) is not allowed before the first Trick House puzzle.
+@ Coming from the east (already past this point) the player can go on.
+Route110_EventScript_OldWomanBlockTrigger::
+	specialvar VAR_RESULT, GetPlayerFacingDirection
+	goto_if_eq VAR_RESULT, DIR_WEST, Route110_EventScript_OldWomanLetPass
+	lockall
+	applymovement LOCALID_ROUTE110_OLD_WOMAN, Common_Movement_FacePlayer
+	waitmovement 0
+	msgbox Route110_Text_SolveTrickHouseFirst, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_PLAYER, Route110_Movement_PlayerStepBackWest
+	waitmovement 0
+	applymovement LOCALID_ROUTE110_OLD_WOMAN, Common_Movement_WalkInPlaceFasterLeft
+	waitmovement 0
+	releaseall
+	end
+
+Route110_EventScript_OldWomanLetPass::
+	end
+
+Route110_Movement_PlayerStepBackWest:
+	walk_left
+	step_end
 
 Route110_EventScript_CyclingGuy2::
 	msgbox Route110_Text_BikeTechniques, MSGBOX_NPC
@@ -808,6 +850,13 @@ Route110_Text_TwoRoads:
 	.string "The two roads, one above, one below…\p"
 	.string "A road each for people and POKéMON.\n"
 	.string "Perhaps that is right and fair.$"
+
+Route110_Text_SolveTrickHouseFirst:
+	.string "Oh, hello, dear!\p"
+	.string "The man in that house, the TRICK\n"
+	.string "MASTER, is waiting for a challenger.\p"
+	.string "Go and solve his first puzzle!\n"
+	.string "I won't let you pass until you do.$"
 
 Route110_Text_WalkOnTheLowRoad:
 	.string "I don't have a BIKE, so I'll take\n"

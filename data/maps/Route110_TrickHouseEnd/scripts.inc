@@ -59,7 +59,7 @@ Route110_TrickHouseEnd_EventScript_CompletedPuzzle1::
 	msgbox Route110_TrickHouseEnd_Text_AllNightToPlantTrees, MSGBOX_DEFAULT
 	msgbox Route110_TrickHouseEnd_Text_YouHaveEarnedThisReward, MSGBOX_DEFAULT
 	setvar VAR_TRICK_HOUSE_PRIZE_PICKUP, 0
-	giveitem ITEM_RARE_CANDY
+	call Route110_TrickHouse_EventScript_GiveEvolutionStones
 	call_if_eq VAR_RESULT, FALSE, Route110_TrickHouseEnd_EventScript_BagFull
 	msgbox Route110_TrickHouseEnd_Text_MakeNewTricksToStumpYou, MSGBOX_DEFAULT
 	closemessage
@@ -181,6 +181,34 @@ Route110_TrickHouseEnd_EventScript_TrickMasterExit::
 	applywaitmovement LOCALID_TRICK_MASTER_END, Route110_TrickHouse_Movement_TrickMasterJumpAway
 	removeobject LOCALID_TRICK_MASTER_END
 	addvar VAR_TRICK_HOUSE_LEVEL, 1
+	return
+
+@ Reward of the first puzzle: one of each evolution stone. They are given only if they all fit in the bag,
+@ otherwise VAR_RESULT is FALSE and the Trick Master keeps them for later (VAR_TRICK_HOUSE_PRIZE_PICKUP).
+Route110_TrickHouse_EventScript_GiveEvolutionStones::
+	checkitemspace ITEM_SUN_STONE
+	goto_if_eq VAR_RESULT, FALSE, Route110_TrickHouse_EventScript_NoRoomForStones
+	checkitemspace ITEM_MOON_STONE
+	goto_if_eq VAR_RESULT, FALSE, Route110_TrickHouse_EventScript_NoRoomForStones
+	checkitemspace ITEM_FIRE_STONE
+	goto_if_eq VAR_RESULT, FALSE, Route110_TrickHouse_EventScript_NoRoomForStones
+	checkitemspace ITEM_THUNDER_STONE
+	goto_if_eq VAR_RESULT, FALSE, Route110_TrickHouse_EventScript_NoRoomForStones
+	checkitemspace ITEM_WATER_STONE
+	goto_if_eq VAR_RESULT, FALSE, Route110_TrickHouse_EventScript_NoRoomForStones
+	checkitemspace ITEM_LEAF_STONE
+	goto_if_eq VAR_RESULT, FALSE, Route110_TrickHouse_EventScript_NoRoomForStones
+	giveitem ITEM_SUN_STONE
+	giveitem ITEM_MOON_STONE
+	giveitem ITEM_FIRE_STONE
+	giveitem ITEM_THUNDER_STONE
+	giveitem ITEM_WATER_STONE
+	giveitem ITEM_LEAF_STONE
+	setvar VAR_RESULT, TRUE
+	return
+
+Route110_TrickHouse_EventScript_NoRoomForStones::
+	setvar VAR_RESULT, FALSE
 	return
 
 Route110_TrickHouseEnd_EventScript_BagFull::

@@ -57,6 +57,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_ROUTE110_OLD_WOMAN",
       "graphics_id": "OBJ_EVENT_GFX_EXPERT_F",
       "x": 14,
       "y": 69,
@@ -628,6 +629,24 @@
       "var": "VAR_REGISTER_BIRCH_STATE",
       "var_value": "1",
       "script": "Route110_EventScript_BirchScene4"
+    },
+    {
+      "type": "trigger",
+      "x": 15,
+      "y": 69,
+      "elevation": 3,
+      "var": "VAR_TRICK_HOUSE_LEVEL",
+      "var_value": "0",
+      "script": "Route110_EventScript_OldWomanBlockTrigger"
+    },
+    {
+      "type": "trigger",
+      "x": 15,
+      "y": 71,
+      "elevation": 3,
+      "var": "VAR_TRICK_HOUSE_LEVEL",
+      "var_value": "0",
+      "script": "Route110_EventScript_OldWomanBlockTrigger"
     }
   ],
   "bg_events": [
