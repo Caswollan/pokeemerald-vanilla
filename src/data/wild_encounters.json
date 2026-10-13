@@ -8670,7 +8670,7 @@
             ]
           },
           "land_mons": {
-            "encounter_rate": 10,
+            "encounter_rate": 20,
             "mons": [
               {
                 "min_level": 9,
