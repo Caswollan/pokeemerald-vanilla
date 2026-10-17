@@ -462,13 +462,17 @@ MauvilleCity_Text_UncleYourePushingIt:
 
 MauvilleCity_Text_WallyWeCanBeatAnyone:
 	.string "WALLY: I'm not pushing it.\p"
-	.string "If I combine forces with RALTS,\n"
+	.string "RALTS and I trained really hard,\n"
+	.string "and it evolved into KIRLIA!\p"
+	.string "With KIRLIA and my new friends,\n"
 	.string "we can beat anyone!$"
 
 MauvilleCity_Text_WallyWillYouBattleMe:
 	.string "WALLY: Oh! Hi, {PLAYER}!\p"
-	.string "I've gotten a lot stronger since\n"
-	.string "we met.\p"
+	.string "My RALTS and I trained so much that\n"
+	.string "it evolved into a KIRLIA!\p"
+	.string "I caught new POKéMON too, and we've\n"
+	.string "all gotten a lot stronger.\p"
 	.string "{PLAYER}, I want you and my UNCLE to\n"
 	.string "understand that.\p"
 	.string "{PLAYER}, please, will you have\n"
