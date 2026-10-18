@@ -1209,14 +1209,15 @@ void DoOrbEffect(void)
     u8 taskId = CreateTask(Task_OrbEffect, 80);
     s16 *data = gTasks[taskId].data;
 
-    if (gSpecialVar_Result == 0)
-    {
-        tBlueOrb = FALSE;
-        tCenterX = 104;
-    }
-    else if (gSpecialVar_Result == 1)
+    // Hack: the orbs are swapped (Aqua has the BLUE ORB, Magma the RED ORB), so are the flash colors
+    if (gSpecialVar_Result == 0) // Archie, Seafloor Cavern
     {
         tBlueOrb = TRUE;
+        tCenterX = 104;
+    }
+    else if (gSpecialVar_Result == 1) // Maxie, Magma Hideout
+    {
+        tBlueOrb = FALSE;
         tCenterX = 136;
     }
     else if (gSpecialVar_Result == 2)
