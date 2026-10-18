@@ -1962,8 +1962,10 @@ static u32 ApplyTrainerMonNature(u32 personality, u8 nature)
 {
     u32 diff;
 
-    if (nature == NATURE_HARDY || nature >= NUM_NATURES)
+    // nature is TRAINER_NATURE(NATURE_*) = nature + 1, 0 = vanilla nature
+    if (nature == 0 || nature > NUM_NATURES)
         return personality;
+    nature--;
 
     diff = (nature + NUM_NATURES - (personality % NUM_NATURES)) % NUM_NATURES;
     return personality + ((diff * 21) % NUM_NATURES) * 256;

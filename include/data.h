@@ -37,12 +37,16 @@ struct MonCoords
 #define TRAINER_MON_ABILITY_1       1 // species' first ability
 #define TRAINER_MON_ABILITY_2       2 // species' second ability (falls back to the first if the species has only one)
 
+// Value for the nature field of trainer party mons: TRAINER_NATURE(NATURE_*). It stores the nature + 1,
+// so that 0 (field left out) keeps the vanilla random nature and NATURE_HARDY (0) can be chosen too.
+#define TRAINER_NATURE(nature) ((nature) + 1)
+
 struct TrainerMonNoItemDefaultMoves
 {
     u16 iv;
     u8 lvl;
     u16 species;
-    u8 nature;      // NATURE_*; NATURE_HARDY (0, default) = vanilla nature
+    u8 nature;      // TRAINER_NATURE(NATURE_*); 0 (default) = vanilla nature
     u8 abilityNum;  // TRAINER_MON_ABILITY_*; 0 (default) = vanilla ability
 };
 
@@ -51,7 +55,7 @@ struct TrainerMonItemDefaultMoves
     u16 iv;
     u8 lvl;
     u16 species;
-    u8 nature;      // NATURE_*; NATURE_HARDY (0, default) = vanilla nature
+    u8 nature;      // TRAINER_NATURE(NATURE_*); 0 (default) = vanilla nature
     u8 abilityNum;  // TRAINER_MON_ABILITY_*; 0 (default) = vanilla ability
     u16 heldItem;
 };
@@ -61,7 +65,7 @@ struct TrainerMonNoItemCustomMoves
     u16 iv;
     u8 lvl;
     u16 species;
-    u8 nature;      // NATURE_*; NATURE_HARDY (0, default) = vanilla nature
+    u8 nature;      // TRAINER_NATURE(NATURE_*); 0 (default) = vanilla nature
     u8 abilityNum;  // TRAINER_MON_ABILITY_*; 0 (default) = vanilla ability
     u16 moves[MAX_MON_MOVES];
 };
@@ -71,7 +75,7 @@ struct TrainerMonItemCustomMoves
     u16 iv;
     u8 lvl;
     u16 species;
-    u8 nature;      // NATURE_*; NATURE_HARDY (0, default) = vanilla nature
+    u8 nature;      // TRAINER_NATURE(NATURE_*); 0 (default) = vanilla nature
     u8 abilityNum;  // TRAINER_MON_ABILITY_*; 0 (default) = vanilla ability
     u16 heldItem;
     u16 moves[MAX_MON_MOVES];
