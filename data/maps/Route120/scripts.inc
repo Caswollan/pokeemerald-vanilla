@@ -154,10 +154,17 @@ Route120_EventScript_BerryNotLove::
 Route120_EventScript_Steven::
 	lock
 	faceplayer
+	@ The Kecleon on the bridge is revealed only after the Fortree Gym (6th badge)
+	goto_if_unset FLAG_BADGE06_GET, Route120_EventScript_StevenBeatGymFirst
 	goto_if_set FLAG_NOT_READY_FOR_BATTLE_ROUTE_120, Route120_EventScript_StevenAskReadyForBattle
 	msgbox Route120_Text_StevenGreeting, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, Route120_EventScript_StevenNotReady
 	goto Route120_EventScript_StevenBattleKecleon
+	end
+
+Route120_EventScript_StevenBeatGymFirst::
+	msgbox Route120_Text_StevenBeatGymFirst, MSGBOX_DEFAULT
+	release
 	end
 
 Route120_EventScript_StevenNotReady::
@@ -365,6 +372,16 @@ Route120_Text_StevenGreeting:
 	.string "That would be more fun.\p"
 	.string "{PLAYER}{KUN}, are your POKéMON ready for\n"
 	.string "battle?$"
+
+Route120_Text_StevenBeatGymFirst:
+	.string "STEVEN: Hm? {PLAYER}{KUN}, hi.\n"
+	.string "It's been a while.\p"
+	.string "There's something here that you can't\n"
+	.string "see, right?\p"
+	.string "I could show you what it is, but first\n"
+	.string "you should challenge the FORTREE GYM.\p"
+	.string "Come back once you have WINONA's\n"
+	.string "BADGE. I'll wait here.$"
 
 Route120_Text_StevenIllWaitHere:
 	.string "STEVEN: No?\p"
