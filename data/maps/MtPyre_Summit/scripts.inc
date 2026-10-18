@@ -32,7 +32,11 @@ MtPyre_Summit_EventScript_TeamAquaTrigger2::
 MtPyre_Summit_EventScript_TeamAquaExits::
 	playbgm MUS_ENCOUNTER_AQUA, FALSE
 	applywaitmovement LOCALID_PLAYER, Common_Movement_FaceUp
-	applywaitmovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, Common_Movement_WalkInPlaceFasterDown
+	@ Archie and Matt both turn towards the player
+	applymovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, Common_Movement_WalkInPlaceFasterDown
+	applymovement LOCALID_MT_PYRE_SUMMIT_MATT, Common_Movement_WalkInPlaceFasterDown
+	waitmovement LOCALID_MT_PYRE_SUMMIT_ARCHIE
+	waitmovement LOCALID_MT_PYRE_SUMMIT_MATT
 	delay 50
 	call_if_eq VAR_0x8008, 0, MtPyre_Summit_EventScript_ArchieFacePlayer0
 	call_if_eq VAR_0x8008, 1, MtPyre_Summit_EventScript_ArchieFacePlayer1
@@ -45,9 +49,14 @@ MtPyre_Summit_EventScript_TeamAquaExits::
 	special HasEnoughMonsForDoubleBattle
 	goto_if_ne VAR_RESULT, PLAYER_HAS_TWO_USABLE_MONS, MtPyre_Summit_EventScript_AquaNeedTwoMons
 	special StartMtPyreAquaBattle
+	@ wait for the end of the battle before going on (the special doesn't stop the script by itself)
+	waitstate
 	msgbox MtPyre_Summit_Text_ArchieWeGotTheOrbLetsGo, MSGBOX_DEFAULT
 	closemessage
-	fadescreen FADE_TO_BLACK
+	@ Team Aqua walks away down the path (around the player) instead of vanishing
+	call_if_eq VAR_0x8008, 0, MtPyre_Summit_EventScript_TeamAquaWalkAway0
+	call_if_eq VAR_0x8008, 1, MtPyre_Summit_EventScript_TeamAquaWalkAway1
+	call_if_eq VAR_0x8008, 2, MtPyre_Summit_EventScript_TeamAquaWalkAway2
 	removeobject LOCALID_MT_PYRE_SUMMIT_ARCHIE
 	removeobject LOCALID_MT_PYRE_SUMMIT_MATT
 	removeobject LOCALID_MT_PYRE_SUMMIT_GRUNT_1
@@ -57,7 +66,6 @@ MtPyre_Summit_EventScript_TeamAquaExits::
 	setflag FLAG_HIDE_MT_PYRE_SUMMIT_ARCHIE
 	setflag FLAG_HIDE_MT_PYRE_SUMMIT_TEAM_AQUA
 	fadedefaultbgm
-	fadescreen FADE_FROM_BLACK
 	delay 20
 	setvar VAR_MT_PYRE_STATE, 1
 	call_if_eq VAR_0x8008, 0, MtPyre_Summit_EventScript_OldLadyApproachPlayer0
@@ -69,6 +77,129 @@ MtPyre_Summit_EventScript_TeamAquaExits::
 	setflag FLAG_HIDE_JAGGED_PASS_MAGMA_GUARD
 	releaseall
 	end
+
+@ After the battle Archie (in front of the player) and Matt (on his right) walk down the path side by side, around
+@ the player who stands at (22/23/24,7) (VAR_0x8008 = 0/1/2). The two grunts at y 11 go down with them; everyone stops off-screen
+@ and is then removed.
+MtPyre_Summit_EventScript_TeamAquaWalkAway0::
+	applymovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, MtPyre_Summit_Movement_ArchieLeaveDown
+	applymovement LOCALID_MT_PYRE_SUMMIT_MATT, MtPyre_Summit_Movement_MattLeaveDown
+	goto MtPyre_Summit_EventScript_GruntsWalkAway
+
+MtPyre_Summit_EventScript_TeamAquaWalkAway1::
+	applymovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, MtPyre_Summit_Movement_ArchieLeaveLeft
+	applymovement LOCALID_MT_PYRE_SUMMIT_MATT, MtPyre_Summit_Movement_MattLeaveRejoinArchie
+	goto MtPyre_Summit_EventScript_GruntsWalkAway
+
+MtPyre_Summit_EventScript_TeamAquaWalkAway2::
+	applymovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, MtPyre_Summit_Movement_ArchieLeaveDownLeft
+	applymovement LOCALID_MT_PYRE_SUMMIT_MATT, MtPyre_Summit_Movement_MattLeaveLeft
+	goto MtPyre_Summit_EventScript_GruntsWalkAway
+
+MtPyre_Summit_EventScript_GruntsWalkAway::
+	applymovement LOCALID_MT_PYRE_SUMMIT_GRUNT_3, MtPyre_Summit_Movement_Grunt3LeaveDown
+	applymovement LOCALID_MT_PYRE_SUMMIT_GRUNT_4, MtPyre_Summit_Movement_Grunt4LeaveDown
+	waitmovement LOCALID_MT_PYRE_SUMMIT_GRUNT_3
+	waitmovement LOCALID_MT_PYRE_SUMMIT_GRUNT_4
+	waitmovement LOCALID_MT_PYRE_SUMMIT_ARCHIE
+	waitmovement LOCALID_MT_PYRE_SUMMIT_MATT
+	return
+
+@ Player at (22,7), Archie (22,6), Matt (23,6): both step right, then down side by side (23 and 24)
+MtPyre_Summit_Movement_ArchieLeaveDown:
+	walk_right
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+MtPyre_Summit_Movement_MattLeaveDown:
+	walk_right
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+@ Player at (23,7), Archie (23,6), Matt (24,6): Archie goes around on the left (22), Matt on the right (24),
+@ then Matt comes back next to Archie below the player (23)
+MtPyre_Summit_Movement_ArchieLeaveLeft:
+	walk_left
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+MtPyre_Summit_Movement_MattLeaveRejoinArchie:
+	walk_down
+	walk_down
+	walk_left
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+@ Player at (24,7), Archie (24,6), Matt (25,6): both go left (22 and 23), then down side by side
+MtPyre_Summit_Movement_ArchieLeaveDownLeft:
+	walk_left
+	walk_left
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+MtPyre_Summit_Movement_MattLeaveLeft:
+	walk_left
+	walk_left
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+@ (21,11) -> (22,11) -> (22,15)
+MtPyre_Summit_Movement_Grunt3LeaveDown:
+	walk_right
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+@ (25,11) -> (24,11) -> (24,15)
+MtPyre_Summit_Movement_Grunt4LeaveDown:
+	walk_left
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
 
 @ Archie and Matt only battle a player with at least two Pokemon able to fight
 MtPyre_Summit_EventScript_AquaNeedTwoMons::
@@ -93,7 +224,10 @@ MtPyre_Summit_EventScript_MattTrainer::
 	end
 
 MtPyre_Summit_EventScript_ArchieFacePlayer0::
-	applywaitmovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, MtPyre_Summit_Movement_ArchieFacePlayer0
+	applymovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, MtPyre_Summit_Movement_ArchieFacePlayer0
+	applymovement LOCALID_MT_PYRE_SUMMIT_MATT, MtPyre_Summit_Movement_MattFollowArchieLeft
+	waitmovement LOCALID_MT_PYRE_SUMMIT_ARCHIE
+	waitmovement LOCALID_MT_PYRE_SUMMIT_MATT
 	return
 
 @ Archie is already facing player
@@ -101,7 +235,10 @@ MtPyre_Summit_EventScript_ArchieFacePlayer1::
 	return
 
 MtPyre_Summit_EventScript_ArchieFacePlayer2::
-	applywaitmovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, MtPyre_Summit_Movement_ArchieFacePlayer2
+	applymovement LOCALID_MT_PYRE_SUMMIT_MATT, MtPyre_Summit_Movement_MattFollowArchieRight
+	applymovement LOCALID_MT_PYRE_SUMMIT_ARCHIE, MtPyre_Summit_Movement_ArchieFacePlayer2
+	waitmovement LOCALID_MT_PYRE_SUMMIT_ARCHIE
+	waitmovement LOCALID_MT_PYRE_SUMMIT_MATT
 	return
 
 MtPyre_Summit_EventScript_OldLadyApproachPlayer0::
@@ -136,6 +273,18 @@ MtPyre_Summit_Movement_OldLadyApproachPlayer2:
 
 MtPyre_Summit_Movement_ArchieFacePlayer0:
 	walk_left
+	walk_in_place_faster_down
+	step_end
+
+@ Matt stays on Archie's right: (24,6) -> (23,6)
+MtPyre_Summit_Movement_MattFollowArchieLeft:
+	walk_left
+	walk_in_place_faster_down
+	step_end
+
+@ Matt stays on Archie's right: (24,6) -> (25,6)
+MtPyre_Summit_Movement_MattFollowArchieRight:
+	walk_right
 	walk_in_place_faster_down
 	step_end
 

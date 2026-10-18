@@ -4585,7 +4585,7 @@ static const struct LevelCapCheckpoint sLevelCapCheckpoints[] =
     {55, {T(SHELLY_WEATHER_INSTITUTE)}}, // Team Aqua Shelly, Weather Institute
     {57, {T(BRENDAN_ROUTE_119_TREECKO), T(BRENDAN_ROUTE_119_TORCHIC), T(BRENDAN_ROUTE_119_MUDKIP), T(MAY_ROUTE_119_TREECKO), T(MAY_ROUTE_119_TORCHIC), T(MAY_ROUTE_119_MUDKIP)}}, // Rival, Route 119
     {61, {FLAG_BADGE06_GET}}, // Winona, 6th Gym
-    {64, {T(BRENDAN_LILYCOVE_TREECKO), T(BRENDAN_LILYCOVE_TORCHIC), T(BRENDAN_LILYCOVE_MUDKIP), T(MAY_LILYCOVE_TREECKO), T(MAY_LILYCOVE_TORCHIC), T(MAY_LILYCOVE_MUDKIP)}}, // Rival, Lilycove City
+    {64, {T(WALLY_LILYCOVE), FLAG_MET_RIVAL_LILYCOVE}}, // Wally, Lilycove City (FLAG_MET_RIVAL_LILYCOVE: old saves past the rival)
     {66, {T(ARCHIE_MT_PYRE)}}, // Team Aqua Archie and Matt, Mt. Pyre (double battle)
     {68, {T(COURTNEY_MAGMA_HIDEOUT)}}, // Team Magma Courtney, Magma Hideout
     {68, {T(TABITHA_MAGMA_HIDEOUT)}}, // Team Magma Tabitha, Magma Hideout

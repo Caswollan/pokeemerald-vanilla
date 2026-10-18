@@ -224,6 +224,53 @@ LilycoveCity_EventScript_AquaGrunt4::
 	msgbox LilycoveCity_Text_IfWorldBecomesOurs, MSGBOX_NPC
 	end
 
+@ Wally waits in front of the Department Store (he replaced the rival battle). The battle is mandatory:
+@ he stands in front of the door, and the Mt. Pyre outer path opens once he is defeated (FLAG_MET_RIVAL_LILYCOVE).
+LilycoveCity_EventScript_Wally::
+	lock
+	faceplayer
+	msgbox LilycoveCity_Text_WallyIntro, MSGBOX_DEFAULT
+	trainerbattle_no_intro TRAINER_WALLY_LILYCOVE, LilycoveCity_Text_WallyDefeat
+	msgbox LilycoveCity_Text_WallyPostBattle, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_LILYCOVE_WALLY, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
+	fadescreen FADE_TO_BLACK
+	removeobject LOCALID_LILYCOVE_WALLY
+	setflag FLAG_MET_RIVAL_LILYCOVE
+	@ as after the old rival battle here, the rival goes back home to Littleroot
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_2F_PICHU_DOLL
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_SWABLU_DOLL
+	fadescreen FADE_FROM_BLACK
+	release
+	end
+
+LilycoveCity_Text_WallyIntro:
+	.string "WALLY: {PLAYER}! I've been waiting\n"
+	.string "for you!\p"
+	.string "After our battle in PETALBURG, I kept\n"
+	.string "training with my POKéMON every day.\p"
+	.string "I came to LILYCOVE to buy supplies\n"
+	.string "for my journey to the POKéMON LEAGUE.\p"
+	.string "But first, I want to show you how\n"
+	.string "strong we've become!\p"
+	.string "{PLAYER}, let's battle!$"
+
+LilycoveCity_Text_WallyDefeat:
+	.string "WALLY: … … …\p"
+	.string "I lost again…\n"
+	.string "But I'm not giving up!$"
+
+LilycoveCity_Text_WallyPostBattle:
+	.string "WALLY: You're really amazing,\n"
+	.string "{PLAYER}.\p"
+	.string "I'll keep getting stronger, too.\p"
+	.string "Next time we meet, I'll be the one\n"
+	.string "who wins!$"
+
+@ Old rival battle, not used anymore (Wally took the rival's place)
 LilycoveCity_EventScript_Rival::
 	lock
 	faceplayer
