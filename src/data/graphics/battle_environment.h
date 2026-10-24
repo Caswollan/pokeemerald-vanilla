@@ -55,6 +55,7 @@ const u32 gBattleEnvironmentPalette_StadiumPhoebe[] = INCGFX_U32("graphics/battl
 const u32 gBattleEnvironmentPalette_StadiumGlacia[] = INCGFX_U32("graphics/battle_environment/stadium/glacia.pal", ".gbapal.lz");
 const u32 gBattleEnvironmentPalette_StadiumDrake[] = INCGFX_U32("graphics/battle_environment/stadium/drake.pal", ".gbapal.lz");
 const u32 gBattleEnvironmentPalette_StadiumWallace[] = INCGFX_U32("graphics/battle_environment/stadium/wallace.pal", ".gbapal.lz");
+const u32 gBattleEnvironmentPalette_StadiumSteven[] = INCGFX_U32("graphics/battle_environment/stadium/steven.pal", ".gbapal.lz"); // Champion Steven
 const u32 gBattleEnvironmentPalette_Rayquaza[] = INCGFX_U32("graphics/battle_environment/sky/palette.pal", ".gbapal.lz");
 
 const u32 gBattleEnvironmentAnimTiles_TallGrass[] = INCGFX_U32("graphics/battle_environment/tall_grass/anim_tiles.png", ".4bpp.lz");
