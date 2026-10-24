@@ -59,7 +59,9 @@
 #include "scanline_effect.h"
 #include "wild_encounter.h"
 #include "frontier_util.h"
+#include "item.h"
 #include "constants/abilities.h"
+#include "constants/items.h"
 #include "constants/layouts.h"
 #include "constants/map_types.h"
 #include "constants/region_map_sections.h"
@@ -970,6 +972,10 @@ bool32 Overworld_IsBikingAllowed(void)
 // Flash level of 8 is fully black
 void SetDefaultFlashLevel(void)
 {
+    // Dark caves light up by themselves if the player has HM05 (Flash) and the 2nd badge
+    if (gMapHeader.cave && CheckBagHasItem(ITEM_HM05, 1) && FlagGet(FLAG_BADGE02_GET))
+        FlagSet(FLAG_SYS_USE_FLASH);
+
     if (!gMapHeader.cave)
         gSaveBlock1Ptr->flashLevel = 0;
     else if (FlagGet(FLAG_SYS_USE_FLASH))
