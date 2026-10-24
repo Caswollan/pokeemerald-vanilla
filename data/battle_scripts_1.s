@@ -638,7 +638,8 @@ BattleScript_DoMultiHit::
 	waitmessage 1
 	addbyte sMULTIHIT_STRING + 4, 1
 	moveendto MOVEEND_NEXT_TARGET
-	jumpifbyte CMP_COMMON_BITS, gMoveResultFlags, MOVE_RESULT_FOE_ENDURED, BattleScript_MultiHitPrintStrings
+	@ Sturdy / Focus Band / Endure: show the message now and keep hitting (Gen 5+)
+	call BattleScript_MultiHitTryEnduredMsg
 	decrementmultihit BattleScript_MultiHitLoop
 	goto BattleScript_MultiHitPrintStrings
 BattleScript_MultiHitNoMoreHits::
@@ -1421,7 +1422,8 @@ BattleScript_DoTripleKickAttack::
 	printstring STRINGID_EMPTYSTRING3
 	waitmessage 1
 	moveendto MOVEEND_NEXT_TARGET
-	jumpifbyte CMP_COMMON_BITS, gMoveResultFlags, MOVE_RESULT_FOE_ENDURED, BattleScript_TripleKickPrintStrings
+	@ Sturdy / Focus Band / Endure: show the message now and keep hitting (Gen 5+)
+	call BattleScript_MultiHitTryEnduredMsg
 	decrementmultihit BattleScript_TripleKickLoop
 	goto BattleScript_TripleKickPrintStrings
 BattleScript_TripleKickNoMoreHits::
@@ -4517,6 +4519,21 @@ BattleScript_ItemHealHP_Ret::
 BattleScript_SelectingNotAllowedMoveChoiceItem::
 	printselectionstring STRINGID_ITEMALLOWSONLYYMOVE
 	endselectionscript
+
+@ Called after each hit of a multi-hit move: shows the endured / hung on message right away
+BattleScript_MultiHitTryEnduredMsg::
+	jumpifbyte CMP_COMMON_BITS, gMoveResultFlags, MOVE_RESULT_FOE_HUNG_ON, BattleScript_MultiHitHungOn
+	jumpifbyte CMP_NO_COMMON_BITS, gMoveResultFlags, MOVE_RESULT_FOE_ENDURED, BattleScript_MultiHitTryEnduredMsgEnd
+	bicbyte gMoveResultFlags, MOVE_RESULT_FOE_ENDURED
+	printstring STRINGID_PKMNENDUREDHIT
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_MultiHitTryEnduredMsgEnd::
+	return
+
+BattleScript_MultiHitHungOn::
+	bicbyte gMoveResultFlags, MOVE_RESULT_FOE_HUNG_ON | MOVE_RESULT_FOE_ENDURED
+	call BattleScript_FocusBandActivates
+	return
 
 BattleScript_FocusBandActivates::
 	playanimation BS_TARGET, B_ANIM_FOCUS_BAND
