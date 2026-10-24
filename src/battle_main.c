@@ -179,6 +179,7 @@ EWRAM_DATA u8 gBattlerFainted = 0;
 EWRAM_DATA u8 gEffectBattler = 0;
 EWRAM_DATA u8 gPotentialItemEffectBattler = 0;
 EWRAM_DATA u8 gAbsentBattlerFlags = 0;
+EWRAM_DATA bool8 gPlayerPartnerSlotEmpty = FALSE; // double battle started with one usable Pokémon (see TrySetPlayerPartnerSlotEmpty)
 EWRAM_DATA u8 gCritMultiplier = 0;
 EWRAM_DATA u8 gMultiHitCounter = 0;
 EWRAM_DATA const u8 *gBattlescriptCurrInstr = NULL;
@@ -3407,7 +3408,12 @@ static void BattleIntroGetMonsData(void)
         {
             gBattleCommunication[1]++;
             if (gBattleCommunication[1] == gBattlersCount)
+            {
+                // double battle with one usable Pokémon: the player's right slot stays empty
+                if (gPlayerPartnerSlotEmpty)
+                    gAbsentBattlerFlags |= gBitTable[GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT)];
                 gBattleMainFunc = BattleIntroPrepareBackgroundSlide;
+            }
             else
                 gBattleCommunication[MULTIUSE_STATE] = 0;
         }
@@ -3893,7 +3899,8 @@ static void TryDoEventsBeforeFirstTurn(void)
         {
             for (j = i + 1; j < gBattlersCount; j++)
             {
-                if (GetWhoStrikesFirst(gBattlerByTurnOrder[i], gBattlerByTurnOrder[j], TRUE) != 0)
+                // switch-in abilities by current Speed only, as in Gen 5+ (no Quick Claw)
+                if (GetWhoIsFasterForEndTurn(gBattlerByTurnOrder[i], gBattlerByTurnOrder[j]) != 0)
                     SwapTurnOrder(i, j);
             }
         }
@@ -4659,13 +4666,7 @@ u32 GetBattlerTurnOrderSpeed(u8 battler)
     else
         holdEffect = GetItemHoldEffect(gBattleMons[battler].item);
 
-    // badge boost
-    if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_FRONTIER))
-        && FlagGet(FLAG_BADGE03_GET)
-        && GetBattlerSide(battler) == B_SIDE_PLAYER)
-    {
-        speed = (speed * 110) / 100;
-    }
+    // no badge Speed boost (removed, as in Gen 4+)
 
     if (holdEffect == HOLD_EFFECT_MACHO_BRACE)
         speed /= 2;
@@ -4773,6 +4774,70 @@ u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves)
     }
 
     return strikesFirst;
+}
+
+// End of turn effects go from the fastest to the slowest Pokémon, ignoring the chosen moves and
+// Quick Claw (Gen 5+). Returns non-zero if battler2 goes before battler1.
+u8 GetWhoIsFasterForEndTurn(u8 battler1, u8 battler2)
+{
+    u32 speedBattler1 = GetBattlerTurnOrderSpeed(battler1);
+    u32 speedBattler2 = GetBattlerTurnOrderSpeed(battler2);
+
+    if (speedBattler1 == speedBattler2)
+        return Random() & 1;
+    return speedBattler1 < speedBattler2;
+}
+
+static s8 GetChosenMovePriority(u8 battler)
+{
+    u16 move;
+
+    if (gChosenActionByBattler[battler] != B_ACTION_USE_MOVE)
+        return 0;
+    if (gProtectStructs[battler].noValidMoves)
+        move = MOVE_STRUGGLE;
+    else
+        move = gBattleMons[battler].moves[*(gBattleStruct->chosenMovePositions + battler)];
+    return gBattleMoves[move].priority;
+}
+
+// TRUE if battler1 must act before battler2: higher priority first, then Quick Claw, then higher current Speed.
+// Equal Pokémon keep their current order.
+static bool32 ActsBefore(u8 battler1, u8 battler2)
+{
+    s8 priority1 = GetChosenMovePriority(battler1);
+    s8 priority2 = GetChosenMovePriority(battler2);
+    u32 speedBattler1, speedBattler2;
+
+    if (priority1 != priority2)
+        return priority1 > priority2;
+
+    speedBattler1 = QuickClawActivates(battler1) ? UINT_MAX : GetBattlerTurnOrderSpeed(battler1);
+    speedBattler2 = QuickClawActivates(battler2) ? UINT_MAX : GetBattlerTurnOrderSpeed(battler2);
+    return speedBattler1 > speedBattler2;
+}
+
+// Gen 8+: after every action, the Pokémon that still have to use a move are sorted again by their current
+// Speed (e.g. after Icy Wind or paralysis). Called by HandleAction_ActionFinished.
+void UpdateTurnOrderAfterAction(void)
+{
+    s32 i, j;
+
+    if (gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED | BATTLE_TYPE_SAFARI))
+        return;
+
+    // insertion sort, so that Pokémon with the same priority and Speed keep their order
+    for (i = gCurrentTurnActionNumber + 1; i < gBattlersCount; i++)
+    {
+        for (j = i; j > gCurrentTurnActionNumber; j--)
+        {
+            if (gActionsByTurnOrder[j] != B_ACTION_USE_MOVE || gActionsByTurnOrder[j - 1] != B_ACTION_USE_MOVE)
+                break;
+            if (!ActsBefore(gBattlerByTurnOrder[j], gBattlerByTurnOrder[j - 1]))
+                break;
+            SwapTurnOrder(j, j - 1);
+        }
+    }
 }
 
 static void SetActionsAndBattlersTurnOrder(void)

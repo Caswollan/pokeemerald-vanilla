@@ -669,6 +669,8 @@ void HandleAction_ActionFinished(void)
 {
     *(gBattleStruct->monToSwitchIntoId + gBattlerByTurnOrder[gCurrentTurnActionNumber]) = PARTY_SIZE;
     gCurrentTurnActionNumber++;
+    if (gCurrentTurnActionNumber < gBattlersCount)
+        UpdateTurnOrderAfterAction(); // Speed changes during the turn affect who moves next (Gen 8+)
     gCurrentActionFuncId = gActionsByTurnOrder[gCurrentTurnActionNumber];
     SpecialStatusesClear();
     gHitMarker &= ~(HITMARKER_DESTINYBOND | HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_ATTACKSTRING_PRINTED
@@ -1216,7 +1218,8 @@ u8 DoFieldEndTurnEffects(void)
                 s32 j;
                 for (j = i + 1; j < gBattlersCount; j++)
                 {
-                    if (GetWhoStrikesFirst(gBattlerByTurnOrder[i], gBattlerByTurnOrder[j], FALSE))
+                    // by current Speed only, as in Gen 5+ (no move priority, no Quick Claw)
+                    if (GetWhoIsFasterForEndTurn(gBattlerByTurnOrder[i], gBattlerByTurnOrder[j]))
                         SwapTurnOrder(i, j);
                 }
             }

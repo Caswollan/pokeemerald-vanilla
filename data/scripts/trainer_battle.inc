@@ -25,18 +25,11 @@ EventScript_TryDoDoubleTrainerBattle::
 	call EventScript_RevealTrainer
 	specialvar VAR_RESULT, GetTrainerFlag
 	goto_if_ne VAR_RESULT, FALSE, EventScript_NoDoubleTrainerBattle
-	special HasEnoughMonsForDoubleBattle
-	goto_if_ne VAR_RESULT, PLAYER_HAS_TWO_USABLE_MONS, EventScript_NotEnoughMonsForDoubleBattle
+	@ no "you need two Pokémon" check: double battles also start with one usable Pokémon (Gen 5+)
 	special PlayTrainerEncounterMusic
 	special SetTrainerFacingDirection
 	goto EventScript_ShowTrainerIntroMsg
 
-EventScript_NotEnoughMonsForDoubleBattle::
-	special ShowTrainerCantBattleSpeech
-	waitmessage
-	waitbuttonpress
-	release
-	end
 
 EventScript_NoDoubleTrainerBattle::
 	gotopostbattlescript
@@ -66,8 +59,6 @@ EventScript_NoRematchTrainerBattle::
 EventScript_TryDoDoubleRematchBattle::
 	specialvar VAR_RESULT, IsTrainerReadyForRematch
 	goto_if_eq VAR_RESULT, FALSE, EventScript_NoDoubleRematchTrainerBattle
-	special HasEnoughMonsForDoubleBattle
-	goto_if_ne VAR_RESULT, PLAYER_HAS_TWO_USABLE_MONS, EventScript_NotEnoughMonsForDoubleRematchBattle
 	special PlayTrainerEncounterMusic
 	special SetTrainerFacingDirection
 	special ShowTrainerIntroSpeech
@@ -80,12 +71,6 @@ EventScript_TryDoDoubleRematchBattle::
 EventScript_NoDoubleRematchTrainerBattle::
 	gotopostbattlescript
 
-EventScript_NotEnoughMonsForDoubleRematchBattle::
-	special ShowTrainerCantBattleSpeech
-	waitmessage
-	waitbuttonpress
-	release
-	end
 
 EventScript_RevealTrainer::
 	applywaitmovement VAR_LAST_TALKED, Movement_RevealTrainer

@@ -46,8 +46,6 @@ MtPyre_Summit_EventScript_TeamAquaExits::
 	applywaitmovement LOCALID_MT_PYRE_SUMMIT_MATT, Common_Movement_WalkInPlaceFasterDown
 	msgbox MtPyre_Summit_Text_MattBattleIntro, MSGBOX_DEFAULT
 	closemessage
-	special HasEnoughMonsForDoubleBattle
-	goto_if_ne VAR_RESULT, PLAYER_HAS_TWO_USABLE_MONS, MtPyre_Summit_EventScript_AquaNeedTwoMons
 	special StartMtPyreAquaBattle
 	@ wait for the end of the battle before going on (the special doesn't stop the script by itself)
 	waitstate
@@ -202,18 +200,6 @@ MtPyre_Summit_Movement_Grunt4LeaveDown:
 	step_end
 
 @ Archie and Matt only battle a player with at least two Pokemon able to fight
-MtPyre_Summit_EventScript_AquaNeedTwoMons::
-	msgbox MtPyre_Summit_Text_ArchieNeedTwoMons, MSGBOX_DEFAULT
-	closemessage
-	applywaitmovement LOCALID_PLAYER, MtPyre_Summit_Movement_PlayerStepBack
-	fadedefaultbgm
-	releaseall
-	end
-
-MtPyre_Summit_Movement_PlayerStepBack:
-	walk_down
-	step_end
-
 @ Loaded by StartMtPyreAquaBattle (src/battle_setup.c)
 MtPyre_Summit_EventScript_ArchieTrainer::
 	trainerbattle TRAINER_BATTLE_SET_TRAINER_A, TRAINER_ARCHIE_MT_PYRE, LOCALID_NONE, MtPyre_Summit_Text_ArchieDefeat, MtPyre_Summit_Text_ArchieDefeat
@@ -801,8 +787,3 @@ MtPyre_Summit_Text_ArchieDefeat:
 MtPyre_Summit_Text_MattDefeat:
 	.string "Whoa! Sorry, BOSS!$"
 
-MtPyre_Summit_Text_ArchieNeedTwoMons:
-	.string "ARCHIE: Hah! You can't even face\n"
-	.string "the two of us with what you've got!\p"
-	.string "Come back when you have at least\n"
-	.string "two POKéMON ready to fight!$"

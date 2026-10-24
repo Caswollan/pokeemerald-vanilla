@@ -23,6 +23,7 @@ static void CreateTasksForSendRecvLinkBuffers(void);
 static void InitLinkBtlControllers(void);
 static void InitSinglePlayerBtlControllers(void);
 static void SetBattlePartyIds(void);
+static void TrySetPlayerPartnerSlotEmpty(void);
 static void Task_HandleSendLinkBuffersData(u8 taskId);
 static void Task_HandleCopyReceivedLinkBuffersData(u8 taskId);
 
@@ -650,6 +651,51 @@ static void SetBattlePartyIds(void)
         if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
             gBattlerPartyIndexes[1] = 0, gBattlerPartyIndexes[3] = 3;
     }
+
+    TrySetPlayerPartnerSlotEmpty();
+}
+
+// Gen 5+: a double battle can start with only one usable Pokémon on the player's side. The right slot
+// then stays empty: it points to a party slot with no HP (empty slot first, else a fainted Pokémon) and
+// the battler is marked absent in BattleIntroGetMonsData.
+static bool32 IsUsablePartyMon(struct Pokemon *mon)
+{
+    u32 species = GetMonData(mon, MON_DATA_SPECIES_OR_EGG);
+
+    return species != SPECIES_NONE && species != SPECIES_EGG && GetMonData(mon, MON_DATA_HP) != 0;
+}
+
+static void TrySetPlayerPartnerSlotEmpty(void)
+{
+    s32 i, usable = 0, slot = PARTY_SIZE;
+
+    gPlayerPartnerSlotEmpty = FALSE;
+    if (!(gBattleTypeFlags & BATTLE_TYPE_DOUBLE) || gBattleTypeFlags & (BATTLE_TYPE_MULTI | BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED))
+        return;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (IsUsablePartyMon(&gPlayerParty[i]))
+            usable++;
+    }
+    if (usable != 1)
+        return;
+
+    for (i = 0; i < PARTY_SIZE && slot == PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_NONE)
+            slot = i;
+    }
+    for (i = 0; i < PARTY_SIZE && slot == PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG && GetMonData(&gPlayerParty[i], MON_DATA_HP) == 0)
+            slot = i;
+    }
+    if (slot == PARTY_SIZE) // the other 5 are all Eggs: keep the vanilla behaviour
+        return;
+
+    gBattlerPartyIndexes[GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT)] = slot;
+    gPlayerPartnerSlotEmpty = TRUE;
 }
 
 static void PrepareBufferDataTransfer(u8 bufferId, u8 *data, u16 size)

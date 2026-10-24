@@ -2044,6 +2044,8 @@ void BufferStringBattle(u16 stringID)
             {
                 if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER)
                     stringPtr = sText_InGamePartnerSentOutZGoN;
+                else if (gPlayerPartnerSlotEmpty)
+                    stringPtr = sText_GoPkmn; // only one usable Pokémon
                 else if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
                     stringPtr = sText_GoTwoPkmn;
                 else if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
