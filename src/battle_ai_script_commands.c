@@ -785,6 +785,8 @@ static void Cmd_if_hp_equal(void)
 
     if (gAIScriptPtr[1] == AI_USER)
         battler = sBattler_AI;
+    else if (gAIScriptPtr[1] == AI_USER_PARTNER) // used to check if the partner has fainted
+        battler = BATTLE_PARTNER(sBattler_AI);
     else
         battler = gBattlerTarget;
 

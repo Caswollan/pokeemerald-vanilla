@@ -260,6 +260,15 @@ void HandleAction_UseMove(void)
         }
     }
 
+    // Moves that hit everyone else (e.g. Surf) always start from the left foe, then go right foe -> ally
+    // (see GetNextHitEveryoneTarget), whatever target the controller picked
+    if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && IsHitEveryoneMove(gCurrentMove))
+    {
+        gBattlerTarget = GetBattlerAtPosition(BATTLE_OPPOSITE(GET_BATTLER_SIDE(gBattlerAttacker)));
+        if (gAbsentBattlerFlags & gBitTable[gBattlerTarget] || gBattleMons[gBattlerTarget].hp == 0)
+            gBattlerTarget = GetBattlerAtPosition(BATTLE_PARTNER(GetBattlerPosition(gBattlerTarget)));
+    }
+
     if (gBattleTypeFlags & BATTLE_TYPE_PALACE && gProtectStructs[gBattlerAttacker].palaceUnableToUseMove)
     {
         // Battle Palace, select battle script for failure to use move

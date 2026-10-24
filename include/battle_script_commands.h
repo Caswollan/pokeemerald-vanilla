@@ -4,6 +4,7 @@
 #include "constants/battle_script_commands.h"
 
 u8 GetBattlerHiddenPowerType(u8 battler);
+bool8 IsHitEveryoneMove(u16 move);
 
 // Arguments for 'flags' in HandleBattleWindow
 #define WINDOW_CLEAR (1 << 0)

@@ -2258,6 +2258,7 @@ AI_DoubleBattle:
 	get_curr_move_type
 	if_move MOVE_EARTHQUAKE, AI_DoubleBattleAllHittingGroundMove
 	if_move MOVE_MAGNITUDE, AI_DoubleBattleAllHittingGroundMove
+	if_move MOVE_SURF, AI_DoubleBattleAllHittingWaterMove
 	if_equal TYPE_ELECTRIC, AI_DoubleBattleElectricMove
 	if_equal TYPE_FIRE, AI_DoubleBattleFireMove
 	get_ability AI_USER
@@ -2289,6 +2290,20 @@ AI_DoubleBattleAllHittingGroundMove:
 	if_type AI_USER_PARTNER, TYPE_POISON, Score_Minus10
 	if_type AI_USER_PARTNER, TYPE_ROCK, Score_Minus10
 	goto Score_Minus3
+
+@ Surf hits the partner too (as in Gen 4+): avoid it when the partner is weak to Water
+AI_DoubleBattleAllHittingWaterMove:
+	if_hp_equal AI_USER_PARTNER, 0, AI_DoubleBattleAllHittingWaterMoveEnd
+	if_ability AI_USER_PARTNER, ABILITY_WATER_ABSORB, Score_Plus2
+	if_type AI_USER_PARTNER, TYPE_FIRE, Score_Minus10
+	if_type AI_USER_PARTNER, TYPE_GROUND, Score_Minus10
+	if_type AI_USER_PARTNER, TYPE_ROCK, Score_Minus10
+	if_type AI_USER_PARTNER, TYPE_WATER, Score_Minus1
+	if_type AI_USER_PARTNER, TYPE_GRASS, Score_Minus1
+	if_type AI_USER_PARTNER, TYPE_DRAGON, Score_Minus1
+	goto Score_Minus3
+AI_DoubleBattleAllHittingWaterMoveEnd:
+	end
 
 AI_DoubleBattleSkillSwap:
 	get_ability AI_USER

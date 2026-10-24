@@ -4575,6 +4575,46 @@ static void Cmd_playstatchangeanimation(void)
     }
 }
 
+// Ordinary moves that hit everyone else on the field (e.g. Surf, as in Gen 4+). Earthquake, Magnitude,
+// Explosion and Teeter Dance already loop over their targets in their own battle scripts.
+bool8 IsHitEveryoneMove(u16 move)
+{
+    if (gBattleMoves[move].target != MOVE_TARGET_FOES_AND_ALLY)
+        return FALSE;
+    switch (gBattleMoves[move].effect)
+    {
+    case EFFECT_EARTHQUAKE:
+    case EFFECT_MAGNITUDE:
+    case EFFECT_EXPLOSION:
+    case EFFECT_TEETER_DANCE:
+        return FALSE;
+    }
+    return TRUE;
+}
+
+// Next target of a hit-everyone move: left foe -> right foe -> ally (the first target is the left foe,
+// or the right one if the left one is absent, see GetMoveTarget). Returns MAX_BATTLERS_COUNT when done.
+static u8 GetNextHitEveryoneTarget(u8 attacker, u8 current)
+{
+    u8 foeLeft = GetBattlerAtPosition(BATTLE_OPPOSITE(GET_BATTLER_SIDE(attacker)));
+    u8 foeRight = GetBattlerAtPosition(BATTLE_PARTNER(GetBattlerPosition(foeLeft)));
+    u8 ally = GetBattlerAtPosition(BATTLE_PARTNER(GetBattlerPosition(attacker)));
+    u8 order[3];
+    s32 i;
+
+    order[0] = foeLeft;
+    order[1] = foeRight;
+    order[2] = ally;
+    for (i = 0; i < 3 && order[i] != current; i++)
+        ;
+    for (i++; i < 3; i++)
+    {
+        if (!(gAbsentBattlerFlags & gBitTable[order[i]]) && gBattleMons[order[i]].hp != 0)
+            return order[i];
+    }
+    return MAX_BATTLERS_COUNT;
+}
+
 static void Cmd_moveend(void)
 {
     s32 i;
@@ -4847,6 +4887,22 @@ static void Cmd_moveend(void)
                 {
                     gHitMarker |= HITMARKER_NO_ATTACKSTRING;
                 }
+            }
+            else if (!(gHitMarker & HITMARKER_UNABLE_TO_USE_MOVE) && gBattleTypeFlags & BATTLE_TYPE_DOUBLE
+                && !gProtectStructs[gBattlerAttacker].chargingTurn && IsHitEveryoneMove(gCurrentMove))
+            {
+                u8 battler = GetNextHitEveryoneTarget(gBattlerAttacker, gBattlerTarget);
+                if (battler != MAX_BATTLERS_COUNT)
+                {
+                    gBattlerTarget = battler;
+                    gHitMarker |= HITMARKER_NO_ATTACKSTRING;
+                    gBattleScripting.moveendState = 0;
+                    MoveValuesCleanUp();
+                    BattleScriptPush(gBattleScriptsForMoveEffects[gBattleMoves[gCurrentMove].effect]);
+                    gBattlescriptCurrInstr = BattleScript_FlushMessageBox;
+                    return;
+                }
+                gHitMarker |= HITMARKER_NO_ATTACKSTRING;
             }
             gBattleScripting.moveendState++;
             break;
