@@ -14,9 +14,11 @@ MossdeepCity_OnTransition:
 @ Courtney guards the Space Center door while Team Magma is inside, until the player beats her
 MossdeepCity_EventScript_SetCourtneyVisibility::
 	setflag FLAG_HIDE_MOSSDEEP_CITY_COURTNEY
+	setvar VAR_TEMP_2, 1
 	goto_if_ne VAR_MOSSDEEP_CITY_STATE, 2, MossdeepCity_EventScript_SetCourtneyVisibilityEnd
 	goto_if_defeated TRAINER_COURTNEY_SPACE_CENTER, MossdeepCity_EventScript_SetCourtneyVisibilityEnd
 	clearflag FLAG_HIDE_MOSSDEEP_CITY_COURTNEY
+	setvar VAR_TEMP_2, 0
 MossdeepCity_EventScript_SetCourtneyVisibilityEnd:
 	return
 
@@ -107,6 +109,7 @@ MossdeepCity_EventScript_TeamMagmaEnterSpaceCenter::
 	setflag FLAG_HIDE_MOSSDEEP_CITY_TEAM_MAGMA
 	clearflag FLAG_HIDE_MOSSDEEP_CITY_COURTNEY
 	addobject LOCALID_MOSSDEEP_COURTNEY
+	setvar VAR_TEMP_2, 0
 	releaseall
 	end
 
@@ -440,19 +443,88 @@ MossdeepCity_EventScript_Courtney::
 	trainerbattle_single TRAINER_COURTNEY_SPACE_CENTER, MossdeepCity_Text_CourtneyIntro, MossdeepCity_Text_CourtneyDefeat, MossdeepCity_EventScript_CourtneyDefeated
 	end
 
+@ Triggers on the top step of the Space Center stairs: the player walks up to Courtney, then the battle starts
+MossdeepCity_EventScript_CourtneyStairsLeft::
+	lockall
+	setvar VAR_0x8008, 0
+	goto MossdeepCity_EventScript_CourtneyStairs
+
+MossdeepCity_EventScript_CourtneyStairsMiddle::
+	lockall
+	setvar VAR_0x8008, 1
+	goto MossdeepCity_EventScript_CourtneyStairs
+
+MossdeepCity_EventScript_CourtneyStairsRight::
+	lockall
+	setvar VAR_0x8008, 2
+	goto MossdeepCity_EventScript_CourtneyStairs
+
+MossdeepCity_EventScript_CourtneyStairs::
+	applymovement LOCALID_MOSSDEEP_COURTNEY, Common_Movement_FaceDown
+	waitmovement 0
+	playse SE_PIN
+	applymovement LOCALID_MOSSDEEP_COURTNEY, Common_Movement_ExclamationMark
+	waitmovement 0
+	applymovement LOCALID_MOSSDEEP_COURTNEY, Common_Movement_Delay48
+	waitmovement 0
+	call_if_eq VAR_0x8008, 0, MossdeepCity_EventScript_PlayerApproachCourtneyLeft
+	call_if_eq VAR_0x8008, 1, MossdeepCity_EventScript_PlayerApproachCourtneyMiddle
+	call_if_eq VAR_0x8008, 2, MossdeepCity_EventScript_PlayerApproachCourtneyRight
+	msgbox MossdeepCity_Text_CourtneyIntro, MSGBOX_DEFAULT
+	closemessage
+	trainerbattle_no_intro TRAINER_COURTNEY_SPACE_CENTER, MossdeepCity_Text_CourtneyDefeat
+	goto MossdeepCity_EventScript_CourtneyDefeated
+
+MossdeepCity_EventScript_PlayerApproachCourtneyLeft::
+	applymovement OBJ_EVENT_ID_PLAYER, MossdeepCity_Movement_PlayerApproachCourtneyLeft
+	waitmovement 0
+	return
+
+MossdeepCity_EventScript_PlayerApproachCourtneyMiddle::
+	applymovement OBJ_EVENT_ID_PLAYER, MossdeepCity_Movement_PlayerApproachCourtneyMiddle
+	waitmovement 0
+	return
+
+MossdeepCity_EventScript_PlayerApproachCourtneyRight::
+	applymovement OBJ_EVENT_ID_PLAYER, MossdeepCity_Movement_PlayerApproachCourtneyRight
+	waitmovement 0
+	return
+
+MossdeepCity_Movement_PlayerApproachCourtneyLeft:
+	walk_up
+	walk_right
+	face_up
+	step_end
+
+MossdeepCity_Movement_PlayerApproachCourtneyMiddle:
+	walk_up
+	face_up
+	step_end
+
+MossdeepCity_Movement_PlayerApproachCourtneyRight:
+	walk_up
+	walk_left
+	face_up
+	step_end
+
 MossdeepCity_EventScript_CourtneyDefeated::
 	msgbox MossdeepCity_Text_CourtneyPostBattle, MSGBOX_DEFAULT
 	closemessage
+	applywaitmovement LOCALID_MOSSDEEP_COURTNEY, Common_Movement_FaceUp
+	opendoor 64, 15
+	waitdooranim
 	applywaitmovement LOCALID_MOSSDEEP_COURTNEY, MossdeepCity_Movement_CourtneyEnterSpaceCenter
+	closedoor 64, 15
+	waitdooranim
 	removeobject LOCALID_MOSSDEEP_COURTNEY
 	setflag FLAG_HIDE_MOSSDEEP_CITY_COURTNEY
-	release
+	setvar VAR_TEMP_2, 1
+	releaseall
 	end
 
 MossdeepCity_Movement_CourtneyEnterSpaceCenter:
-	face_up
-	delay_8
 	walk_up
+	set_invisible
 	step_end
 
 MossdeepCity_Text_CourtneyIntro:

@@ -1261,16 +1261,21 @@ SootopolisCity_EventScript_GiveWaterfall::
 	setflag FLAG_RECEIVED_HM_WATERFALL
 	msgbox SootopolisCity_Text_ExplainWaterfallGoToGym, MSGBOX_DEFAULT
 	closemessage
+	@ Wallace stands in front of the Gym door (31,32): open it, walk in, close it
+	applywaitmovement LOCALID_SOOTOPOLIS_WALLACE, Common_Movement_FaceUp
+	opendoor 31, 32
+	waitdooranim
 	applywaitmovement LOCALID_SOOTOPOLIS_WALLACE, SootopolisCity_Movement_WallaceEnterGym
+	closedoor 31, 32
+	waitdooranim
 	removeobject LOCALID_SOOTOPOLIS_WALLACE
 	setflag FLAG_HIDE_SOOTOPOLIS_CITY_WALLACE
 	release
 	end
 
 SootopolisCity_Movement_WallaceEnterGym:
-	face_up
-	delay_8
 	walk_up
+	set_invisible
 	step_end
 
 SootopolisCity_EventScript_WallaceMoveFromGym::

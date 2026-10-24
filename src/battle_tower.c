@@ -769,31 +769,39 @@ struct
     u8 nature;
     u8 evs[NUM_STATS];
     u16 moves[MAX_MON_MOVES];
+    u16 heldItem;
+    u8 abilityNum;
 } static const sStevenMons[MULTI_PARTY_SIZE] =
 {
     {
-        .species = SPECIES_METANG,
+        .species = SPECIES_ARMALDO,
         .fixedIV = MAX_PER_STAT_IVS,
-        .level = 42,
-        .nature = NATURE_BRAVE,
-        .evs = {0, 252, 252, 0, 6, 0},
-        .moves = {MOVE_LIGHT_SCREEN, MOVE_PSYCHIC, MOVE_REFLECT, MOVE_METAL_CLAW}
+        .level = 75,
+        .nature = NATURE_CAREFUL,
+        .evs = {0, 0, 0, 0, 0, 0},
+        .moves = {MOVE_ROCK_SLIDE, MOVE_LEECH_LIFE, MOVE_LIQUIDATION, MOVE_SWORDS_DANCE},
+        .heldItem = ITEM_SITRUS_BERRY,
+        .abilityNum = 0, // Battle Armor
     },
     {
-        .species = SPECIES_SKARMORY,
+        .species = SPECIES_CRADILY,
         .fixedIV = MAX_PER_STAT_IVS,
-        .level = 43,
-        .nature = NATURE_IMPISH,
-        .evs = {252, 0, 0, 0, 6, 252},
-        .moves = {MOVE_TOXIC, MOVE_AERIAL_ACE, MOVE_PROTECT, MOVE_STEEL_WING}
+        .level = 75,
+        .nature = NATURE_MODEST,
+        .evs = {0, 0, 0, 0, 0, 0},
+        .moves = {MOVE_POWER_GEM, MOVE_GIGA_DRAIN, MOVE_SLUDGE_BOMB, MOVE_EARTH_POWER},
+        .heldItem = ITEM_MIRACLE_SEED,
+        .abilityNum = 0, // Suction Cups
     },
     {
         .species = SPECIES_AGGRON,
         .fixedIV = MAX_PER_STAT_IVS,
-        .level = 44,
-        .nature = NATURE_ADAMANT,
-        .evs = {0, 252, 0, 0, 252, 6},
-        .moves = {MOVE_THUNDER, MOVE_PROTECT, MOVE_SOLAR_BEAM, MOVE_DRAGON_CLAW}
+        .level = 75,
+        .nature = NATURE_BRAVE,
+        .evs = {0, 0, 0, 0, 0, 0},
+        .moves = {MOVE_METEOR_MASH, MOVE_ROCK_SLIDE, MOVE_SUBMISSION, MOVE_DIZZY_PUNCH},
+        .heldItem = ITEM_HARD_STONE,
+        .abilityNum = 0, // Sturdy
     }
 };
 
@@ -2979,12 +2987,10 @@ static void FillPartnerParty(u16 trainerId)
                       sStevenMons[i].level,
                       sStevenMons[i].fixedIV,
                       TRUE,
-                      #ifdef BUGFIX
-                      j,
-                      #else
-                      i, // BUG: personality was stored in the 'j' variable. As a result, Steven's Pokémon do not have the intended natures.
-                      #endif
+                      j, // vanilla passed 'i' here, so Steven's Pokémon didn't get the intended natures
                       OT_ID_PRESET, STEVEN_OTID);
+            SetMonData(&gPlayerParty[MULTI_PARTY_SIZE + i], MON_DATA_HELD_ITEM, &sStevenMons[i].heldItem);
+            SetMonData(&gPlayerParty[MULTI_PARTY_SIZE + i], MON_DATA_ABILITY_NUM, &sStevenMons[i].abilityNum);
             for (j = 0; j < PARTY_SIZE; j++)
                 SetMonData(&gPlayerParty[MULTI_PARTY_SIZE + i], MON_DATA_HP_EV + j, &sStevenMons[i].evs[j]);
             for (j = 0; j < MAX_MON_MOVES; j++)
