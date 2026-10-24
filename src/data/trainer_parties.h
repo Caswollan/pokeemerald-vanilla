@@ -4725,36 +4725,60 @@ static const struct TrainerMonItemCustomMoves sParty_TabithaMossdeep[] = {
     }
 };
 
-static const struct TrainerMonNoItemCustomMoves sParty_WallyVR1[] = {
+static const struct TrainerMonItemCustomMoves sParty_WallyVR1[] = {
     {
-    .iv = 150,
-    .lvl = 44,
+    .iv = 255,
+    .lvl = 83,
     .species = SPECIES_ALTARIA,
-    .moves = {MOVE_AERIAL_ACE, MOVE_SAFEGUARD, MOVE_DRAGON_BREATH, MOVE_DRAGON_DANCE}
+    .nature = TRAINER_NATURE(NATURE_CAREFUL),
+    .abilityNum = TRAINER_MON_ABILITY_1,
+    .heldItem = ITEM_LUM_BERRY,
+    .moves = {MOVE_DRAGON_CLAW, MOVE_SKY_ATTACK, MOVE_EARTHQUAKE, MOVE_DRAGON_DANCE}
     },
     {
-    .iv = 150,
-    .lvl = 43,
-    .species = SPECIES_DELCATTY,
-    .moves = {MOVE_SING, MOVE_ASSIST, MOVE_CHARM, MOVE_FAINT_ATTACK}
+    .iv = 255,
+    .lvl = 83,
+    .species = SPECIES_STARMIE,
+    .nature = TRAINER_NATURE(NATURE_TIMID),
+    .abilityNum = TRAINER_MON_ABILITY_1,
+    .heldItem = ITEM_MYSTIC_WATER,
+    .moves = {MOVE_HYDRO_PUMP, MOVE_PSYCHIC, MOVE_ICE_BEAM, MOVE_POWER_GEM}
     },
     {
-    .iv = 150,
-    .lvl = 44,
-    .species = SPECIES_ROSELIA,
-    .moves = {MOVE_MAGICAL_LEAF, MOVE_LEECH_SEED, MOVE_GIGA_DRAIN, MOVE_TOXIC}
+    .iv = 255,
+    .lvl = 83,
+    .species = SPECIES_HERACROSS,
+    .nature = TRAINER_NATURE(NATURE_ADAMANT),
+    .abilityNum = TRAINER_MON_ABILITY_1,
+    .heldItem = ITEM_FOCUS_BAND,
+    .moves = {MOVE_MEGAHORN, MOVE_SUPERPOWER, MOVE_EARTHQUAKE, MOVE_BULK_UP}
     },
     {
-    .iv = 150,
-    .lvl = 41,
-    .species = SPECIES_MAGNETON,
-    .moves = {MOVE_SUPERSONIC, MOVE_THUNDERBOLT, MOVE_TRI_ATTACK, MOVE_SCREECH}
+    .iv = 255,
+    .lvl = 83,
+    .species = SPECIES_PORYGON2,
+    .nature = TRAINER_NATURE(NATURE_BOLD),
+    .abilityNum = TRAINER_MON_ABILITY_1,
+    .heldItem = ITEM_LEFTOVERS,
+    .moves = {MOVE_TRI_ATTACK, MOVE_THUNDERBOLT, MOVE_ICE_BEAM, MOVE_PSYCHIC}
     },
     {
-    .iv = 250,
-    .lvl = 45,
+    .iv = 255,
+    .lvl = 83,
+    .species = SPECIES_FLAREON,
+    .nature = TRAINER_NATURE(NATURE_ADAMANT),
+    .abilityNum = TRAINER_MON_ABILITY_1,
+    .heldItem = ITEM_SITRUS_BERRY,
+    .moves = {MOVE_SACRED_FIRE, MOVE_SUPERPOWER, MOVE_IRON_TAIL, MOVE_WILL_O_WISP}
+    },
+    {
+    .iv = 255,
+    .lvl = 83,
     .species = SPECIES_GARDEVOIR,
-    .moves = {MOVE_DOUBLE_TEAM, MOVE_CALM_MIND, MOVE_PSYCHIC, MOVE_FUTURE_SIGHT}
+    .nature = TRAINER_NATURE(NATURE_TIMID),
+    .abilityNum = TRAINER_MON_ABILITY_1,
+    .heldItem = ITEM_WHITE_HERB,
+    .moves = {MOVE_PSYCHO_BOOST, MOVE_ENERGY_BALL, MOVE_THUNDERBOLT, MOVE_CALM_MIND}
     }
 };
 
