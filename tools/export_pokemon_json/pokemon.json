@@ -13022,7 +13022,7 @@
     ],
     "abilities": {
       "ability1": "SERENE_GRACE",
-      "ability2": "NATURAL_CURE"
+      "ability2": "ILLUMINATE"
     },
     "stats": {
       "hp": 30,
@@ -13148,7 +13148,7 @@
     ],
     "abilities": {
       "ability1": "SERENE_GRACE",
-      "ability2": "NATURAL_CURE"
+      "ability2": "ILLUMINATE"
     },
     "stats": {
       "hp": 60,
@@ -18440,7 +18440,7 @@
     ],
     "abilities": {
       "ability1": "VOLT_ABSORB",
-      "ability2": "WATER_ABSORB"
+      "ability2": "ILLUMINATE"
     },
     "stats": {
       "hp": 75,
@@ -18556,7 +18556,7 @@
     ],
     "abilities": {
       "ability1": "VOLT_ABSORB",
-      "ability2": "WATER_ABSORB"
+      "ability2": "ILLUMINATE"
     },
     "stats": {
       "hp": 125,
@@ -19433,7 +19433,7 @@
     ],
     "abilities": {
       "ability1": "STATIC",
-      "ability2": null
+      "ability2": "ILLUMINATE"
     },
     "stats": {
       "hp": 55,
@@ -19549,7 +19549,7 @@
     ],
     "abilities": {
       "ability1": "STATIC",
-      "ability2": null
+      "ability2": "ILLUMINATE"
     },
     "stats": {
       "hp": 70,
@@ -19673,7 +19673,7 @@
     ],
     "abilities": {
       "ability1": "STATIC",
-      "ability2": null
+      "ability2": "ILLUMINATE"
     },
     "stats": {
       "hp": 90,
@@ -33780,7 +33780,7 @@
     ],
     "abilities": {
       "ability1": "LEVITATE",
-      "ability2": null
+      "ability2": "ILLUMINATE"
     },
     "stats": {
       "hp": 65,

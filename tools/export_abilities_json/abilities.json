@@ -172,8 +172,6 @@
       "POLIWRATH",
       "LAPRAS",
       "VAPOREON",
-      "CHINCHOU",
-      "LANTURN",
       "POLITOED",
       "WOOPER",
       "QUAGSIRE",
@@ -487,8 +485,6 @@
     "effect": "Status conditions are cured when the Pokemon switches out.",
     "pokemon": [
       "CHANSEY",
-      "STARYU",
-      "STARMIE",
       "CORSOLA",
       "BLISSEY",
       "CELEBI",
@@ -600,9 +596,18 @@
     "ability": "ILLUMINATE",
     "name": "Illuminate",
     "gameName": "ILLUMINATE",
-    "description": "Encounter rate increases.",
-    "effect": "Raises the wild encounter rate when the Pokemon leads the party. No effect in battle.",
-    "pokemon": []
+    "description": "Ups accuracy & encounters.",
+    "effect": "Raises the accuracy of the Pokemon's moves by 20%. Raises the wild encounter rate when the Pokemon leads the party.",
+    "pokemon": [
+      "STARYU",
+      "STARMIE",
+      "CHINCHOU",
+      "LANTURN",
+      "MAREEP",
+      "FLAAFFY",
+      "AMPHAROS",
+      "VOLBEAT"
+    ]
   },
   {
     "id": 36,

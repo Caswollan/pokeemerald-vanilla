@@ -58,7 +58,7 @@ EFFECT_TEXT = {
     'SERENE_GRACE': 'Doubles the chance of the secondary effects of the Pokemon\'s moves.',
     'SWIFT_SWIM': 'Doubles Speed in the rain.',
     'CHLOROPHYLL': 'Doubles Speed in the sun.',
-    'ILLUMINATE': 'Raises the wild encounter rate when the Pokemon leads the party. No effect in battle.',
+    'ILLUMINATE': 'Raises the accuracy of the Pokemon\'s moves by 20%. Raises the wild encounter rate when the Pokemon leads the party.',
     'TRACE': 'Copies the opponent\'s ability when the Pokemon enters battle.',
     'HUGE_POWER': 'Doubles the Pokemon\'s Attack.',
     'POISON_POINT': '30% chance to poison a Pokemon that makes contact with it.',
