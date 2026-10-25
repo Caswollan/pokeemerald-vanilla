@@ -847,6 +847,14 @@ static bool8 TryDoorWarp(struct MapPosition *position, u16 metatileBehavior, u8 
             warpEventId = GetWarpEventAtMapPosition(&gMapHeader, position);
             if (warpEventId != WARP_ID_NONE && IsWarpMetatileBehavior(metatileBehavior) == TRUE)
             {
+                // The Mauville Game Corner only opens after the 4th badge (Flannery): show a notice instead
+                const struct WarpEvent *warp = &gMapHeader.events->warps[warpEventId];
+                if (warp->mapGroup == MAP_GROUP(MAP_MAUVILLE_CITY_GAME_CORNER) && warp->mapNum == MAP_NUM(MAP_MAUVILLE_CITY_GAME_CORNER)
+                 && !FlagGet(FLAG_BADGE04_GET))
+                {
+                    ScriptContext_SetupScript(MauvilleCity_EventScript_GameCornerClosed);
+                    return TRUE;
+                }
                 StoreInitialPlayerAvatarState();
                 SetupWarp(&gMapHeader, warpEventId, position);
                 DoDoorWarp();

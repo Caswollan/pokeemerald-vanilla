@@ -12,6 +12,13 @@ MauvilleCity_OnTransition:
 	call_if_set FLAG_GOT_TM_THUNDERBOLT_FROM_WATTSON, MauvilleCity_EventScript_MoveWattsonBackToGym
 	end
 
+@ Run by TryDoorWarp (src/field_control_avatar.c) when the player tries to enter the Game Corner without the 4th badge
+MauvilleCity_EventScript_GameCornerClosed::
+	lockall
+	msgbox MauvilleCity_Text_GameCornerClosed, MSGBOX_DEFAULT
+	releaseall
+	end
+
 MauvilleCity_EventScript_MoveWattsonBackToGym::
 	clearflag FLAG_HIDE_MAUVILLE_GYM_WATTSON
 	setflag FLAG_HIDE_MAUVILLE_CITY_WATTSON
@@ -582,6 +589,12 @@ MauvilleCity_Text_WattsonWontBeChallenge:
 	.string "a short SURF away from ROUTE 110.\p"
 	.string "That's it, then, you have my trust!\n"
 	.string "Wahahahaha!$"
+
+MauvilleCity_Text_GameCornerClosed:
+	.string "There's a notice on the door…\p"
+	.string "“The GAME CORNER is open only to\n"
+	.string "TRAINERS who have defeated the\l"
+	.string "LAVARIDGE GYM LEADER, FLANNERY.”$"
 
 MauvilleCity_Text_WattsonThanksTakeTM:
 	.string "WATTSON: Wahahahaha!\p"
