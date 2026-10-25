@@ -1,0 +1,1473 @@
+[
+  {
+    "tm": "TM01",
+    "move": "PIN_MISSILE",
+    "order": 54,
+    "phase": 9,
+    "phaseName": "Fortree City (6th badge)",
+    "sources": [
+      {
+        "how": "Shop",
+        "place": "Fortree City · Poké Mart",
+        "coords": null,
+        "cost": "₽3,000",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM02",
+    "move": "TWINEEDLE",
+    "order": 12,
+    "phase": 5,
+    "phaseName": "Mauville City & Route 110 (3rd badge)",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Route 117",
+        "coords": [
+          9,
+          1
+        ],
+        "cost": null,
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM03",
+    "move": "LEECH_LIFE",
+    "order": 46,
+    "phase": 8,
+    "phaseName": "Petalburg City (5th badge, Surf)",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Route 119",
+        "coords": [
+          17,
+          82
+        ],
+        "cost": null,
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM04",
+    "move": "SIGNAL_BEAM",
+    "order": 27,
+    "phase": 7,
+    "phaseName": "Lavaridge Town (4th badge, Strength, Go-Goggles)",
+    "sources": [
+      {
+        "how": "Game Corner",
+        "place": "Mauville Game Corner",
+        "coords": null,
+        "cost": "100 coins",
+        "note": "TM prize counter."
+      }
+    ]
+  },
+  {
+    "tm": "TM05",
+    "move": "KNOCK_OFF",
+    "order": 8,
+    "phase": 4,
+    "phaseName": "Slateport City",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Slateport City · Oceanic Museum 1F",
+        "coords": null,
+        "cost": null,
+        "note": "The Team Aqua Grunt who recognizes you on the ground floor."
+      }
+    ]
+  },
+  {
+    "tm": "TM06",
+    "move": "DARK_PULSE",
+    "order": 28,
+    "phase": 7,
+    "phaseName": "Lavaridge Town (4th badge, Strength, Go-Goggles)",
+    "sources": [
+      {
+        "how": "Game Corner",
+        "place": "Mauville Game Corner",
+        "coords": null,
+        "cost": "100 coins",
+        "note": "TM prize counter."
+      }
+    ]
+  },
+  {
+    "tm": "TM07",
+    "move": "TORMENT",
+    "order": 9,
+    "phase": 4,
+    "phaseName": "Slateport City",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Slateport City · Battle Tent",
+        "coords": null,
+        "cost": null,
+        "note": "NPC in the Battle Tent lobby."
+      }
+    ]
+  },
+  {
+    "tm": "TM08",
+    "move": "TAUNT",
+    "order": 55,
+    "phase": 9,
+    "phaseName": "Fortree City (6th badge)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Route 110 · Trick House",
+        "coords": null,
+        "cost": null,
+        "note": "Reward for clearing the 5th Trick House puzzle."
+      }
+    ]
+  },
+  {
+    "tm": "TM09",
+    "move": "DRAGON_CLAW",
+    "order": 84,
+    "phase": 12,
+    "phaseName": "Sootopolis City (8th badge, Waterfall) & Victory Road",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Meteor Falls B1F · room 2",
+        "coords": [
+          5,
+          3
+        ],
+        "cost": null,
+        "note": "Waterfall needed."
+      }
+    ]
+  },
+  {
+    "tm": "TM10",
+    "move": "DRAGON_PULSE",
+    "order": 19,
+    "phase": 6,
+    "phaseName": "Towards Lavaridge (Routes 111-115, Meteor Falls)",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Meteor Falls 1F · room 1",
+        "coords": [
+          26,
+          32
+        ],
+        "cost": null,
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM11",
+    "move": "DRAGON_DANCE",
+    "order": 63,
+    "phase": 10,
+    "phaseName": "Lilycove City & Mt. Pyre",
+    "sources": [
+      {
+        "how": "Shop",
+        "place": "Lilycove Dept. Store 4F",
+        "coords": null,
+        "cost": "₽3,000",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM12",
+    "move": "THUNDER_PUNCH",
+    "order": 13,
+    "phase": 5,
+    "phaseName": "Mauville City & Route 110 (3rd badge)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Route 110 · Trick House",
+        "coords": null,
+        "cost": null,
+        "note": "Reward for clearing the 2nd Trick House puzzle (with Fire Punch and Ice Punch)."
+      }
+    ]
+  },
+  {
+    "tm": "TM13",
+    "move": "SHOCK_WAVE",
+    "order": 14,
+    "phase": 5,
+    "phaseName": "Mauville City & Route 110 (3rd badge)",
+    "sources": [
+      {
+        "how": "Gym reward",
+        "place": "Mauville City Gym",
+        "coords": null,
+        "cost": null,
+        "note": "Wattson, after the battle (3rd badge)."
+      }
+    ]
+  },
+  {
+    "tm": "TM14",
+    "move": "THUNDERBOLT",
+    "order": 29,
+    "phase": 7,
+    "phaseName": "Lavaridge Town (4th badge, Strength, Go-Goggles)",
+    "sources": [
+      {
+        "how": "Game Corner",
+        "place": "Mauville Game Corner",
+        "coords": null,
+        "cost": "100 coins",
+        "note": "TM prize counter."
+      }
+    ]
+  },
+  {
+    "tm": "TM15",
+    "move": "THUNDER",
+    "order": 47,
+    "phase": 8,
+    "phaseName": "Petalburg City (5th badge, Surf)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Mauville City",
+        "coords": null,
+        "cost": null,
+        "note": "Wattson, after you shut down the New Mauville generator."
+      }
+    ]
+  },
+  {
+    "tm": "TM16",
+    "move": "THUNDER_WAVE",
+    "order": 10,
+    "phase": 4,
+    "phaseName": "Slateport City",
+    "sources": [
+      {
+        "how": "Shop",
+        "place": "Slateport City · market",
+        "coords": null,
+        "cost": "₽3,000",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM17",
+    "move": "LOW_KICK",
+    "order": 20,
+    "phase": 6,
+    "phaseName": "Towards Lavaridge (Routes 111-115, Meteor Falls)",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Route 115",
+        "coords": [
+          26,
+          67
+        ],
+        "cost": null,
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM18",
+    "move": "ARM_THRUST",
+    "order": 56,
+    "phase": 9,
+    "phaseName": "Fortree City (6th badge)",
+    "sources": [
+      {
+        "how": "Shop",
+        "place": "Fortree City · Poké Mart",
+        "coords": null,
+        "cost": "₽3,000",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM19",
+    "move": "BRICK_BREAK",
+    "order": 21,
+    "phase": 6,
+    "phaseName": "Towards Lavaridge (Routes 111-115, Meteor Falls)",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Route 115",
+        "coords": [
+          18,
+          7
+        ],
+        "cost": null,
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM20",
+    "move": "SUPERPOWER",
+    "order": 85,
+    "phase": 12,
+    "phaseName": "Sootopolis City (8th badge, Waterfall) & Victory Road",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Sootopolis City · house 1",
+        "coords": null,
+        "cost": null,
+        "note": "The Black Belt in the house."
+      }
+    ]
+  },
+  {
+    "tm": "TM21",
+    "move": "BULK_UP",
+    "order": 5,
+    "phase": 3,
+    "phaseName": "Dewford Town & Granite Cave (2nd badge)",
+    "sources": [
+      {
+        "how": "Gym reward",
+        "place": "Dewford Town Gym",
+        "coords": null,
+        "cost": null,
+        "note": "Brawly, after the battle (2nd badge)."
+      }
+    ]
+  },
+  {
+    "tm": "TM22",
+    "move": "FIRE_PUNCH",
+    "order": 15,
+    "phase": 5,
+    "phaseName": "Mauville City & Route 110 (3rd badge)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Route 110 · Trick House",
+        "coords": null,
+        "cost": null,
+        "note": "Reward for clearing the 2nd Trick House puzzle (with ThunderPunch and Ice Punch)."
+      }
+    ]
+  },
+  {
+    "tm": "TM23",
+    "move": "FLAMETHROWER",
+    "order": 30,
+    "phase": 7,
+    "phaseName": "Lavaridge Town (4th badge, Strength, Go-Goggles)",
+    "sources": [
+      {
+        "how": "Game Corner",
+        "place": "Mauville Game Corner",
+        "coords": null,
+        "cost": "100 coins",
+        "note": "TM prize counter."
+      }
+    ]
+  },
+  {
+    "tm": "TM24",
+    "move": "HEAT_WAVE",
+    "order": 31,
+    "phase": 7,
+    "phaseName": "Lavaridge Town (4th badge, Strength, Go-Goggles)",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Fiery Path",
+        "coords": [
+          7,
+          32
+        ],
+        "cost": null,
+        "note": "Strength needed."
+      }
+    ]
+  },
+  {
+    "tm": "TM25",
+    "move": "FIRE_BLAST",
+    "order": 76,
+    "phase": 11,
+    "phaseName": "Magma Hideout & Mossdeep City (7th badge, Dive)",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Magma Hideout 1F",
+        "coords": [
+          3,
+          20
+        ],
+        "cost": null,
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM26",
+    "move": "OVERHEAT",
+    "order": 32,
+    "phase": 7,
+    "phaseName": "Lavaridge Town (4th badge, Strength, Go-Goggles)",
+    "sources": [
+      {
+        "how": "Gym reward",
+        "place": "Lavaridge Town Gym",
+        "coords": null,
+        "cost": null,
+        "note": "Flannery, after the battle (4th badge)."
+      }
+    ]
+  },
+  {
+    "tm": "TM27",
+    "move": "SUNNY_DAY",
+    "order": 57,
+    "phase": 9,
+    "phaseName": "Fortree City (6th badge)",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Scorched Slab (Route 120)",
+        "coords": [
+          7,
+          5
+        ],
+        "cost": null,
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM28",
+    "move": "WILL_O_WISP",
+    "order": 64,
+    "phase": 10,
+    "phaseName": "Lilycove City & Mt. Pyre",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Mt. Pyre · exterior",
+        "coords": [
+          9,
+          9
+        ],
+        "cost": null,
+        "note": "In front of the grave at the end of the corridor."
+      }
+    ]
+  },
+  {
+    "tm": "TM29",
+    "move": "AERIAL_ACE",
+    "order": 22,
+    "phase": 6,
+    "phaseName": "Towards Lavaridge (Routes 111-115, Meteor Falls)",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Route 113",
+        "coords": [
+          22,
+          5
+        ],
+        "cost": null,
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM30",
+    "move": "SKY_ATTACK",
+    "order": 58,
+    "phase": 9,
+    "phaseName": "Fortree City (6th badge)",
+    "sources": [
+      {
+        "how": "Gym reward",
+        "place": "Fortree City Gym",
+        "coords": null,
+        "cost": null,
+        "note": "Winona, after the battle (6th badge)."
+      }
+    ]
+  },
+  {
+    "tm": "TM31",
+    "move": "RAZOR_WIND",
+    "order": 59,
+    "phase": 9,
+    "phaseName": "Fortree City (6th badge)",
+    "sources": [
+      {
+        "how": "Gym reward",
+        "place": "Fortree City Gym",
+        "coords": null,
+        "cost": null,
+        "note": "Winona, after the battle (6th badge)."
+      }
+    ]
+  },
+  {
+    "tm": "TM32",
+    "move": "SHADOW_PUNCH",
+    "order": 65,
+    "phase": 10,
+    "phaseName": "Lilycove City & Mt. Pyre",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Mt. Pyre · exterior",
+        "coords": [
+          19,
+          40
+        ],
+        "cost": null,
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM33",
+    "move": "SHADOW_BALL",
+    "order": 66,
+    "phase": 10,
+    "phaseName": "Lilycove City & Mt. Pyre",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Mt. Pyre 6F",
+        "coords": [
+          6,
+          9
+        ],
+        "cost": null,
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM34",
+    "move": "BULLET_SEED",
+    "order": 1,
+    "phase": 1,
+    "phaseName": "Start, before Roxanne",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Route 104",
+        "coords": null,
+        "cost": null,
+        "note": "Given by an NPC."
+      }
+    ]
+  },
+  {
+    "tm": "TM35",
+    "move": "EGG_BOMB",
+    "order": 33,
+    "phase": 7,
+    "phaseName": "Lavaridge Town (4th badge, Strength, Go-Goggles)",
+    "sources": [
+      {
+        "how": "Game Corner",
+        "place": "Mauville Game Corner",
+        "coords": null,
+        "cost": "100 coins",
+        "note": "TM prize counter."
+      }
+    ]
+  },
+  {
+    "tm": "TM36",
+    "move": "GIGA_DRAIN",
+    "order": 48,
+    "phase": 8,
+    "phaseName": "Petalburg City (5th badge, Surf)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Route 123",
+        "coords": null,
+        "cost": null,
+        "note": "The girl who gives it if you have a Grass-type Pokémon in your party."
+      }
+    ]
+  },
+  {
+    "tm": "TM37",
+    "move": "ENERGY_BALL",
+    "order": 34,
+    "phase": 7,
+    "phaseName": "Lavaridge Town (4th badge, Strength, Go-Goggles)",
+    "sources": [
+      {
+        "how": "Game Corner",
+        "place": "Mauville Game Corner",
+        "coords": null,
+        "cost": "100 coins",
+        "note": "TM prize counter."
+      }
+    ]
+  },
+  {
+    "tm": "TM38",
+    "move": "SOLAR_BEAM",
+    "order": 67,
+    "phase": 10,
+    "phaseName": "Lilycove City & Mt. Pyre",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Safari Zone · northwest",
+        "coords": [
+          33,
+          7
+        ],
+        "cost": null,
+        "note": "Mach Bike needed."
+      }
+    ]
+  },
+  {
+    "tm": "TM39",
+    "move": "PETAL_DANCE",
+    "order": 60,
+    "phase": 9,
+    "phaseName": "Fortree City (6th badge)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Fortree City · house 2",
+        "coords": null,
+        "cost": null,
+        "note": "The old woman gives it as soon as you talk to her."
+      }
+    ]
+  },
+  {
+    "tm": "TM40",
+    "move": "DIG",
+    "order": 23,
+    "phase": 6,
+    "phaseName": "Towards Lavaridge (Routes 111-115, Meteor Falls)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Route 114 · Fossil Maniac's house",
+        "coords": null,
+        "cost": null,
+        "note": "The Fossil Maniac's brother."
+      }
+    ]
+  },
+  {
+    "tm": "TM41",
+    "move": "EARTHQUAKE",
+    "order": 77,
+    "phase": 11,
+    "phaseName": "Magma Hideout & Mossdeep City (7th badge, Dive)",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Seafloor Cavern · room 9",
+        "coords": [
+          14,
+          5
+        ],
+        "cost": null,
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM42",
+    "move": "EARTH_POWER",
+    "order": 35,
+    "phase": 7,
+    "phaseName": "Lavaridge Town (4th badge, Strength, Go-Goggles)",
+    "sources": [
+      {
+        "how": "Game Corner",
+        "place": "Mauville Game Corner",
+        "coords": null,
+        "cost": "100 coins",
+        "note": "TM prize counter."
+      }
+    ]
+  },
+  {
+    "tm": "TM43",
+    "move": "ICICLE_SPEAR",
+    "order": 61,
+    "phase": 9,
+    "phaseName": "Fortree City (6th badge)",
+    "sources": [
+      {
+        "how": "Shop",
+        "place": "Fortree City · Poké Mart",
+        "coords": null,
+        "cost": "₽3,000",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM44",
+    "move": "ICE_PUNCH",
+    "order": 16,
+    "phase": 5,
+    "phaseName": "Mauville City & Route 110 (3rd badge)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Route 110 · Trick House",
+        "coords": null,
+        "cost": null,
+        "note": "Reward for clearing the 2nd Trick House puzzle (with ThunderPunch and Fire Punch)."
+      }
+    ]
+  },
+  {
+    "tm": "TM45",
+    "move": "ICICLE_CRASH",
+    "order": 78,
+    "phase": 11,
+    "phaseName": "Magma Hideout & Mossdeep City (7th badge, Dive)",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Route 125",
+        "coords": [
+          46,
+          17
+        ],
+        "cost": null,
+        "note": "Surf needed."
+      }
+    ]
+  },
+  {
+    "tm": "TM46",
+    "move": "ICY_WIND",
+    "order": 17,
+    "phase": 5,
+    "phaseName": "Mauville City & Route 110 (3rd badge)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Verdanturf Town · Battle Tent",
+        "coords": null,
+        "cost": null,
+        "note": "The girl in the Battle Tent lobby."
+      }
+    ]
+  },
+  {
+    "tm": "TM47",
+    "move": "ICE_BEAM",
+    "order": 36,
+    "phase": 7,
+    "phaseName": "Lavaridge Town (4th badge, Strength, Go-Goggles)",
+    "sources": [
+      {
+        "how": "Game Corner",
+        "place": "Mauville Game Corner",
+        "coords": null,
+        "cost": "100 coins",
+        "note": "TM prize counter."
+      }
+    ]
+  },
+  {
+    "tm": "TM48",
+    "move": "BLIZZARD",
+    "order": 79,
+    "phase": 11,
+    "phaseName": "Magma Hideout & Mossdeep City (7th badge, Dive)",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Shoal Cave · ice room (low tide)",
+        "coords": [
+          12,
+          21
+        ],
+        "cost": null,
+        "note": "Reachable at low tide."
+      }
+    ]
+  },
+  {
+    "tm": "TM49",
+    "move": "HAIL",
+    "order": 80,
+    "phase": 11,
+    "phaseName": "Magma Hideout & Mossdeep City (7th badge, Dive)",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Shoal Cave · ice room (low tide)",
+        "coords": [
+          12,
+          8
+        ],
+        "cost": null,
+        "note": "Reachable at low tide."
+      }
+    ]
+  },
+  {
+    "tm": "TM50",
+    "move": "RETURN",
+    "order": 24,
+    "phase": 6,
+    "phaseName": "Towards Lavaridge (Routes 111-115, Meteor Falls)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Fallarbor Town · Cozmo's house",
+        "coords": null,
+        "cost": null,
+        "note": "Bring the Meteorite back to Prof. Cozmo."
+      }
+    ]
+  },
+  {
+    "tm": "TM51",
+    "move": "FACADE",
+    "order": 49,
+    "phase": 8,
+    "phaseName": "Petalburg City (5th badge, Surf)",
+    "sources": [
+      {
+        "how": "Gym reward",
+        "place": "Petalburg City Gym",
+        "coords": null,
+        "cost": null,
+        "note": "Norman, after the battle (5th badge)."
+      }
+    ]
+  },
+  {
+    "tm": "TM52",
+    "move": "SECRET_POWER",
+    "order": 11,
+    "phase": 4,
+    "phaseName": "Slateport City",
+    "sources": [
+      {
+        "how": "Shop",
+        "place": "Slateport City · market",
+        "coords": null,
+        "cost": "₽3,000",
+        "note": ""
+      },
+      {
+        "how": "Gift",
+        "place": "Route 111",
+        "coords": null,
+        "cost": null,
+        "note": "The NPC who explains Secret Bases."
+      }
+    ]
+  },
+  {
+    "tm": "TM53",
+    "move": "WEATHER_BALL",
+    "order": 50,
+    "phase": 8,
+    "phaseName": "Petalburg City (5th badge, Surf)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Route 119 · Weather Institute 2F",
+        "coords": null,
+        "cost": null,
+        "note": "Held by the Castform you receive after saving the Weather Institute."
+      }
+    ]
+  },
+  {
+    "tm": "TM54",
+    "move": "HYPER_VOICE",
+    "order": 37,
+    "phase": 7,
+    "phaseName": "Lavaridge Town (4th badge, Strength, Go-Goggles)",
+    "sources": [
+      {
+        "how": "Game Corner",
+        "place": "Mauville Game Corner",
+        "coords": null,
+        "cost": "100 coins",
+        "note": "TM prize counter."
+      }
+    ]
+  },
+  {
+    "tm": "TM55",
+    "move": "HYPER_BEAM",
+    "order": 68,
+    "phase": 10,
+    "phaseName": "Lilycove City & Mt. Pyre",
+    "sources": [
+      {
+        "how": "Shop",
+        "place": "Lilycove Dept. Store 4F",
+        "coords": null,
+        "cost": "₽7,500",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM56",
+    "move": "SWORDS_DANCE",
+    "order": 69,
+    "phase": 10,
+    "phaseName": "Lilycove City & Mt. Pyre",
+    "sources": [
+      {
+        "how": "Shop",
+        "place": "Lilycove Dept. Store 4F",
+        "coords": null,
+        "cost": "₽3,000",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM57",
+    "move": "DOUBLE_TEAM",
+    "order": 70,
+    "phase": 10,
+    "phaseName": "Lilycove City & Mt. Pyre",
+    "sources": [
+      {
+        "how": "Shop",
+        "place": "Lilycove Dept. Store 4F",
+        "coords": null,
+        "cost": "₽2,000",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM58",
+    "move": "PROTECT",
+    "order": 71,
+    "phase": 10,
+    "phaseName": "Lilycove City & Mt. Pyre",
+    "sources": [
+      {
+        "how": "Shop",
+        "place": "Lilycove Dept. Store 4F",
+        "coords": null,
+        "cost": "₽3,000",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM59",
+    "move": "POISON_FANG",
+    "order": 38,
+    "phase": 7,
+    "phaseName": "Lavaridge Town (4th badge, Strength, Go-Goggles)",
+    "sources": [
+      {
+        "how": "Game Corner",
+        "place": "Mauville Game Corner",
+        "coords": null,
+        "cost": "100 coins",
+        "note": "TM prize counter."
+      }
+    ]
+  },
+  {
+    "tm": "TM60",
+    "move": "SLUDGE_BOMB",
+    "order": 39,
+    "phase": 7,
+    "phaseName": "Lavaridge Town (4th badge, Strength, Go-Goggles)",
+    "sources": [
+      {
+        "how": "Game Corner",
+        "place": "Mauville Game Corner",
+        "coords": null,
+        "cost": "100 coins",
+        "note": "TM prize counter."
+      }
+    ]
+  },
+  {
+    "tm": "TM61",
+    "move": "TOXIC",
+    "order": 40,
+    "phase": 7,
+    "phaseName": "Lavaridge Town (4th badge, Strength, Go-Goggles)",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Fiery Path",
+        "coords": [
+          8,
+          3
+        ],
+        "cost": null,
+        "note": "Strength needed."
+      }
+    ]
+  },
+  {
+    "tm": "TM62",
+    "move": "DIZZY_PUNCH",
+    "order": 41,
+    "phase": 7,
+    "phaseName": "Lavaridge Town (4th badge, Strength, Go-Goggles)",
+    "sources": [
+      {
+        "how": "Game Corner",
+        "place": "Mauville Game Corner",
+        "coords": null,
+        "cost": "100 coins",
+        "note": "TM prize counter."
+      }
+    ]
+  },
+  {
+    "tm": "TM63",
+    "move": "PSYCHIC",
+    "order": 42,
+    "phase": 7,
+    "phaseName": "Lavaridge Town (4th badge, Strength, Go-Goggles)",
+    "sources": [
+      {
+        "how": "Game Corner",
+        "place": "Mauville Game Corner",
+        "coords": null,
+        "cost": "100 coins",
+        "note": "TM prize counter."
+      }
+    ]
+  },
+  {
+    "tm": "TM64",
+    "move": "AGILITY",
+    "order": 72,
+    "phase": 10,
+    "phaseName": "Lilycove City & Mt. Pyre",
+    "sources": [
+      {
+        "how": "Shop",
+        "place": "Lilycove Dept. Store 4F",
+        "coords": null,
+        "cost": "₽3,000",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM65",
+    "move": "LIGHT_SCREEN",
+    "order": 73,
+    "phase": 10,
+    "phaseName": "Lilycove City & Mt. Pyre",
+    "sources": [
+      {
+        "how": "Shop",
+        "place": "Lilycove Dept. Store 4F",
+        "coords": null,
+        "cost": "₽3,000",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM66",
+    "move": "REFLECT",
+    "order": 74,
+    "phase": 10,
+    "phaseName": "Lilycove City & Mt. Pyre",
+    "sources": [
+      {
+        "how": "Shop",
+        "place": "Lilycove Dept. Store 4F",
+        "coords": null,
+        "cost": "₽3,000",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM67",
+    "move": "REST",
+    "order": 75,
+    "phase": 10,
+    "phaseName": "Lilycove City & Mt. Pyre",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Lilycove City · house 2",
+        "coords": null,
+        "cost": null,
+        "note": "The man in the house."
+      }
+    ]
+  },
+  {
+    "tm": "TM68",
+    "move": "CALM_MIND",
+    "order": 81,
+    "phase": 11,
+    "phaseName": "Magma Hideout & Mossdeep City (7th badge, Dive)",
+    "sources": [
+      {
+        "how": "Gym reward",
+        "place": "Mossdeep City Gym",
+        "coords": null,
+        "cost": null,
+        "note": "Tate & Liza, after the battle (7th badge)."
+      }
+    ]
+  },
+  {
+    "tm": "TM69",
+    "move": "ROCK_BLAST",
+    "order": 62,
+    "phase": 9,
+    "phaseName": "Fortree City (6th badge)",
+    "sources": [
+      {
+        "how": "Shop",
+        "place": "Fortree City · Poké Mart",
+        "coords": null,
+        "cost": "₽3,000",
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM70",
+    "move": "ROCK_TOMB",
+    "order": 2,
+    "phase": 2,
+    "phaseName": "Rustboro City (1st badge)",
+    "sources": [
+      {
+        "how": "Gym reward",
+        "place": "Rustboro City Gym",
+        "coords": null,
+        "cost": null,
+        "note": "Roxanne, after the battle (1st badge)."
+      }
+    ]
+  },
+  {
+    "tm": "TM71",
+    "move": "ROCK_SLIDE",
+    "order": 25,
+    "phase": 6,
+    "phaseName": "Towards Lavaridge (Routes 111-115, Meteor Falls)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Route 114",
+        "coords": null,
+        "cost": null,
+        "note": "The gentleman on the route."
+      }
+    ]
+  },
+  {
+    "tm": "TM72",
+    "move": "POWER_GEM",
+    "order": 43,
+    "phase": 7,
+    "phaseName": "Lavaridge Town (4th badge, Strength, Go-Goggles)",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Route 111",
+        "coords": [
+          12,
+          54
+        ],
+        "cost": null,
+        "note": "In the desert (Go-Goggles needed)."
+      }
+    ]
+  },
+  {
+    "tm": "TM73",
+    "move": "SANDSTORM",
+    "order": 44,
+    "phase": 7,
+    "phaseName": "Lavaridge Town (4th badge, Strength, Go-Goggles)",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Route 111",
+        "coords": [
+          33,
+          104
+        ],
+        "cost": null,
+        "note": "In the desert (Go-Goggles needed)."
+      }
+    ]
+  },
+  {
+    "tm": "TM74",
+    "move": "STEEL_WING",
+    "order": 6,
+    "phase": 3,
+    "phaseName": "Dewford Town & Granite Cave (2nd badge)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Granite Cave · Steven's room",
+        "coords": null,
+        "cost": null,
+        "note": "Steven, when you deliver the letter."
+      }
+    ]
+  },
+  {
+    "tm": "TM75",
+    "move": "IRON_TAIL",
+    "order": 26,
+    "phase": 6,
+    "phaseName": "Towards Lavaridge (Routes 111-115, Meteor Falls)",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Meteor Falls 1F · room 1",
+        "coords": [
+          2,
+          4
+        ],
+        "cost": null,
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM76",
+    "move": "FLASH_CANNON",
+    "order": 45,
+    "phase": 7,
+    "phaseName": "Lavaridge Town (4th badge, Strength, Go-Goggles)",
+    "sources": [
+      {
+        "how": "Game Corner",
+        "place": "Mauville Game Corner",
+        "coords": null,
+        "cost": "100 coins",
+        "note": "TM prize counter."
+      }
+    ]
+  },
+  {
+    "tm": "TM77",
+    "move": "LIQUIDATION",
+    "order": 51,
+    "phase": 8,
+    "phaseName": "Petalburg City (5th badge, Surf)",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Route 119",
+        "coords": [
+          25,
+          76
+        ],
+        "cost": null,
+        "note": ""
+      }
+    ]
+  },
+  {
+    "tm": "TM78",
+    "move": "HYDRO_PUMP",
+    "order": 86,
+    "phase": 12,
+    "phaseName": "Sootopolis City (8th badge, Waterfall) & Victory Road",
+    "sources": [
+      {
+        "how": "Gym reward",
+        "place": "Sootopolis City Gym",
+        "coords": null,
+        "cost": null,
+        "note": "Wallace, after the battle (8th badge)."
+      }
+    ]
+  },
+  {
+    "tm": "TM79",
+    "move": "RAIN_DANCE",
+    "order": 82,
+    "phase": 11,
+    "phaseName": "Magma Hideout & Mossdeep City (7th badge, Dive)",
+    "sources": [
+      {
+        "how": "Item ball",
+        "place": "Abandoned Ship · hidden floor",
+        "coords": [
+          5,
+          11
+        ],
+        "cost": null,
+        "note": "In one of the locked rooms (Dive and Storage Key needed)."
+      }
+    ]
+  },
+  {
+    "tm": "HM01",
+    "move": "CUT",
+    "order": 3,
+    "phase": 2,
+    "phaseName": "Rustboro City (1st badge)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Rustboro City · Cutter's house",
+        "coords": null,
+        "cost": null,
+        "note": "The Cutter."
+      }
+    ]
+  },
+  {
+    "tm": "HM02",
+    "move": "FLY",
+    "order": 52,
+    "phase": 8,
+    "phaseName": "Petalburg City (5th badge, Surf)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Route 119",
+        "coords": null,
+        "cost": null,
+        "note": "Your rival, after the battle near the Weather Institute."
+      }
+    ]
+  },
+  {
+    "tm": "HM03",
+    "move": "SURF",
+    "order": 53,
+    "phase": 8,
+    "phaseName": "Petalburg City (5th badge, Surf)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Petalburg City · Wally's house",
+        "coords": null,
+        "cost": null,
+        "note": "Wally's father, after the 5th badge."
+      }
+    ]
+  },
+  {
+    "tm": "HM04",
+    "move": "STRENGTH",
+    "order": 4,
+    "phase": 2,
+    "phaseName": "Rustboro City (1st badge)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Rusturf Tunnel",
+        "coords": null,
+        "cost": null,
+        "note": "Wanda's boyfriend, once the tunnel is open."
+      }
+    ]
+  },
+  {
+    "tm": "HM05",
+    "move": "FLASH",
+    "order": 7,
+    "phase": 3,
+    "phaseName": "Dewford Town & Granite Cave (2nd badge)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Granite Cave 1F",
+        "coords": null,
+        "cost": null,
+        "note": "The Hiker at the cave entrance."
+      }
+    ]
+  },
+  {
+    "tm": "HM06",
+    "move": "ROCK_SMASH",
+    "order": 18,
+    "phase": 5,
+    "phaseName": "Mauville City & Route 110 (3rd badge)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Mauville City · house 1",
+        "coords": null,
+        "cost": null,
+        "note": "The man in the first house of Mauville."
+      }
+    ]
+  },
+  {
+    "tm": "HM07",
+    "move": "WATERFALL",
+    "order": 87,
+    "phase": 12,
+    "phaseName": "Sootopolis City (8th badge, Waterfall) & Victory Road",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Sootopolis City",
+        "coords": null,
+        "cost": null,
+        "note": "Wallace, after Rayquaza wakes up."
+      }
+    ]
+  },
+  {
+    "tm": "HM08",
+    "move": "DIVE",
+    "order": 83,
+    "phase": 11,
+    "phaseName": "Magma Hideout & Mossdeep City (7th badge, Dive)",
+    "sources": [
+      {
+        "how": "Gift",
+        "place": "Mossdeep City · Steven's house",
+        "coords": null,
+        "cost": null,
+        "note": "Steven, after the 7th badge."
+      }
+    ]
+  }
+]

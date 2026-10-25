@@ -894,3 +894,42 @@ img.px, .col-sprite-img img, .detail-sprite img, .evo-sprite-box img, .mini-spri
   .weakness-grid { grid-template-columns: repeat(3, 1fr); }
   .detail-nav { flex-direction: column; align-items: flex-start; }
 }
+
+/* HMs & TMs PAGE */
+.page-wide { max-width: 1300px; }
+.tm-summary { font-size: 12px; color: var(--text-muted); margin: -4px 0 14px; }
+.moves-table th.sort-asc::after  { content: ' ↑'; color: var(--text); }
+.moves-table th.sort-desc::after { content: ' ↓'; color: var(--text); }
+.tm-table tbody tr:hover td { cursor: default; }
+.tm-table td.tm-where, .tm-table td.tm-phase { text-align: left; }
+.tm-table th:nth-child(8), .tm-table th:nth-child(10) { text-align: left; cursor: default; }
+.tm-table th:nth-child(10) { cursor: pointer; }
+.tm-where { min-width: 320px; }
+.tm-src { display: flex; gap: 8px; align-items: flex-start; padding: 3px 0; }
+.tm-src + .tm-src { border-top: 1px dashed rgba(255,255,255,0.06); }
+.tm-how {
+  flex-shrink: 0; min-width: 84px; text-align: center; font-size: 10px; font-weight: 700;
+  font-family: var(--font-head); letter-spacing: .03em; padding: 2px 6px; border-radius: 4px;
+  background: rgba(136,144,168,0.18); color: #aab2c8;
+}
+.tm-how-gym-reward  { background: rgba(212,168,64,0.18);  color: #e2bd5c; }
+.tm-how-gift        { background: rgba(92,184,92,0.18);   color: #82d482; }
+.tm-how-item-ball   { background: rgba(232,98,42,0.18);   color: #f08a5a; }
+.tm-how-hidden-item { background: rgba(160,64,160,0.2);   color: #d08ad0; }
+.tm-how-shop        { background: rgba(74,144,217,0.18);  color: #7ab8f5; }
+.tm-how-game-corner { background: rgba(248,88,136,0.18);  color: #f88aac; }
+.tm-how-prize       { background: rgba(109,214,214,0.16); color: #8ee0e0; }
+.tm-src-text { font-size: 12px; line-height: 1.45; }
+.tm-src-text b { font-weight: 600; color: var(--text); }
+.tm-coords { color: var(--text-muted); font-size: 11px; }
+.tm-cost { color: #d4a840; font-size: 11px; font-weight: 600; margin-left: 4px; }
+.tm-note { color: var(--text-muted); font-size: 11px; }
+.tm-phase { font-size: 12px; color: var(--text-muted); min-width: 180px; }
+.tm-phase-num {
+  display: inline-block; min-width: 20px; margin-right: 6px; text-align: center;
+  font-family: var(--font-head); font-weight: 700; color: var(--text);
+  background: var(--bg4); border-radius: 4px; padding: 0 4px;
+}
+.tm-missing td { opacity: .6; }
+.tm-empty { color: var(--text-muted); padding: 20px !important; }
+@media (max-width: 900px) { .moves-table-wrap { overflow-x: auto; } }

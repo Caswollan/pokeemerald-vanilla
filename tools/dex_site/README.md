@@ -12,7 +12,8 @@ python3 tools/dex_site/build.py
 ```
 
 Lo script:
-1. lancia i tre export (`export_pokemon_json`, `export_moves_json`, `export_abilities_json`);
+1. lancia i quattro export (`export_pokemon_json`, `export_moves_json`, `export_abilities_json`,
+   `export_tms_json`: dove si ottiene ogni MT/MN, letto da mappe, script, negozi e premi);
 2. legge la tabella dei tipi da `src/battle_main.c` e i numeri delle MT/MN da `include/constants/tms_hms.h`;
 3. scrive `js/data.js` con tutti i dati;
 4. copia gli sprite da `graphics/pokemon/*/front.png` in `sprites/pokemon/N.png` (serve Pillow:

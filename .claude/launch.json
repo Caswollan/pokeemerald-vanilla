@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "dex-site",
+      "runtimeExecutable": "wsl",
+      "runtimeArgs": ["python3", "-m", "http.server", "8765", "--directory", "/home/caswollan/romhacking/pokeemerald-vanilla/tools/dex_site"],
+      "port": 8765
+    }
+  ]
+}

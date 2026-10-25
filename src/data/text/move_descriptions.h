@@ -31,7 +31,7 @@ static const u8 sFirePunchDescription[] = _(
 
 static const u8 sIcePunchDescription[] = _(
     "An icy punch that may\n"
-    "freeze the foe.");
+    "cause frostbite.");
 
 static const u8 sThunderPunchDescription[] = _(
     "An electrified punch that\n"
@@ -79,7 +79,7 @@ static const u8 sFlyDescription[] = _(
 
 static const u8 sBindDescription[] = _(
     "Binds and squeezes the foe\n"
-    "for 2 to 5 turns.");
+    "for 4 to 5 turns.");
 
 static const u8 sSlamDescription[] = _(
     "Slams the foe with a long\n"
@@ -139,7 +139,7 @@ static const u8 sBodySlamDescription[] = _(
 
 static const u8 sWrapDescription[] = _(
     "Wraps and squeezes the foe\n"
-    "2 to 5 times with vines, etc.");
+    "for 4 to 5 turns.");
 
 static const u8 sTakeDownDescription[] = _(
     "A reckless charge attack\n"
@@ -226,16 +226,16 @@ static const u8 sHydroPumpDescription[] = _(
     "to strike the foe.");
 
 static const u8 sSurfDescription[] = _(
-    "Creates a huge wave, then\n"
-    "crashes it down on the foe.");
+    "Creates a huge wave that\n"
+    "hits all other POKéMON.");
 
 static const u8 sIceBeamDescription[] = _(
     "Blasts the foe with an icy\n"
-    "beam that may freeze it.");
+    "beam. May cause frostbite.");
 
 static const u8 sBlizzardDescription[] = _(
-    "Hits the foe with an icy\n"
-    "storm that may freeze it.");
+    "An icy storm that may cause\n"
+    "frostbite. Sure hit in hail.");
 
 static const u8 sPsybeamDescription[] = _(
     "Fires a peculiar ray that\n"
@@ -331,7 +331,7 @@ static const u8 sDragonRageDescription[] = _(
 
 static const u8 sFireSpinDescription[] = _(
     "Traps the foe in a ring of\n"
-    "fire for 2 to 5 turns.");
+    "fire for 4 to 5 turns.");
 
 static const u8 sThunderShockDescription[] = _(
     "An electrical attack that\n"
@@ -511,7 +511,7 @@ static const u8 sWaterfallDescription[] = _(
 
 static const u8 sClampDescription[] = _(
     "Traps and squeezes the\n"
-    "foe for 2 to 5 turns.");
+    "foe for 4 to 5 turns.");
 
 static const u8 sSwiftDescription[] = _(
     "Sprays star-shaped rays\n"
@@ -554,7 +554,7 @@ static const u8 sDreamEaterDescription[] = _(
     "inflicted on a sleeping foe.");
 
 static const u8 sPoisonGasDescription[] = _(
-    "Envelops the foe in a toxic\n"
+    "Envelops the foes in a toxic\n"
     "gas that may poison.");
 
 static const u8 sBarrageDescription[] = _(
@@ -658,8 +658,8 @@ static const u8 sSubstituteDescription[] = _(
     "of the user's maximum HP.");
 
 static const u8 sStruggleDescription[] = _(
-    "Used only if all PP are gone.\n"
-    "Also hurts the user a little.");
+    "Used only when out of PP.\n"
+    "Hurts the user by 1/4 HP.");
 
 static const u8 sSketchDescription[] = _(
     "Copies the foe's last move\n"
@@ -710,7 +710,7 @@ static const u8 sAeroblastDescription[] = _(
     "High critical-hit ratio.");
 
 static const u8 sCottonSporeDescription[] = _(
-    "Spores cling to the foe,\n"
+    "Spores cling to the foes,\n"
     "sharply reducing SPEED.");
 
 static const u8 sReversalDescription[] = _(
@@ -999,7 +999,7 @@ static const u8 sRockSmashDescription[] = _(
 
 static const u8 sWhirlpoolDescription[] = _(
     "Traps and hurts the foe in\n"
-    "a whirlpool for 2 to 5 turns.");
+    "a vortex for 4 to 5 turns.");
 
 static const u8 sBeatUpDescription[] = _(
     "Summons party POKéMON to\n"
@@ -1050,8 +1050,8 @@ static const u8 sMementoDescription[] = _(
     "the foe's abilities.");
 
 static const u8 sFacadeDescription[] = _(
-    "Boosts ATTACK when burned,\n"
-    "paralyzed, or poisoned.");
+    "Powers up if the user has a\n"
+    "status other than sleep.");
 
 static const u8 sFocusPunchDescription[] = _(
     "A powerful loyalty attack.\n"
@@ -1311,7 +1311,7 @@ static const u8 sSkyUppercutDescription[] = _(
 
 static const u8 sSandTombDescription[] = _(
     "Traps and hurts the foe in\n"
-    "quicksand for 2 to 5 turns.");
+    "quicksand for 4 to 5 turns.");
 
 static const u8 sSheerColdDescription[] = _(
     "A chilling attack that\n"

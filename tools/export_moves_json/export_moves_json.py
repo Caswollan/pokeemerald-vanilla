@@ -234,6 +234,11 @@ EFFECT_TEXT = {
     'SPLASH': 'No effect',
 }
 
+# Moves whose behaviour differs from their EFFECT_* (special cases coded on the move itself)
+MOVE_TEXT = {
+    'BLIZZARD': '{c}% Frostbite, never misses in hail',
+}
+
 # Readable names where the constant isn't enough (dashes, in-game spellings)
 NAME_FIXES = {
     'DOUBLE_EDGE': 'Double-Edge', 'SOFT_BOILED': 'Soft-Boiled', 'WILL_O_WISP': 'Will-O-Wisp',
@@ -304,7 +309,7 @@ def main():
         priority = int(f['priority'])
         if effect not in EFFECT_TEXT:
             unknown.add(effect)
-        text = EFFECT_TEXT.get(effect)
+        text = MOVE_TEXT.get(strip('MOVE_', constant), EFFECT_TEXT.get(effect))
         moves.append({
             'id': number,
             'move': strip('MOVE_', constant),

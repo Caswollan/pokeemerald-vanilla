@@ -122,7 +122,7 @@
     "accuracy": 100,
     "pp": 15,
     "priority": 0,
-    "description": "An icy punch that may freeze the foe.",
+    "description": "An icy punch that may cause frostbite.",
     "effect": "FREEZE_HIT",
     "effectChance": 10,
     "secondaryEffect": "10% Frostbite"
@@ -314,7 +314,7 @@
     "accuracy": 100,
     "pp": 20,
     "priority": 0,
-    "description": "Binds and squeezes the foe for 2 to 5 turns.",
+    "description": "Binds and squeezes the foe for 4 to 5 turns.",
     "effect": "TRAP",
     "effectChance": 100,
     "secondaryEffect": "Traps and damages the target for 2-5 turns"
@@ -554,7 +554,7 @@
     "accuracy": 100,
     "pp": 20,
     "priority": 0,
-    "description": "Wraps and squeezes the foe 2 to 5 times with vines, etc.",
+    "description": "Wraps and squeezes the foe for 4 to 5 turns.",
     "effect": "TRAP",
     "effectChance": 100,
     "secondaryEffect": "Traps and damages the target for 2-5 turns"
@@ -906,7 +906,7 @@
     "accuracy": 100,
     "pp": 15,
     "priority": 0,
-    "description": "Creates a huge wave, then crashes it down on the foe.",
+    "description": "Creates a huge wave that hits all other POKéMON.",
     "effect": "HIT",
     "effectChance": 0,
     "secondaryEffect": null
@@ -922,7 +922,7 @@
     "accuracy": 100,
     "pp": 15,
     "priority": 0,
-    "description": "Blasts the foe with an icy beam that may freeze it.",
+    "description": "Blasts the foe with an icy beam. May cause frostbite.",
     "effect": "FREEZE_HIT",
     "effectChance": 10,
     "secondaryEffect": "10% Frostbite"
@@ -938,10 +938,10 @@
     "accuracy": 80,
     "pp": 5,
     "priority": 0,
-    "description": "Hits the foe with an icy storm that may freeze it.",
+    "description": "An icy storm that may cause frostbite. Sure hit in hail.",
     "effect": "FREEZE_HIT",
     "effectChance": 10,
-    "secondaryEffect": "10% Frostbite"
+    "secondaryEffect": "10% Frostbite, never misses in hail"
   },
   {
     "id": 60,
@@ -1322,7 +1322,7 @@
     "accuracy": 100,
     "pp": 15,
     "priority": 0,
-    "description": "Traps the foe in a ring of fire for 2 to 5 turns.",
+    "description": "Traps the foe in a ring of fire for 4 to 5 turns.",
     "effect": "TRAP",
     "effectChance": 100,
     "secondaryEffect": "Traps and damages the target for 2-5 turns"
@@ -2042,7 +2042,7 @@
     "accuracy": 100,
     "pp": 15,
     "priority": 0,
-    "description": "Traps and squeezes the foe for 2 to 5 turns.",
+    "description": "Traps and squeezes the foe for 4 to 5 turns.",
     "effect": "TRAP",
     "effectChance": 100,
     "secondaryEffect": "Traps and damages the target for 2-5 turns"
@@ -2218,7 +2218,7 @@
     "accuracy": 90,
     "pp": 40,
     "priority": 0,
-    "description": "Envelops the foe in a toxic gas that may poison.",
+    "description": "Envelops the foes in a toxic gas that may poison.",
     "effect": "POISON",
     "effectChance": 0,
     "secondaryEffect": "Poisons the target"
@@ -2634,7 +2634,7 @@
     "accuracy": 100,
     "pp": 1,
     "priority": 0,
-    "description": "Used only if all PP are gone. Also hurts the user a little.",
+    "description": "Used only when out of PP. Hurts the user by 1/4 HP.",
     "effect": "RECOIL",
     "effectChance": 0,
     "secondaryEffect": "The user takes 1/4 of the damage dealt"
@@ -2842,7 +2842,7 @@
     "accuracy": 100,
     "pp": 40,
     "priority": 0,
-    "description": "Spores cling to the foe, sharply reducing SPEED.",
+    "description": "Spores cling to the foes, sharply reducing SPEED.",
     "effect": "SPEED_DOWN_2",
     "effectChance": 0,
     "secondaryEffect": "Sharply lowers the target's Speed"
@@ -3994,7 +3994,7 @@
     "accuracy": 100,
     "pp": 15,
     "priority": 0,
-    "description": "Traps and hurts the foe in a whirlpool for 2 to 5 turns.",
+    "description": "Traps and hurts the foe in a vortex for 4 to 5 turns.",
     "effect": "TRAP",
     "effectChance": 100,
     "secondaryEffect": "Traps and damages the target for 2-5 turns"
@@ -4202,7 +4202,7 @@
     "accuracy": 100,
     "pp": 20,
     "priority": 0,
-    "description": "Boosts ATTACK when burned, paralyzed, or poisoned.",
+    "description": "Powers up if the user has a status other than sleep.",
     "effect": "FACADE",
     "effectChance": 0,
     "secondaryEffect": "Double power if the user is poisoned, burned, paralyzed or has Frostbite"
@@ -5242,7 +5242,7 @@
     "accuracy": 100,
     "pp": 15,
     "priority": 0,
-    "description": "Traps and hurts the foe in quicksand for 2 to 5 turns.",
+    "description": "Traps and hurts the foe in quicksand for 4 to 5 turns.",
     "effect": "TRAP",
     "effectChance": 100,
     "secondaryEffect": "Traps and damages the target for 2-5 turns"
