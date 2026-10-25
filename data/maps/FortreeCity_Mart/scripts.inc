@@ -23,6 +23,10 @@ FortreeCity_Mart_Pokemart:
 	.2byte ITEM_REVIVE
 	.2byte ITEM_SUPER_REPEL
 	.2byte ITEM_WOOD_MAIL
+	.2byte ITEM_TM_PIN_MISSILE
+	.2byte ITEM_TM_ARM_THRUST
+	.2byte ITEM_TM_ICICLE_SPEAR
+	.2byte ITEM_TM_ROCK_BLAST
 	pokemartlistend
 
 FortreeCity_Mart_EventScript_Woman::

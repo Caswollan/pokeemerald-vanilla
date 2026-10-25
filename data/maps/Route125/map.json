@@ -157,8 +157,8 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Route125_EventScript_ItemBigPearl",
-      "flag": "FLAG_ITEM_ROUTE_125_BIG_PEARL"
+      "script": "Route125_EventScript_ItemTMIcicleCrash",
+      "flag": "FLAG_ITEM_ROUTE_125_TM_ICICLE_CRASH"
     }
   ],
   "warp_events": [

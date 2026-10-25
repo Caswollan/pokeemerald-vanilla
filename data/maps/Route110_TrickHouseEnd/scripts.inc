@@ -71,7 +71,7 @@ Route110_TrickHouseEnd_EventScript_CompletedPuzzle2::
 	msgbox Route110_TrickHouseEnd_Text_AllNightToMakeMaze, MSGBOX_DEFAULT
 	msgbox Route110_TrickHouseEnd_Text_YouHaveEarnedThisReward, MSGBOX_DEFAULT
 	setvar VAR_TRICK_HOUSE_PRIZE_PICKUP, 0
-	giveitem ITEM_TIMER_BALL
+	call Route110_TrickHouse_EventScript_GivePuzzle2Items
 	call_if_eq VAR_RESULT, FALSE, Route110_TrickHouseEnd_EventScript_BagFull
 	msgbox Route110_TrickHouseEnd_Text_MakeNewTricksToStumpYou, MSGBOX_DEFAULT
 	closemessage
@@ -185,6 +185,7 @@ Route110_TrickHouseEnd_EventScript_TrickMasterExit::
 
 @ Reward of the first puzzle: one of each evolution stone. They are given only if they all fit in the bag,
 @ otherwise VAR_RESULT is FALSE and the Trick Master keeps them for later (VAR_TRICK_HOUSE_PRIZE_PICKUP).
+@ First puzzle reward: one of each evolution stone
 Route110_TrickHouse_EventScript_GiveEvolutionStones::
 	checkitemspace ITEM_SUN_STONE
 	goto_if_eq VAR_RESULT, FALSE, Route110_TrickHouse_EventScript_NoRoomForStones
@@ -204,6 +205,21 @@ Route110_TrickHouse_EventScript_GiveEvolutionStones::
 	giveitem ITEM_THUNDER_STONE
 	giveitem ITEM_WATER_STONE
 	giveitem ITEM_LEAF_STONE
+	setvar VAR_RESULT, TRUE
+	return
+
+@ Second puzzle reward: TM12 ThunderPunch, TM22 Fire Punch, TM44 Ice Punch.
+@ Returns VAR_RESULT TRUE if everything was given, FALSE (nothing given) if the bag is full.
+Route110_TrickHouse_EventScript_GivePuzzle2Items::
+	checkitemspace ITEM_TM_THUNDER_PUNCH
+	goto_if_eq VAR_RESULT, FALSE, Route110_TrickHouse_EventScript_NoRoomForStones
+	checkitemspace ITEM_TM_FIRE_PUNCH
+	goto_if_eq VAR_RESULT, FALSE, Route110_TrickHouse_EventScript_NoRoomForStones
+	checkitemspace ITEM_TM_ICE_PUNCH
+	goto_if_eq VAR_RESULT, FALSE, Route110_TrickHouse_EventScript_NoRoomForStones
+	giveitem ITEM_TM_THUNDER_PUNCH
+	giveitem ITEM_TM_FIRE_PUNCH
+	giveitem ITEM_TM_ICE_PUNCH
 	setvar VAR_RESULT, TRUE
 	return
 

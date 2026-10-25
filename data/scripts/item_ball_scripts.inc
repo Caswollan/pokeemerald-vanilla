@@ -62,8 +62,8 @@ Route111_EventScript_ItemTMSandstorm::
 	finditem ITEM_TM_SANDSTORM
 	end
 
-Route111_EventScript_ItemStardust::
-	finditem ITEM_STARDUST
+Route111_EventScript_ItemTMPowerGem::
+	finditem ITEM_TM_POWER_GEM
 	end
 
 Route111_EventScript_ItemHPUp::
@@ -107,7 +107,7 @@ Route115_EventScript_ItemSuperPotion::
 	end
 
 Route115_EventScript_ItemTMFocusPunch::
-	finditem ITEM_TM_SUPERPOWER
+	finditem ITEM_TM_BRICK_BREAK
 	end
 
 Route115_EventScript_ItemIron::
@@ -122,8 +122,8 @@ Route115_EventScript_ItemHealPowder::
 	finditem ITEM_HEAL_POWDER
 	end
 
-Route115_EventScript_ItemPPUp::
-	finditem ITEM_PP_UP
+Route115_EventScript_ItemTMLowKick::
+	finditem ITEM_TM_LOW_KICK
 	end
 
 Route116_EventScript_ItemXSpecial::
@@ -150,8 +150,8 @@ Route117_EventScript_ItemGreatBall::
 	finditem ITEM_GREAT_BALL
 	end
 
-Route117_EventScript_ItemRevive::
-	finditem ITEM_REVIVE
+Route117_EventScript_ItemTMTwineedle::
+	finditem ITEM_TM_TWINEEDLE
 	end
 
 Route118_EventScript_ItemHyperPotion::
@@ -170,8 +170,8 @@ Route119_EventScript_ItemElixir::
 	finditem ITEM_ELIXIR
 	end
 
-Route119_EventScript_ItemLeafStone::
-	finditem ITEM_LEAF_STONE
+Route119_EventScript_ItemTMLiquidation::
+	finditem ITEM_TM_LIQUIDATION
 	end
 
 Route119_EventScript_ItemRareCandy::
@@ -254,8 +254,8 @@ Route124_EventScript_ItemYellowShard::
 	finditem ITEM_YELLOW_SHARD
 	end
 
-Route125_EventScript_ItemBigPearl::
-	finditem ITEM_BIG_PEARL
+Route125_EventScript_ItemTMIcicleCrash::
+	finditem ITEM_TM_ICICLE_CRASH
 	end
 
 Route126_EventScript_ItemGreenShard::
@@ -370,8 +370,8 @@ JaggedPass_EventScript_ItemBurnHeal::
 	finditem ITEM_BURN_HEAL
 	end
 
-FieryPath_EventScript_ItemFireStone::
-	finditem ITEM_FIRE_STONE
+FieryPath_EventScript_ItemTMHeatWave::
+	finditem ITEM_TM_HEAT_WAVE
 	end
 
 FieryPath_EventScript_ItemTMToxic::
@@ -390,8 +390,8 @@ MeteorFalls_1F_1R_EventScript_ItemMoonStone::
 	finditem ITEM_MOON_STONE
 	end
 
-MeteorFalls_1F_1R_EventScript_ItemPPUP::
-	finditem ITEM_PP_UP
+MeteorFalls_1F_1R_EventScript_ItemTMDragonPulse::
+	finditem ITEM_TM_DRAGON_PULSE
 	end
 
 MeteorFalls_B1F_2R_EventScript_ItemTMDragonClaw::
@@ -428,10 +428,6 @@ AbandonedShip_Rooms_B1F_EventScript_ItemEscapeRope::
 
 AbandonedShip_Rooms2_B1F_EventScript_ItemDiveBall::
 	finditem ITEM_DIVE_BALL
-	end
-
-AbandonedShip_Room_B1F_EventScript_ItemTMIceBeam::
-	finditem ITEM_TM_ICE_BEAM
 	end
 
 AbandonedShip_Rooms2_1F_EventScript_ItemRevive::
@@ -506,6 +502,18 @@ MtPyre_Exterior_EventScript_ItemMaxPotion::
 	finditem ITEM_MAX_POTION
 	end
 
+Route119_EventScript_ItemTMLeechLife::
+	finditem ITEM_TM_LEECH_LIFE
+	end
+
+Route113_EventScript_ItemTMAerialAce::
+	finditem ITEM_TM_AERIAL_ACE
+	end
+
+MtPyre_Exterior_EventScript_ItemTMWillOWisp::
+	finditem ITEM_TM_WILL_O_WISP
+	end
+
 MtPyre_Exterior_EventScript_ItemTMSkillSwap::
 	finditem ITEM_TM_SHADOW_PUNCH
 	end
@@ -558,8 +566,8 @@ ShoalCave_LowTideIceRoom_EventScript_ItemTMHail::
 	finditem ITEM_TM_HAIL
 	end
 
-ShoalCave_LowTideIceRoom_EventScript_ItemNeverMeltIce::
-	finditem ITEM_NEVER_MELT_ICE
+ShoalCave_LowTideIceRoom_EventScript_ItemTMBlizzard::
+	finditem ITEM_TM_BLIZZARD
 	end
 
 SeafloorCavern_Room9_EventScript_ItemTMEarthquake::
@@ -610,10 +618,6 @@ VictoryRoad_1F_EventScript_ItemPPUp::
 	finditem ITEM_PP_UP
 	end
 
-VictoryRoad_B1F_EventScript_ItemTMPsychic::
-	finditem ITEM_TM_PSYCHIC
-	end
-
 VictoryRoad_B1F_EventScript_ItemFullRestore::
 	finditem ITEM_FULL_RESTORE
 	end
@@ -630,8 +634,8 @@ ArtisanCave_1F_EventScript_ItemCarbos::
 	finditem ITEM_CARBOS
 	end
 
-MagmaHideout_1F_EventScript_ItemRareCandy::
-	finditem ITEM_RARE_CANDY
+MagmaHideout_1F_EventScript_ItemTMFireBlast::
+	finditem ITEM_TM_FIRE_BLAST
 	end
 
 MagmaHideout_2F_2R_EventScript_ItemMaxElixir::
@@ -648,10 +652,6 @@ MagmaHideout_3F_1R_EventScript_ItemNugget::
 
 MagmaHideout_3F_2R_EventScript_ItemPPMax::
 	finditem ITEM_PP_MAX
-	end
-
-MagmaHideout_4F_EventScript_ItemMaxRevive::
-	finditem ITEM_MAX_REVIVE
 	end
 
 MagmaHideout_3F_3R_EventScript_ItemEscapeRope::

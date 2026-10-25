@@ -2,20 +2,7 @@ SSTidalRooms_MapScripts::
 	.byte 0
 
 SSTidalRooms_EventScript_SnatchGiver::
-	lock
-	faceplayer
-	goto_if_set FLAG_RECEIVED_TM_SNATCH, SSTidalRooms_EventScript_ExplainSnatch
-	msgbox SSTidalRooms_Text_NotSuspiciousTakeThis, MSGBOX_DEFAULT
-	giveitem ITEM_TM_ICY_WIND
-	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
-	setflag FLAG_RECEIVED_TM_SNATCH
-	msgbox SSTidalRooms_Text_ExplainSnatch, MSGBOX_DEFAULT
-	release
-	end
-
-SSTidalRooms_EventScript_ExplainSnatch::
-	msgbox SSTidalRooms_Text_ExplainSnatch, MSGBOX_DEFAULT
-	release
+	msgbox SSTidalRooms_Text_NotSuspicious, MSGBOX_NPC
 	end
 
 SSTidalRooms_EventScript_Bed::
@@ -161,14 +148,7 @@ SSTidalRooms_Text_NaomiPostBattle:
 	.string "But, I will admit there is an appealing\n"
 	.string "side to touring HOENN by ferry.$"
 
-SSTidalRooms_Text_NotSuspiciousTakeThis:
+SSTidalRooms_Text_NotSuspicious:
 	.string "Uh… Hi! I… I'm not acting suspicious!\n"
-	.string "Uh… You can have this! For free!\p"
-	.string "It… Honestly, I didn't SNATCH it from\n"
-	.string "someone! I'd never do such a thing!\l"
-	.string "It's clean! You can use it!$"
-
-SSTidalRooms_Text_ExplainSnatch:
-	.string "ICY WIND chills the foe and lowers\n"
-	.string "its SPEED.$"
+	.string "I'm just, uh… enjoying the cruise!$"
 

@@ -1,81 +1,41 @@
 FortreeCity_House2_MapScripts::
 	.byte 0
 
-FortreeCity_House2_EventScript_HiddenPowerGiver::
+FortreeCity_House2_EventScript_PetalDanceGiver::
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_TM_HIDDEN_POWER, FortreeCity_House2_EventScript_ExplainHiddenPower
-	call_if_unset FLAG_MET_HIDDEN_POWER_GIVER, FortreeCity_House2_EventScript_Greeting
-	msgbox FortreeCity_House2_Text_CoinInWhichHand, MSGBOX_DEFAULT
-	multichoice 21, 8, MULTI_RIGHTLEFT, TRUE
-	switch VAR_RESULT
-	case 1, FortreeCity_House2_EventScript_WrongGuess
-	msgbox FortreeCity_House2_Text_CorrectTryAgainWhichHand, MSGBOX_DEFAULT
-	multichoice 21, 8, MULTI_RIGHTLEFT, TRUE
-	switch VAR_RESULT
-	case 1, FortreeCity_House2_EventScript_WrongGuess
-	msgbox FortreeCity_House2_Text_CorrectTryAgainWhichHand2, MSGBOX_DEFAULT
-	multichoice 21, 8, MULTI_RIGHTLEFT, TRUE
-	switch VAR_RESULT
-	case 0, FortreeCity_House2_EventScript_WrongGuess
-	msgbox FortreeCity_House2_Text_YourHiddenPowerHasAwoken, MSGBOX_DEFAULT
-	giveitem ITEM_TM_AGILITY
+	goto_if_set FLAG_RECEIVED_TM_PETAL_DANCE, FortreeCity_House2_EventScript_ExplainPetalDance
+	call_if_unset FLAG_MET_PETAL_DANCE_GIVER, FortreeCity_House2_EventScript_Greeting
+	msgbox FortreeCity_House2_Text_TakeThisTM, MSGBOX_DEFAULT
+	giveitem ITEM_TM_PETAL_DANCE
 	goto_if_eq VAR_RESULT, 0, Common_EventScript_ShowBagIsFull
-	setflag FLAG_RECEIVED_TM_HIDDEN_POWER
-	msgbox FortreeCity_House2_Text_ExplainHiddenPower, MSGBOX_DEFAULT
+	setflag FLAG_RECEIVED_TM_PETAL_DANCE
+	msgbox FortreeCity_House2_Text_ExplainPetalDance, MSGBOX_DEFAULT
 	release
 	end
 
 FortreeCity_House2_EventScript_Greeting::
-	msgbox FortreeCity_House2_Text_HiddenPowersArousedByNature, MSGBOX_DEFAULT
-	setflag FLAG_MET_HIDDEN_POWER_GIVER
+	msgbox FortreeCity_House2_Text_StrengthBlossomsInNature, MSGBOX_DEFAULT
+	setflag FLAG_MET_PETAL_DANCE_GIVER
 	return
 
-FortreeCity_House2_EventScript_ExplainHiddenPower::
-	msgbox FortreeCity_House2_Text_ExplainHiddenPower, MSGBOX_DEFAULT
+FortreeCity_House2_EventScript_ExplainPetalDance::
+	msgbox FortreeCity_House2_Text_ExplainPetalDance, MSGBOX_DEFAULT
 	release
 	end
 
-FortreeCity_House2_EventScript_WrongGuess::
-	msgbox FortreeCity_House2_Text_YouGuessedWrong, MSGBOX_DEFAULT
-	release
-	end
-
-FortreeCity_House2_Text_HiddenPowersArousedByNature:
+FortreeCity_House2_Text_StrengthBlossomsInNature:
 	.string "People… POKéMON…\p"
-	.string "Their hidden powers are aroused by\n"
-	.string "living in natural environments…$"
+	.string "Their strength blossoms when they\n"
+	.string "live close to nature…$"
 
-FortreeCity_House2_Text_CoinInWhichHand:
-	.string "Let this old woman see if your hidden\n"
-	.string "power has awoken…\p"
-	.string "I hold a coin in my hand.\p"
-	.string "Now, tell me, have I palmed it in\n"
-	.string "the right hand? Or in the left?$"
+FortreeCity_House2_Text_TakeThisTM:
+	.string "I can feel a strength in you,\n"
+	.string "ready to bloom like a flower…\p"
+	.string "Here, take this and let your\n"
+	.string "POKéMON blossom too.$"
 
-FortreeCity_House2_Text_CorrectTryAgainWhichHand:
-	.string "Oh! Yes, correct!\p"
-	.string "We shall try again.\p"
-	.string "In which hand have I palmed the coin?\n"
-	.string "The right or left?$"
-
-FortreeCity_House2_Text_CorrectTryAgainWhichHand2:
-	.string "Oh! Yes, correct!\p"
-	.string "We shall try again.\p"
-	.string "In which hand have I palmed the coin?\n"
-	.string "The right or left?$"
-
-FortreeCity_House2_Text_YourHiddenPowerHasAwoken:
-	.string "Oh! Splendid!\n"
-	.string "Your hidden power has awoken!\p"
-	.string "Here, take this and awaken the hidden\n"
-	.string "power of your POKéMON.$"
-
-FortreeCity_House2_Text_ExplainHiddenPower:
-	.string "AGILITY sharply raises the SPEED\n"
-	.string "of your POKéMON.$"
-
-FortreeCity_House2_Text_YouGuessedWrong:
-	.string "No, too bad.\n"
-	.string "You guessed wrong.$"
+FortreeCity_House2_Text_ExplainPetalDance:
+	.string "PETAL DANCE hits hard, but it\n"
+	.string "sharply lowers the user's SP. ATK.$"
 

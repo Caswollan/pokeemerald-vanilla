@@ -37,8 +37,8 @@
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "ShoalCave_LowTideIceRoom_EventScript_ItemNeverMeltIce",
-      "flag": "FLAG_ITEM_SHOAL_CAVE_ICE_ROOM_NEVER_MELT_ICE"
+      "script": "ShoalCave_LowTideIceRoom_EventScript_ItemTMBlizzard",
+      "flag": "FLAG_ITEM_SHOAL_CAVE_ICE_ROOM_TM_BLIZZARD"
     }
   ],
   "warp_events": [

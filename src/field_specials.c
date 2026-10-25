@@ -2391,12 +2391,38 @@ void ShowScrollableMultichoice(void)
         task->tKeepOpenAfterSelect = FALSE;
         task->tTaskId = taskId;
         break;
+    case SCROLL_MULTI_GAME_CORNER_TMS:
+        task->tMaxItemsOnScreen = MAX_SCROLL_MULTI_ON_SCREEN;
+        task->tNumItems = 15; // TMs + EXIT
+        task->tLeft = MAX_MULTICHOICE_WIDTH; // moved left by the text width, so the list sits on the right
+        task->tTop = 1;
+        task->tWidth = 16; // recalculated from the text width
+        task->tHeight = 12;
+        task->tKeepOpenAfterSelect = FALSE;
+        task->tTaskId = taskId;
+        break;
     default:
         gSpecialVar_Result = MULTI_B_PRESSED;
         DestroyTask(taskId);
         break;
     }
 }
+
+// Mauville Game Corner TM prizes: TM, move, price in coins
+static const u8 sText_GameCornerTMDarkPulse[] = _("TM06 DARK PULSE{CLEAR_TO 100}100");
+static const u8 sText_GameCornerTMFlashCannon[] = _("TM76 FLASH CANNON{CLEAR_TO 100}100");
+static const u8 sText_GameCornerTMSignalBeam[] = _("TM04 SIGNAL BEAM{CLEAR_TO 100}100");
+static const u8 sText_GameCornerTMThunderbolt[] = _("TM14 THUNDERBOLT{CLEAR_TO 100}100");
+static const u8 sText_GameCornerTMFlamethrower[] = _("TM23 FLAMETHROWER{CLEAR_TO 100}100");
+static const u8 sText_GameCornerTMEnergyBall[] = _("TM37 ENERGY BALL{CLEAR_TO 100}100");
+static const u8 sText_GameCornerTMEarthPower[] = _("TM42 EARTH POWER{CLEAR_TO 100}100");
+static const u8 sText_GameCornerTMIceBeam[] = _("TM47 ICE BEAM{CLEAR_TO 100}100");
+static const u8 sText_GameCornerTMSludgeBomb[] = _("TM60 SLUDGE BOMB{CLEAR_TO 100}100");
+static const u8 sText_GameCornerTMPsychic[] = _("TM63 PSYCHIC{CLEAR_TO 100}100");
+static const u8 sText_GameCornerTMHyperVoice[] = _("TM54 HYPER VOICE{CLEAR_TO 100}100");
+static const u8 sText_GameCornerTMEggBomb[] = _("TM35 EGG BOMB{CLEAR_TO 100}100");
+static const u8 sText_GameCornerTMPoisonFang[] = _("TM59 POISON FANG{CLEAR_TO 100}100");
+static const u8 sText_GameCornerTMDizzyPunch[] = _("TM62 DIZZY PUNCH{CLEAR_TO 100}100");
 
 // Nature Changer list: nature name, then the raised stat in red and the lowered stat in blue
 static const u8 sText_NatureOption00[] = _("Hardy{CLEAR_TO 62}Neutral");
@@ -2599,6 +2625,24 @@ static const u8 *const sScrollableMultichoiceOptions[][MAX_SCROLL_MULTI_LENGTH] 
         gText_PokemonMoves,
         gText_Underpowered,
         gText_WhenInDanger,
+        gText_Exit
+    },
+    [SCROLL_MULTI_GAME_CORNER_TMS] =
+    {
+        sText_GameCornerTMDarkPulse,
+        sText_GameCornerTMFlashCannon,
+        sText_GameCornerTMSignalBeam,
+        sText_GameCornerTMThunderbolt,
+        sText_GameCornerTMFlamethrower,
+        sText_GameCornerTMEnergyBall,
+        sText_GameCornerTMEarthPower,
+        sText_GameCornerTMIceBeam,
+        sText_GameCornerTMSludgeBomb,
+        sText_GameCornerTMPsychic,
+        sText_GameCornerTMHyperVoice,
+        sText_GameCornerTMEggBomb,
+        sText_GameCornerTMPoisonFang,
+        sText_GameCornerTMDizzyPunch,
         gText_Exit
     },
     [SCROLL_MULTI_NATURES] =
