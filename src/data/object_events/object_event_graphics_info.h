@@ -1518,7 +1518,8 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Courtney = {
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_UnusedPikachuDoll = {
+// Yellow item ball for TMs (same colors as the NPC_2 palette)
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_TMBall = {
     .tileTag = TAG_NONE,
     .paletteTag = OBJ_EVENT_PAL_TAG_NPC_2,
     .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
@@ -1533,7 +1534,7 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_UnusedPikachuDoll 
     .oam = &gObjectEventBaseOam_16x16,
     .subspriteTables = sOamTables_16x16,
     .anims = sAnimTable_Inanimate,
-    .images = sPicTable_UnusedPikachuDoll,
+    .images = sPicTable_TMBall,
     .affineAnims = gDummySpriteAffineAnimTable,
 };
 

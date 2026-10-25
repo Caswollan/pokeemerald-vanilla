@@ -84,7 +84,7 @@
 #define OBJ_EVENT_GFX_SHELLY                      77
 #define OBJ_EVENT_GFX_TABITHA                     78
 #define OBJ_EVENT_GFX_COURTNEY                    79
-#define OBJ_EVENT_GFX_UNUSED_PIKACHU_DOLL         80
+#define OBJ_EVENT_GFX_TM_BALL                     80
 #define OBJ_EVENT_GFX_UNUSED_PORYGON2_DOLL        81
 #define OBJ_EVENT_GFX_CUTTABLE_TREE               82
 #define OBJ_EVENT_GFX_MART_EMPLOYEE               83
