@@ -599,8 +599,7 @@ static const u8 sPinapBerryDesc[] = _(
 
 static const u8 sPomegBerryDesc[] = _(
     "Makes a POKéMON\n"
-    "friendly but lowers\n"
-    "base HP.");
+    "more friendly.");
 
 static const u8 sKelpsyBerryDesc[] = _(
     "Makes a POKéMON\n"

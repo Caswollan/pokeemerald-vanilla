@@ -4586,7 +4586,11 @@ void ItemUseCB_ReduceEV(u8 taskId, TaskFunc task)
         RemoveBagItem(item, 1);
         GetMonNickname(mon, gStringVar1);
         ItemEffectToStatString(effectType, gStringVar2);
-        if (friendship != newFriendship)
+        if (item == ITEM_POMEG_BERRY)
+        {
+            StringExpandPlaceholders(gStringVar4, gText_PkmnTurnedFriendly);
+        }
+        else if (friendship != newFriendship)
         {
             if (ev != newEv)
                 StringExpandPlaceholders(gStringVar4, gText_PkmnFriendlyBaseVar2Fell);

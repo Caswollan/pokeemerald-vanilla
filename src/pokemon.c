@@ -4570,31 +4570,18 @@ static const struct LevelCapCheckpoint sLevelCapCheckpoints[] =
 {
     {12, {T(GRUNT_PETALBURG_WOODS)}}, // Team Aqua Grunt, Petalburg Woods
     {15, {FLAG_BADGE01_GET}}, // Roxanne, 1st Gym
-    {19, {T(GRUNT_RUSTURF_TUNNEL)}}, // Team Aqua Grunt, Rusturf Tunnel
     {22, {T(BRENDAN_RUSTBORO_TREECKO), T(BRENDAN_RUSTBORO_TORCHIC), T(BRENDAN_RUSTBORO_MUDKIP), T(MAY_RUSTBORO_TREECKO), T(MAY_RUSTBORO_TORCHIC), T(MAY_RUSTBORO_MUDKIP)}}, // Rival, Rustboro City
     {25, {FLAG_BADGE02_GET}}, // Brawly, 2nd Gym
-    {28, {T(GRUNT_MUSEUM_2)}}, // Team Aqua Grunts back to back, Oceanic Museum
     {30, {T(BRENDAN_ROUTE_110_TREECKO), T(BRENDAN_ROUTE_110_TORCHIC), T(BRENDAN_ROUTE_110_MUDKIP), T(MAY_ROUTE_110_TREECKO), T(MAY_ROUTE_110_TORCHIC), T(MAY_ROUTE_110_MUDKIP)}}, // Rival, Route 110
-    {32, {T(WALLY_MAUVILLE)}}, // Wally, Mauville City
     {34, {FLAG_BADGE03_GET}}, // Wattson, 3rd Gym
-    {40, {T(TABITHA_MT_CHIMNEY)}}, // Team Magma Tabitha, Mt. Chimney
     {42, {T(MAXIE_MT_CHIMNEY)}}, // Team Magma Maxie, Mt. Chimney
     {47, {FLAG_BADGE04_GET}}, // Flannery, 4th Gym
-    {48, {T(WALLY_PETALBURG)}}, // Wally, Petalburg City
     {50, {FLAG_BADGE05_GET}}, // Norman, 5th Gym
-    {55, {T(SHELLY_WEATHER_INSTITUTE)}}, // Team Aqua Shelly, Weather Institute
     {57, {T(BRENDAN_ROUTE_119_TREECKO), T(BRENDAN_ROUTE_119_TORCHIC), T(BRENDAN_ROUTE_119_MUDKIP), T(MAY_ROUTE_119_TREECKO), T(MAY_ROUTE_119_TORCHIC), T(MAY_ROUTE_119_MUDKIP)}}, // Rival, Route 119
     {61, {FLAG_BADGE06_GET}}, // Winona, 6th Gym
-    {64, {T(WALLY_LILYCOVE), FLAG_MET_RIVAL_LILYCOVE}}, // Wally, Lilycove City (FLAG_MET_RIVAL_LILYCOVE: old saves past the rival)
-    {66, {T(ARCHIE_MT_PYRE)}}, // Team Aqua Archie and Matt, Mt. Pyre (double battle)
-    {68, {T(COURTNEY_MAGMA_HIDEOUT)}}, // Team Magma Courtney, Magma Hideout
-    {68, {T(TABITHA_MAGMA_HIDEOUT)}}, // Team Magma Tabitha, Magma Hideout
-    {68, {T(MAXIE_MAGMA_HIDEOUT)}}, // Team Magma Maxie, Magma Hideout
-    {70, {T(MATT)}}, // Team Aqua Matt, Aqua Hideout
+    {64, {T(WALLY_LILYCOVE), FLAG_MET_RIVAL_LILYCOVE}}, // Rival, Lilycove City (FLAG_MET_RIVAL_LILYCOVE: set after either Lilycove battle)
+    {68, {T(MATT)}}, // Team Aqua Matt, Aqua Hideout
     {72, {FLAG_BADGE07_GET}}, // Tate and Liza, 7th Gym
-    {75, {T(COURTNEY_SPACE_CENTER)}}, // Team Magma Courtney, Space Center
-    {75, {T(MAXIE_MOSSDEEP)}}, // Team Magma Tabitha and Maxie, Space Center (double battle with Steven)
-    {78, {T(SHELLY_SEAFLOOR_CAVERN)}}, // Team Aqua Shelly and Grunt, Seafloor Cavern (optional)
     {78, {T(ARCHIE)}}, // Team Aqua Archie, Seafloor Cavern
     {80, {FLAG_BADGE08_GET}}, // Wallace, 8th Gym
     {83, {T(WALLY_VR_1)}}, // Wally, Victory Road
@@ -5110,6 +5097,13 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                     {
                     case 0: // ITEM4_EV_HP
                     case 1: // ITEM4_EV_ATK
+                        // Pomeg Berry only raises friendship (the HP EV can't change)
+                        if (item == ITEM_POMEG_BERRY)
+                        {
+                            friendshipOnly = TRUE;
+                            itemEffectParam++;
+                            break;
+                        }
                         // EVs can never change: vitamins and EV-lowering berries have no effect
                         return TRUE;
                         evCount = GetMonEVCount(mon);

@@ -177,7 +177,7 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Declan[] = {
 static const struct TrainerMonItemCustomMoves sParty_GruntRusturfTunnel[] = {
     {
     .iv = 255,
-    .lvl = 19,
+    .lvl = 20,
     .species = SPECIES_ZUBAT,
     .nature = TRAINER_NATURE(NATURE_HARDY),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -186,7 +186,7 @@ static const struct TrainerMonItemCustomMoves sParty_GruntRusturfTunnel[] = {
     },
     {
     .iv = 255,
-    .lvl = 19,
+    .lvl = 20,
     .species = SPECIES_CORPHISH,
     .nature = TRAINER_NATURE(NATURE_CAREFUL),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -195,7 +195,7 @@ static const struct TrainerMonItemCustomMoves sParty_GruntRusturfTunnel[] = {
     },
     {
     .iv = 255,
-    .lvl = 19,
+    .lvl = 21,
     .species = SPECIES_MIGHTYENA,
     .nature = TRAINER_NATURE(NATURE_JOLLY),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -4698,7 +4698,7 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Hector[] = {
 static const struct TrainerMonItemCustomMoves sParty_TabithaMossdeep[] = {
     {
     .iv = 255,
-    .lvl = 75,
+    .lvl = 76,
     .species = SPECIES_CROBAT,
     .nature = TRAINER_NATURE(NATURE_HARDY),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -4707,7 +4707,7 @@ static const struct TrainerMonItemCustomMoves sParty_TabithaMossdeep[] = {
     },
     {
     .iv = 255,
-    .lvl = 75,
+    .lvl = 76,
     .species = SPECIES_PINSIR,
     .nature = TRAINER_NATURE(NATURE_JOLLY),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -4716,7 +4716,7 @@ static const struct TrainerMonItemCustomMoves sParty_TabithaMossdeep[] = {
     },
     {
     .iv = 255,
-    .lvl = 75,
+    .lvl = 76,
     .species = SPECIES_MAGMAR,
     .nature = TRAINER_NATURE(NATURE_TIMID),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -6616,7 +6616,7 @@ static const struct TrainerMonItemCustomMoves sParty_WallyMauville[] = {
     },
     {
     .iv = 255,
-    .lvl = 32,
+    .lvl = 33,
     .species = SPECIES_JUMPLUFF,
     .nature = TRAINER_NATURE(NATURE_BOLD),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -6625,7 +6625,7 @@ static const struct TrainerMonItemCustomMoves sParty_WallyMauville[] = {
     },
     {
     .iv = 255,
-    .lvl = 32,
+    .lvl = 33,
     .species = SPECIES_MAGCARGO,
     .nature = TRAINER_NATURE(NATURE_QUIET),
     .abilityNum = TRAINER_MON_ABILITY_2,
@@ -7636,7 +7636,7 @@ static const struct TrainerMonNoItemDefaultMoves sParty_Darcy[] = {
 static const struct TrainerMonItemCustomMoves sParty_MaxieMossdeep[] = {
     {
     .iv = 255,
-    .lvl = 75,
+    .lvl = 76,
     .species = SPECIES_NIDOKING,
     .nature = TRAINER_NATURE(NATURE_JOLLY),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -7645,7 +7645,7 @@ static const struct TrainerMonItemCustomMoves sParty_MaxieMossdeep[] = {
     },
     {
     .iv = 255,
-    .lvl = 75,
+    .lvl = 76,
     .species = SPECIES_MACHAMP,
     .nature = TRAINER_NATURE(NATURE_CAREFUL),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -7654,7 +7654,7 @@ static const struct TrainerMonItemCustomMoves sParty_MaxieMossdeep[] = {
     },
     {
     .iv = 255,
-    .lvl = 75,
+    .lvl = 76,
     .species = SPECIES_ARCANINE,
     .nature = TRAINER_NATURE(NATURE_ADAMANT),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -9725,7 +9725,7 @@ static const struct TrainerMonItemCustomMoves sParty_WallyLilycove[] = {
 static const struct TrainerMonItemCustomMoves sParty_ArchieMtPyre[] = {
     {
     .iv = 255,
-    .lvl = 66,
+    .lvl = 68,
     .species = SPECIES_CROBAT,
     .nature = TRAINER_NATURE(NATURE_HARDY),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -9734,7 +9734,7 @@ static const struct TrainerMonItemCustomMoves sParty_ArchieMtPyre[] = {
     },
     {
     .iv = 255,
-    .lvl = 66,
+    .lvl = 68,
     .species = SPECIES_MACHAMP,
     .nature = TRAINER_NATURE(NATURE_CAREFUL),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -9743,7 +9743,7 @@ static const struct TrainerMonItemCustomMoves sParty_ArchieMtPyre[] = {
     },
     {
     .iv = 255,
-    .lvl = 66,
+    .lvl = 68,
     .species = SPECIES_SHARPEDO,
     .nature = TRAINER_NATURE(NATURE_ADAMANT),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -9755,7 +9755,7 @@ static const struct TrainerMonItemCustomMoves sParty_ArchieMtPyre[] = {
 static const struct TrainerMonItemCustomMoves sParty_MattMtPyre[] = {
     {
     .iv = 255,
-    .lvl = 66,
+    .lvl = 68,
     .species = SPECIES_MAWILE,
     .nature = TRAINER_NATURE(NATURE_ADAMANT),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -9764,7 +9764,7 @@ static const struct TrainerMonItemCustomMoves sParty_MattMtPyre[] = {
     },
     {
     .iv = 255,
-    .lvl = 66,
+    .lvl = 68,
     .species = SPECIES_NIDOKING,
     .nature = TRAINER_NATURE(NATURE_TIMID),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -9773,7 +9773,7 @@ static const struct TrainerMonItemCustomMoves sParty_MattMtPyre[] = {
     },
     {
     .iv = 255,
-    .lvl = 66,
+    .lvl = 68,
     .species = SPECIES_HUNTAIL,
     .nature = TRAINER_NATURE(NATURE_JOLLY),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -9842,7 +9842,7 @@ static const struct TrainerMonItemCustomMoves sParty_CourtneyMagmaHideout[] = {
 static const struct TrainerMonItemCustomMoves sParty_CourtneySpaceCenter[] = {
     {
     .iv = 255,
-    .lvl = 10,
+    .lvl = 76,
     .species = SPECIES_RAPIDASH,
     .nature = TRAINER_NATURE(NATURE_JOLLY),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -9851,7 +9851,7 @@ static const struct TrainerMonItemCustomMoves sParty_CourtneySpaceCenter[] = {
     },
     {
     .iv = 255,
-    .lvl = 10,
+    .lvl = 76,
     .species = SPECIES_GOLEM,
     .nature = TRAINER_NATURE(NATURE_BRAVE),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -9860,7 +9860,7 @@ static const struct TrainerMonItemCustomMoves sParty_CourtneySpaceCenter[] = {
     },
     {
     .iv = 255,
-    .lvl = 10,
+    .lvl = 76,
     .species = SPECIES_ABSOL,
     .nature = TRAINER_NATURE(NATURE_JOLLY),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -9869,7 +9869,7 @@ static const struct TrainerMonItemCustomMoves sParty_CourtneySpaceCenter[] = {
     },
     {
     .iv = 255,
-    .lvl = 10,
+    .lvl = 76,
     .species = SPECIES_HITMONTOP,
     .nature = TRAINER_NATURE(NATURE_CAREFUL),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -9878,7 +9878,7 @@ static const struct TrainerMonItemCustomMoves sParty_CourtneySpaceCenter[] = {
     },
     {
     .iv = 255,
-    .lvl = 10,
+    .lvl = 76,
     .species = SPECIES_NIDOQUEEN,
     .nature = TRAINER_NATURE(NATURE_IMPISH),
     .abilityNum = TRAINER_MON_ABILITY_1,
@@ -9887,7 +9887,7 @@ static const struct TrainerMonItemCustomMoves sParty_CourtneySpaceCenter[] = {
     },
     {
     .iv = 255,
-    .lvl = 10,
+    .lvl = 76,
     .species = SPECIES_HOUNDOOM,
     .nature = TRAINER_NATURE(NATURE_TIMID),
     .abilityNum = TRAINER_MON_ABILITY_2,
